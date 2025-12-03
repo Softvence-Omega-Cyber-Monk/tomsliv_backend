@@ -1,6 +1,6 @@
 # Variables
 DOCKER_USERNAME=softvence
-PACKAGE_NAME=nestjs_starter
+PACKAGE_NAME=tomsliv_backend
 PACKAGE_VERSION=latest
 
 # Docker image name
