@@ -56,7 +56,8 @@ export const ModelName = {
   FileInstance: 'FileInstance',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
-  User: 'User'
+  User: 'User',
+  Farm: 'Farm'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -157,6 +158,23 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const FarmScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  location: 'location',
+  description: 'description',
+  website: 'website',
+  herdSize: 'herdSize',
+  farmType: 'farmType',
+  ownerId: 'ownerId',
+  logoId: 'logoId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FarmScalarFieldEnum = (typeof FarmScalarFieldEnum)[keyof typeof FarmScalarFieldEnum]
 
 
 export const SortOrder = {

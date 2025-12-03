@@ -242,6 +242,7 @@ export type UserWhereInput = {
   notifications?: Prisma.UserNotificationListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   otps?: Prisma.UserOtpListRelationFilter
+  farms?: Prisma.FarmListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -261,6 +262,7 @@ export type UserOrderByWithRelationInput = {
   notifications?: Prisma.UserNotificationOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
   otps?: Prisma.UserOtpOrderByRelationAggregateInput
+  farms?: Prisma.FarmOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -283,6 +285,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   notifications?: Prisma.UserNotificationListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   otps?: Prisma.UserOtpListRelationFilter
+  farms?: Prisma.FarmListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -326,7 +329,7 @@ export type UserCreateInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -337,6 +340,7 @@ export type UserCreateInput = {
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -344,7 +348,7 @@ export type UserUncheckedCreateInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -355,6 +359,7 @@ export type UserUncheckedCreateInput = {
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUpdateInput = {
@@ -373,6 +378,7 @@ export type UserUpdateInput = {
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -391,6 +397,7 @@ export type UserUncheckedUpdateInput = {
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -398,7 +405,7 @@ export type UserCreateManyInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -495,6 +502,11 @@ export type UserMinOrderByAggregateInput = {
   profilePictureId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCreateNestedOneWithoutOtpsInput = {
@@ -597,12 +609,28 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type UserCreateNestedOneWithoutFarmsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutFarmsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmsInput
+  upsert?: Prisma.UserUpsertWithoutFarmsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFarmsInput, Prisma.UserUpdateWithoutFarmsInput>, Prisma.UserUncheckedUpdateWithoutFarmsInput>
+}
+
 export type UserCreateWithoutOtpsInput = {
   id?: string
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -612,6 +640,7 @@ export type UserCreateWithoutOtpsInput = {
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutOtpsInput = {
@@ -619,7 +648,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -629,6 +658,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   updatedAt?: Date | string
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutOtpsInput = {
@@ -662,6 +692,7 @@ export type UserUpdateWithoutOtpsInput = {
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpsInput = {
@@ -679,6 +710,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -686,7 +718,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -696,6 +728,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -703,7 +736,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -713,6 +746,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   updatedAt?: Date | string
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -746,6 +780,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -763,6 +798,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserCreateWithoutProfilePictureInput = {
@@ -770,7 +806,7 @@ export type UserCreateWithoutProfilePictureInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -780,6 +816,7 @@ export type UserCreateWithoutProfilePictureInput = {
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutProfilePictureInput = {
@@ -787,7 +824,7 @@ export type UserUncheckedCreateWithoutProfilePictureInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -797,6 +834,7 @@ export type UserUncheckedCreateWithoutProfilePictureInput = {
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutProfilePictureInput = {
@@ -848,7 +886,7 @@ export type UserCreateWithoutNotificationsInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -858,6 +896,7 @@ export type UserCreateWithoutNotificationsInput = {
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -865,7 +904,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -875,6 +914,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
+  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -908,6 +948,7 @@ export type UserUpdateWithoutNotificationsInput = {
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -925,6 +966,95 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
+}
+
+export type UserCreateWithoutFarmsInput = {
+  id?: string
+  name?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  isVerified?: boolean
+  lastLoginAt?: Date | string | null
+  lastActiveAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutFarmsInput = {
+  id?: string
+  name?: string
+  email: string
+  password: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  isVerified?: boolean
+  lastLoginAt?: Date | string | null
+  lastActiveAt?: Date | string | null
+  profilePictureId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutFarmsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
+}
+
+export type UserUpsertWithoutFarmsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFarmsInput, Prisma.UserUncheckedUpdateWithoutFarmsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutFarmsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFarmsInput, Prisma.UserUncheckedUpdateWithoutFarmsInput>
+}
+
+export type UserUpdateWithoutFarmsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutFarmsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyProfilePictureInput = {
@@ -932,7 +1062,7 @@ export type UserCreateManyProfilePictureInput = {
   name?: string
   email: string
   password: string
-  role?: $Enums.UserRole
+  role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
@@ -956,6 +1086,7 @@ export type UserUpdateWithoutProfilePictureInput = {
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfilePictureInput = {
@@ -973,6 +1104,7 @@ export type UserUncheckedUpdateWithoutProfilePictureInput = {
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
+  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutProfilePictureInput = {
@@ -998,12 +1130,14 @@ export type UserCountOutputType = {
   notifications: number
   refreshTokens: number
   otps: number
+  farms: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
   otps?: boolean | UserCountOutputTypeCountOtpsArgs
+  farms?: boolean | UserCountOutputTypeCountFarmsArgs
 }
 
 /**
@@ -1037,6 +1171,13 @@ export type UserCountOutputTypeCountOtpsArgs<ExtArgs extends runtime.Types.Exten
   where?: Prisma.UserOtpWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountFarmsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.FarmWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1055,6 +1196,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
+  farms?: boolean | Prisma.User$farmsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1111,6 +1253,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
+  farms?: boolean | Prisma.User$farmsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1127,6 +1270,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     notifications: Prisma.$UserNotificationPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
     otps: Prisma.$UserOtpPayload<ExtArgs>[]
+    farms: Prisma.$FarmPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1539,6 +1683,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.User$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   otps<T extends Prisma.User$otpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserOtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  farms<T extends Prisma.User$farmsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$farmsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2064,6 +2209,30 @@ export type User$otpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   take?: number
   skip?: number
   distinct?: Prisma.UserOtpScalarFieldEnum | Prisma.UserOtpScalarFieldEnum[]
+}
+
+/**
+ * User.farms
+ */
+export type User$farmsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Farm
+   */
+  select?: Prisma.FarmSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Farm
+   */
+  omit?: Prisma.FarmOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FarmInclude<ExtArgs> | null
+  where?: Prisma.FarmWhereInput
+  orderBy?: Prisma.FarmOrderByWithRelationInput | Prisma.FarmOrderByWithRelationInput[]
+  cursor?: Prisma.FarmWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.FarmScalarFieldEnum | Prisma.FarmScalarFieldEnum[]
 }
 
 /**

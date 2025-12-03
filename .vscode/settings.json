@@ -42,6 +42,7 @@
     "healthcheck",
     "instrumentisto",
     "isready",
+    "otps",
     "procps",
     "replicaof",
     "softvence",

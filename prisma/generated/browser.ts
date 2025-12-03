@@ -47,3 +47,8 @@ export type UserNotification = Prisma.UserNotificationModel
  * 
  */
 export type User = Prisma.UserModel
+/**
+ * Model Farm
+ * 
+ */
+export type Farm = Prisma.FarmModel

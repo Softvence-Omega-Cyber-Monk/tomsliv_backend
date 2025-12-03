@@ -5,6 +5,7 @@ import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { Injectable } from '@nestjs/common';
+import { UserRole } from '@prisma';
 import { RegisterDto } from '../dto/register.dto';
 
 @Injectable()
@@ -32,6 +33,7 @@ export class AuthRegisterService {
       data: {
         email,
         name,
+        role: UserRole.USER,
         password: await this.utils.hash(password),
       },
     });

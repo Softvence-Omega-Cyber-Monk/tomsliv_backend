@@ -389,7 +389,8 @@ export const ModelName = {
   FileInstance: 'FileInstance',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
-  User: 'User'
+  User: 'User',
+  Farm: 'Farm'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userOtp" | "refreshToken" | "fileInstance" | "notification" | "userNotification" | "user"
+    modelProps: "userOtp" | "refreshToken" | "fileInstance" | "notification" | "userNotification" | "user" | "farm"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Farm: {
+      payload: Prisma.$FarmPayload<ExtArgs>
+      fields: Prisma.FarmFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.FarmFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.FarmFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>
+        }
+        findFirst: {
+          args: Prisma.FarmFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.FarmFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>
+        }
+        findMany: {
+          args: Prisma.FarmFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>[]
+        }
+        create: {
+          args: Prisma.FarmCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>
+        }
+        createMany: {
+          args: Prisma.FarmCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.FarmCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>[]
+        }
+        delete: {
+          args: Prisma.FarmDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>
+        }
+        update: {
+          args: Prisma.FarmUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>
+        }
+        deleteMany: {
+          args: Prisma.FarmDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.FarmUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.FarmUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>[]
+        }
+        upsert: {
+          args: Prisma.FarmUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$FarmPayload>
+        }
+        aggregate: {
+          args: Prisma.FarmAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateFarm>
+        }
+        groupBy: {
+          args: Prisma.FarmGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FarmGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.FarmCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.FarmCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -974,6 +1049,23 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const FarmScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  location: 'location',
+  description: 'description',
+  website: 'website',
+  herdSize: 'herdSize',
+  farmType: 'farmType',
+  ownerId: 'ownerId',
+  logoId: 'logoId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FarmScalarFieldEnum = (typeof FarmScalarFieldEnum)[keyof typeof FarmScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1239,6 +1331,7 @@ export type GlobalOmitConfig = {
   notification?: Prisma.NotificationOmit
   userNotification?: Prisma.UserNotificationOmit
   user?: Prisma.UserOmit
+  farm?: Prisma.FarmOmit
 }
 
 /* Types for Logging */

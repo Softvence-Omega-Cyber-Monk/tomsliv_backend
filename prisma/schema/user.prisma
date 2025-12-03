@@ -7,7 +7,7 @@ model User {
   password String // hashed password
 
   // Settings
-  role       UserRole   @default(USER)
+  role       UserRole
   status     UserStatus @default(ACTIVE)
   isVerified Boolean    @default(false)
 
@@ -19,10 +19,11 @@ model User {
   profilePictureId String?
   profilePicture   FileInstance? @relation(fields: [profilePictureId], references: [id], onDelete: SetNull)
 
-  // Notifications & Auth
+  // Relations
   notifications UserNotification[]
   refreshTokens RefreshToken[]
   otps          UserOtp[]
+  farms         Farm[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -33,6 +34,7 @@ model User {
 enum UserRole {
   SUPER_ADMIN
   ADMIN
+  FARM_OWNER
   USER
 }
 
@@ -40,4 +42,28 @@ enum UserStatus {
   ACTIVE
   INACTIVE
   DELETED
+}
+
+model Farm {
+  id String @id @default(uuid())
+
+  name        String
+  location    String
+  description String
+  website     String
+
+  herdSize Int
+  farmType String
+
+  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  ownerId String?
+
+  // Logo
+  logoId String?
+  logo   FileInstance? @relation(fields: [logoId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("farms")
 }
