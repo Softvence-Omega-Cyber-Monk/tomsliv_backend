@@ -1,4 +1,9 @@
-import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
+import {
+  GetUser,
+  ValidateAuth,
+  ValidateFarmOwner,
+  ValidateUser,
+} from '@/core/jwt/jwt.decorator';
 import { MulterService } from '@/lib/file/services/multer.service';
 import {
   Body,
@@ -19,6 +24,10 @@ import {
 import { FileType } from '@prisma';
 import { LoginDto } from './dto/login.dto';
 import { LogoutDto, RefreshTokenDto } from './dto/logout.dto';
+import {
+  FarmOwnerNotificationSettingsDto,
+  UserNotificationSettingsDto,
+} from './dto/notification-setting.dto';
 import { ResendOtpDto, VerifyOTPDto } from './dto/otp.dto';
 import {
   ChangePasswordDto,
@@ -30,6 +39,7 @@ import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGetProfileService } from './services/auth-get-profile.service';
 import { AuthLoginService } from './services/auth-login.service';
 import { AuthLogoutService } from './services/auth-logout.service';
+import { AuthNotificationService } from './services/auth-notification.service';
 import { AuthOtpService } from './services/auth-otp.service';
 import { AuthPasswordService } from './services/auth-password.service';
 import { AuthRegisterService } from './services/auth-register.service';
@@ -46,6 +56,7 @@ export class AuthController {
     private readonly authPasswordService: AuthPasswordService,
     private readonly authGetProfileService: AuthGetProfileService,
     private readonly authUpdateProfileService: AuthUpdateProfileService,
+    private readonly authNotificationService: AuthNotificationService,
   ) {}
 
   @ApiOperation({ summary: 'User Registration' })
@@ -139,5 +150,27 @@ export class AuthController {
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.authUpdateProfileService.updateProfile(id, dto, file);
+  }
+
+  @ApiOperation({ summary: 'Update Farm Owner Notification Settings' })
+  @ApiBearerAuth()
+  @Patch('notifications/farm-owner')
+  @ValidateFarmOwner()
+  async updateFarmOwnerNotificationSettings(
+    @GetUser('sub') userId: string,
+    @Body() dto: FarmOwnerNotificationSettingsDto,
+  ) {
+    return this.authNotificationService.updateFarmOwnerSettings(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update User Notification Settings' })
+  @ApiBearerAuth()
+  @Patch('notifications/user')
+  @ValidateUser()
+  async updateUserNotificationSettings(
+    @GetUser('sub') userId: string,
+    @Body() dto: UserNotificationSettingsDto,
+  ) {
+    return this.authNotificationService.updateUserSettings(userId, dto);
   }
 }
