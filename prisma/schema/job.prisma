@@ -1,7 +1,7 @@
 model Job {
   id String @id @default(uuid())
 
-  title       String
+  title       String // Role
   description String
   benefits    String
 
@@ -24,6 +24,8 @@ model Job {
   farmId String
 
   status JobStatus @default(ACTIVE)
+  
+  idealCandidates IdealCandidate[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

@@ -49,12 +49,12 @@ model Farm {
   id String @id @default(uuid())
 
   name        String
-  location    String
-  description String
-  website     String
+  location    String?
+  description String?
+  website     String?
 
-  herdSize Int
-  farmType String
+  herdSize Int?
+  farmType String?
 
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: SetNull)
   ownerId String?

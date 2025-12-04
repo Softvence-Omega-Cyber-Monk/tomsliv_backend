@@ -387,6 +387,7 @@ export const ModelName = {
   UserOtp: 'UserOtp',
   RefreshToken: 'RefreshToken',
   FileInstance: 'FileInstance',
+  IdealCandidate: 'IdealCandidate',
   Job: 'Job',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userOtp" | "refreshToken" | "fileInstance" | "job" | "notification" | "userNotification" | "notificationSettings" | "user" | "farm"
+    modelProps: "userOtp" | "refreshToken" | "fileInstance" | "idealCandidate" | "job" | "notification" | "userNotification" | "notificationSettings" | "user" | "farm"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -631,6 +632,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.FileInstanceCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.FileInstanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    IdealCandidate: {
+      payload: Prisma.$IdealCandidatePayload<ExtArgs>
+      fields: Prisma.IdealCandidateFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.IdealCandidateFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.IdealCandidateFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>
+        }
+        findFirst: {
+          args: Prisma.IdealCandidateFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.IdealCandidateFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>
+        }
+        findMany: {
+          args: Prisma.IdealCandidateFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>[]
+        }
+        create: {
+          args: Prisma.IdealCandidateCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>
+        }
+        createMany: {
+          args: Prisma.IdealCandidateCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.IdealCandidateCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>[]
+        }
+        delete: {
+          args: Prisma.IdealCandidateDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>
+        }
+        update: {
+          args: Prisma.IdealCandidateUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>
+        }
+        deleteMany: {
+          args: Prisma.IdealCandidateDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.IdealCandidateUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.IdealCandidateUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>[]
+        }
+        upsert: {
+          args: Prisma.IdealCandidateUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$IdealCandidatePayload>
+        }
+        aggregate: {
+          args: Prisma.IdealCandidateAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateIdealCandidate>
+        }
+        groupBy: {
+          args: Prisma.IdealCandidateGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IdealCandidateGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.IdealCandidateCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.IdealCandidateCountAggregateOutputType> | number
         }
       }
     }
@@ -1158,6 +1233,22 @@ export const FileInstanceScalarFieldEnum = {
 export type FileInstanceScalarFieldEnum = (typeof FileInstanceScalarFieldEnum)[keyof typeof FileInstanceScalarFieldEnum]
 
 
+export const IdealCandidateScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  minimumExperienceYears: 'minimumExperienceYears',
+  maximumExperienceYears: 'maximumExperienceYears',
+  coreSkills: 'coreSkills',
+  desiredPersonalityTraits: 'desiredPersonalityTraits',
+  preferredCertifications: 'preferredCertifications',
+  nonNegotiableSkills: 'nonNegotiableSkills',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IdealCandidateScalarFieldEnum = (typeof IdealCandidateScalarFieldEnum)[keyof typeof IdealCandidateScalarFieldEnum]
+
+
 export const JobScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -1374,6 +1465,48 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'DesiredPersonalityTrait[]'
+ */
+export type ListEnumDesiredPersonalityTraitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DesiredPersonalityTrait[]'>
+    
+
+
+/**
+ * Reference to a field of type 'DesiredPersonalityTrait'
+ */
+export type EnumDesiredPersonalityTraitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DesiredPersonalityTrait'>
+    
+
+
+/**
+ * Reference to a field of type 'PreferredCertification[]'
+ */
+export type ListEnumPreferredCertificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferredCertification[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PreferredCertification'
+ */
+export type EnumPreferredCertificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferredCertification'>
+    
+
+
+/**
+ * Reference to a field of type 'NonNegotiableSkill[]'
+ */
+export type ListEnumNonNegotiableSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NonNegotiableSkill[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NonNegotiableSkill'
+ */
+export type EnumNonNegotiableSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NonNegotiableSkill'>
+    
+
+
+/**
  * Reference to a field of type 'JobType'
  */
 export type EnumJobTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'JobType'>
@@ -1545,6 +1678,7 @@ export type GlobalOmitConfig = {
   userOtp?: Prisma.UserOtpOmit
   refreshToken?: Prisma.RefreshTokenOmit
   fileInstance?: Prisma.FileInstanceOmit
+  idealCandidate?: Prisma.IdealCandidateOmit
   job?: Prisma.JobOmit
   notification?: Prisma.NotificationOmit
   userNotification?: Prisma.UserNotificationOmit

@@ -54,6 +54,7 @@ export const ModelName = {
   UserOtp: 'UserOtp',
   RefreshToken: 'RefreshToken',
   FileInstance: 'FileInstance',
+  IdealCandidate: 'IdealCandidate',
   Job: 'Job',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
@@ -117,6 +118,22 @@ export const FileInstanceScalarFieldEnum = {
 } as const
 
 export type FileInstanceScalarFieldEnum = (typeof FileInstanceScalarFieldEnum)[keyof typeof FileInstanceScalarFieldEnum]
+
+
+export const IdealCandidateScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  minimumExperienceYears: 'minimumExperienceYears',
+  maximumExperienceYears: 'maximumExperienceYears',
+  coreSkills: 'coreSkills',
+  desiredPersonalityTraits: 'desiredPersonalityTraits',
+  preferredCertifications: 'preferredCertifications',
+  nonNegotiableSkills: 'nonNegotiableSkills',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IdealCandidateScalarFieldEnum = (typeof IdealCandidateScalarFieldEnum)[keyof typeof IdealCandidateScalarFieldEnum]
 
 
 export const JobScalarFieldEnum = {

@@ -30,6 +30,42 @@ export const FileType = {
 export type FileType = (typeof FileType)[keyof typeof FileType]
 
 
+export const DesiredPersonalityTrait = {
+  DETAIL_ORIENTED: 'DETAIL_ORIENTED',
+  TEAM_PLAYER: 'TEAM_PLAYER',
+  SELF_MOTIVATED: 'SELF_MOTIVATED',
+  PROBLEM_SOLVER: 'PROBLEM_SOLVER',
+  ADAPTABLE: 'ADAPTABLE',
+  RELIABLE: 'RELIABLE',
+  PATIENT: 'PATIENT',
+  PHYSICAL_STAMINA: 'PHYSICAL_STAMINA'
+} as const
+
+export type DesiredPersonalityTrait = (typeof DesiredPersonalityTrait)[keyof typeof DesiredPersonalityTrait]
+
+
+export const PreferredCertification = {
+  DAIRY_FARMING_CERTIFICATION: 'DAIRY_FARMING_CERTIFICATION',
+  FIRST_AID_AND_CPR: 'FIRST_AID_AND_CPR',
+  TRACTOR_OPERATION_LICENSE: 'TRACTOR_OPERATION_LICENSE',
+  FOOD_SAFETY_CERTIFICATION: 'FOOD_SAFETY_CERTIFICATION',
+  ANIMAL_WELFARE_CERTIFICATION: 'ANIMAL_WELFARE_CERTIFICATION'
+} as const
+
+export type PreferredCertification = (typeof PreferredCertification)[keyof typeof PreferredCertification]
+
+
+export const NonNegotiableSkill = {
+  ABLE_TO_PERFORM_PHYSICAL_WORK: 'ABLE_TO_PERFORM_PHYSICAL_WORK',
+  ABLE_FOR_EARLY_MORNING_SHIFTS: 'ABLE_FOR_EARLY_MORNING_SHIFTS',
+  AVAILABLE_FOR_WEEKEND_WORK: 'AVAILABLE_FOR_WEEKEND_WORK',
+  VALID_DRIVER_S_LICENSE: 'VALID_DRIVER_S_LICENSE',
+  LOCAL_RESIDENCY_OR_WILLING_TO_RELOCATE: 'LOCAL_RESIDENCY_OR_WILLING_TO_RELOCATE'
+} as const
+
+export type NonNegotiableSkill = (typeof NonNegotiableSkill)[keyof typeof NonNegotiableSkill]
+
+
 export const JobType = {
   FULL_TIME: 'FULL_TIME',
   PART_TIME: 'PART_TIME',
