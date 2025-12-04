@@ -63,6 +63,8 @@ model Farm {
   logoId String?
   logo   FileInstance? @relation(fields: [logoId], references: [id], onDelete: SetNull)
 
+  jobs Job[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 

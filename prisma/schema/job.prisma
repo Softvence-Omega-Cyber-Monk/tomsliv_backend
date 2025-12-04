@@ -1,0 +1,52 @@
+model Job {
+  id String @id @default(uuid())
+
+  title       String
+  description String
+  benefits    String
+
+  location String
+  jobType  JobType
+
+  numberOfPositions  Int
+  requiredExperience Int
+
+  applicationDeadline DateTime
+
+  salaryStart Float?
+  salaryEnd   Float?
+
+  requiredSkills      String[]
+  certifications      String[]
+  machineryExperience String[]
+
+  farm   Farm   @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  farmId String
+
+  status JobStatus @default(ACTIVE)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([location])
+  @@index([jobType])
+  @@index([requiredExperience])
+  @@index([applicationDeadline])
+  @@map("jobs")
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  SEASONAL
+  TEMPORARY
+  INTERN
+}
+
+enum JobStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  CLOSED
+}

@@ -33,6 +33,11 @@ export type RefreshToken = Prisma.RefreshTokenModel
  */
 export type FileInstance = Prisma.FileInstanceModel
 /**
+ * Model Job
+ * 
+ */
+export type Job = Prisma.JobModel
+/**
  * Model Notification
  * 
  */
