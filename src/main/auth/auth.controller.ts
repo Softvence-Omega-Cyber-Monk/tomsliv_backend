@@ -35,7 +35,7 @@ import {
   ResetPasswordDto,
 } from './dto/password.dto';
 import { FarmRegisterDto, RegisterDto } from './dto/register.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
+import { UpdateFarmDto, UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGetProfileService } from './services/auth-get-profile.service';
 import { AuthLoginService } from './services/auth-login.service';
 import { AuthLogoutService } from './services/auth-logout.service';
@@ -135,7 +135,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Update profile' })
   @ApiBearerAuth()
-  @Patch(':id')
+  @Patch('profile')
   @ValidateAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -172,5 +172,24 @@ export class AuthController {
     @Body() dto: UserNotificationSettingsDto,
   ) {
     return this.authNotificationService.updateUserSettings(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update farm profile' })
+  @ApiBearerAuth()
+  @Patch('farm')
+  @ValidateFarmOwner()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileInterceptor(
+      'image',
+      new MulterService().createMulterOptions('./temp', 'temp', FileType.image),
+    ),
+  )
+  async updateFarm(
+    @GetUser('sub') userId: string,
+    @Body() dto: UpdateFarmDto,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    return this.authUpdateProfileService.updateFarm(userId, dto, file);
   }
 }
