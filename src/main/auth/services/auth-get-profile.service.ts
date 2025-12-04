@@ -3,6 +3,7 @@ import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { Injectable } from '@nestjs/common';
+import { Farm, FileInstance, NotificationSettings, UserRole } from '@prisma';
 
 @Injectable()
 export class AuthGetProfileService {
@@ -27,21 +28,77 @@ export class AuthGetProfileService {
     const user = await this.prisma.client.user.findUniqueOrThrow({
       where,
       include: {
-        notifications: true,
+        farm: {
+          include: {
+            logo: true,
+          },
+        },
+        notificationSettings: true,
       },
     });
 
     // Extract only the main user fields
-    const { notifications, ...mainUser } = user;
+    const { notificationSettings, farm, ...mainUser } = user;
 
     const sanitizedUser = await this.authUtils.sanitizeUser(mainUser);
 
-    // Rebuild the full object: sanitized user + full raw relations
+    // Format notification settings based on user role
+    const formattedNotificationSettings = this.formatNotificationSettings(
+      sanitizedUser.role,
+      notificationSettings,
+    );
+
+    // Build final response
     const data = {
       ...sanitizedUser,
-      notifications,
+      ...(user.role === 'FARM_OWNER' &&
+        farm && {
+          farm: this.formatFarmData(farm),
+        }),
+      notificationSettings: formattedNotificationSettings,
     };
 
     return successResponse(data, 'User data fetched successfully');
+  }
+
+  private formatNotificationSettings(
+    userRole: UserRole,
+    settings: NotificationSettings | null,
+  ) {
+    if (!settings) return null;
+
+    const common = {
+      emailNotifications: settings.emailNotifications,
+      weeklyDigest: settings.weeklyDigest,
+    };
+
+    if (userRole === 'FARM_OWNER') {
+      return {
+        ...common,
+        newApplicantAlert: settings.newApplicantAlert,
+        updatesAndTips: settings.updatesAndTips,
+      };
+    }
+
+    if (userRole === 'USER') {
+      return {
+        ...common,
+        newRelatedJobsAlert: settings.newRelatedJobsAlert,
+      };
+    }
+
+    return common;
+  }
+
+  private formatFarmData(farm: Farm & { logo: FileInstance | null }) {
+    if (!farm) return null;
+
+    const logoUrl = farm.logoId && farm.logo ? (farm.logo.url ?? null) : null;
+
+    return {
+      ...farm,
+      logoId: farm.logoId ?? null,
+      logo: logoUrl,
+    };
   }
 }

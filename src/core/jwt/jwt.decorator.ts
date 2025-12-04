@@ -1,3 +1,4 @@
+import { UserEnum } from '@/common/enum/user.enum';
 import {
   applyDecorators,
   createParamDecorator,
@@ -5,7 +6,6 @@ import {
   SetMetadata,
   UseGuards,
 } from '@nestjs/common';
-import { UserEnum } from '@/common/enum/user.enum';
 import { IS_PUBLIC_KEY, ROLES_KEY } from './jwt.constants';
 import { JwtAuthGuard, RolesGuard } from './jwt.guard';
 import { JWTPayload, RequestWithUser } from './jwt.interface';
@@ -34,6 +34,18 @@ export function ValidateAuth(...roles: UserEnum[]) {
     decorators.push(Roles(...roles));
   }
   return applyDecorators(...decorators);
+}
+
+export function ValidateUser() {
+  return ValidateAuth(UserEnum.USER, UserEnum.ADMIN, UserEnum.SUPER_ADMIN);
+}
+
+export function ValidateFarmOwner() {
+  return ValidateAuth(
+    UserEnum.FARM_OWNER,
+    UserEnum.ADMIN,
+    UserEnum.SUPER_ADMIN,
+  );
 }
 
 export function ValidateSuperAdmin() {

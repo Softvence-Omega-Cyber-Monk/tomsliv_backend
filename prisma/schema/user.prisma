@@ -1,9 +1,10 @@
 model User {
   id String @id @default(uuid())
 
-  // Identity
+  // Identity @unique
   name     String @default("Unnamed User")
   email    String @unique
+  phone    String? @unique
   password String // hashed password
 
   // Settings
@@ -16,17 +17,26 @@ model User {
   lastActiveAt DateTime?
 
   // Avatar
-  profilePictureId String?
+  profilePictureId String? @unique
   profilePicture   FileInstance? @relation(fields: [profilePictureId], references: [id], onDelete: SetNull)
 
+  // Farm
+  farmId String? @unique
+  farm   Farm? @relation(fields: [farmId], references: [id], onDelete: SetNull)
+
+  // Saved CV
+  savedCVId String? @unique
+  savedCV   CV? @relation(fields: [savedCVId], references: [id], onDelete: SetNull)
+
+  // Notification Settings
+  notificationSettingsId String? @unique
+  notificationSettings NotificationSettings? @relation(fields: [notificationSettingsId], references: [id], onDelete: Cascade)
+
   // Relations
-  notificationSettings NotificationSettings[]
   notifications        UserNotification[]
   refreshTokens        RefreshToken[]
   otps                 UserOtp[]
-  farms                Farm[]
   jobApplications      JobApplication[]
-  cvs                  CV[]
   savedJobs            SavedJobs[]
 
   createdAt DateTime @default(now())
@@ -59,14 +69,12 @@ model Farm {
   herdSize Int?
   farmType String?
 
-  owner   User?   @relation(fields: [ownerId], references: [id], onDelete: SetNull)
-  ownerId String?
-
   // Logo
-  logoId String?
+  logoId String? @unique
   logo   FileInstance? @relation(fields: [logoId], references: [id], onDelete: SetNull)
 
   jobs Job[]
+  users User?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

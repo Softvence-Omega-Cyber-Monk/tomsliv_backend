@@ -2,7 +2,7 @@ model IdealCandidate {
   id String @id @default(uuid())
 
   job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  jobId String
+  jobId String @unique
 
   minimumExperienceYears Int
   maximumExperienceYears Int

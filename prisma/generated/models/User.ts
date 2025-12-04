@@ -28,6 +28,7 @@ export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
+  phone: string | null
   password: string | null
   role: $Enums.UserRole | null
   status: $Enums.UserStatus | null
@@ -35,6 +36,9 @@ export type UserMinAggregateOutputType = {
   lastLoginAt: Date | null
   lastActiveAt: Date | null
   profilePictureId: string | null
+  farmId: string | null
+  savedCVId: string | null
+  notificationSettingsId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -43,6 +47,7 @@ export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
   email: string | null
+  phone: string | null
   password: string | null
   role: $Enums.UserRole | null
   status: $Enums.UserStatus | null
@@ -50,6 +55,9 @@ export type UserMaxAggregateOutputType = {
   lastLoginAt: Date | null
   lastActiveAt: Date | null
   profilePictureId: string | null
+  farmId: string | null
+  savedCVId: string | null
+  notificationSettingsId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -58,6 +66,7 @@ export type UserCountAggregateOutputType = {
   id: number
   name: number
   email: number
+  phone: number
   password: number
   role: number
   status: number
@@ -65,6 +74,9 @@ export type UserCountAggregateOutputType = {
   lastLoginAt: number
   lastActiveAt: number
   profilePictureId: number
+  farmId: number
+  savedCVId: number
+  notificationSettingsId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -75,6 +87,7 @@ export type UserMinAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  phone?: true
   password?: true
   role?: true
   status?: true
@@ -82,6 +95,9 @@ export type UserMinAggregateInputType = {
   lastLoginAt?: true
   lastActiveAt?: true
   profilePictureId?: true
+  farmId?: true
+  savedCVId?: true
+  notificationSettingsId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -90,6 +106,7 @@ export type UserMaxAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  phone?: true
   password?: true
   role?: true
   status?: true
@@ -97,6 +114,9 @@ export type UserMaxAggregateInputType = {
   lastLoginAt?: true
   lastActiveAt?: true
   profilePictureId?: true
+  farmId?: true
+  savedCVId?: true
+  notificationSettingsId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +125,7 @@ export type UserCountAggregateInputType = {
   id?: true
   name?: true
   email?: true
+  phone?: true
   password?: true
   role?: true
   status?: true
@@ -112,6 +133,9 @@ export type UserCountAggregateInputType = {
   lastLoginAt?: true
   lastActiveAt?: true
   profilePictureId?: true
+  farmId?: true
+  savedCVId?: true
+  notificationSettingsId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -193,6 +217,7 @@ export type UserGroupByOutputType = {
   id: string
   name: string
   email: string
+  phone: string | null
   password: string
   role: $Enums.UserRole
   status: $Enums.UserStatus
@@ -200,6 +225,9 @@ export type UserGroupByOutputType = {
   lastLoginAt: Date | null
   lastActiveAt: Date | null
   profilePictureId: string | null
+  farmId: string | null
+  savedCVId: string | null
+  notificationSettingsId: string | null
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -229,6 +257,7 @@ export type UserWhereInput = {
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringFilter<"User"> | string
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
@@ -236,16 +265,19 @@ export type UserWhereInput = {
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   profilePictureId?: Prisma.StringNullableFilter<"User"> | string | null
+  farmId?: Prisma.StringNullableFilter<"User"> | string | null
+  savedCVId?: Prisma.StringNullableFilter<"User"> | string | null
+  notificationSettingsId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   profilePicture?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
-  notificationSettings?: Prisma.NotificationSettingsListRelationFilter
+  farm?: Prisma.XOR<Prisma.FarmNullableScalarRelationFilter, Prisma.FarmWhereInput> | null
+  savedCV?: Prisma.XOR<Prisma.CVNullableScalarRelationFilter, Prisma.CVWhereInput> | null
+  notificationSettings?: Prisma.XOR<Prisma.NotificationSettingsNullableScalarRelationFilter, Prisma.NotificationSettingsWhereInput> | null
   notifications?: Prisma.UserNotificationListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   otps?: Prisma.UserOtpListRelationFilter
-  farms?: Prisma.FarmListRelationFilter
   jobApplications?: Prisma.JobApplicationListRelationFilter
-  cvs?: Prisma.CVListRelationFilter
   savedJobs?: Prisma.SavedJobsListRelationFilter
 }
 
@@ -253,6 +285,7 @@ export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -260,22 +293,30 @@ export type UserOrderByWithRelationInput = {
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePictureId?: Prisma.SortOrderInput | Prisma.SortOrder
+  farmId?: Prisma.SortOrderInput | Prisma.SortOrder
+  savedCVId?: Prisma.SortOrderInput | Prisma.SortOrder
+  notificationSettingsId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   profilePicture?: Prisma.FileInstanceOrderByWithRelationInput
-  notificationSettings?: Prisma.NotificationSettingsOrderByRelationAggregateInput
+  farm?: Prisma.FarmOrderByWithRelationInput
+  savedCV?: Prisma.CVOrderByWithRelationInput
+  notificationSettings?: Prisma.NotificationSettingsOrderByWithRelationInput
   notifications?: Prisma.UserNotificationOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
   otps?: Prisma.UserOtpOrderByRelationAggregateInput
-  farms?: Prisma.FarmOrderByRelationAggregateInput
   jobApplications?: Prisma.JobApplicationOrderByRelationAggregateInput
-  cvs?: Prisma.CVOrderByRelationAggregateInput
   savedJobs?: Prisma.SavedJobsOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   email?: string
+  phone?: string
+  profilePictureId?: string
+  farmId?: string
+  savedCVId?: string
+  notificationSettingsId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
@@ -286,24 +327,24 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   isVerified?: Prisma.BoolFilter<"User"> | boolean
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  profilePictureId?: Prisma.StringNullableFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   profilePicture?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
-  notificationSettings?: Prisma.NotificationSettingsListRelationFilter
+  farm?: Prisma.XOR<Prisma.FarmNullableScalarRelationFilter, Prisma.FarmWhereInput> | null
+  savedCV?: Prisma.XOR<Prisma.CVNullableScalarRelationFilter, Prisma.CVWhereInput> | null
+  notificationSettings?: Prisma.XOR<Prisma.NotificationSettingsNullableScalarRelationFilter, Prisma.NotificationSettingsWhereInput> | null
   notifications?: Prisma.UserNotificationListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
   otps?: Prisma.UserOtpListRelationFilter
-  farms?: Prisma.FarmListRelationFilter
   jobApplications?: Prisma.JobApplicationListRelationFilter
-  cvs?: Prisma.CVListRelationFilter
   savedJobs?: Prisma.SavedJobsListRelationFilter
-}, "id" | "email">
+}, "id" | "email" | "phone" | "profilePictureId" | "farmId" | "savedCVId" | "notificationSettingsId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -311,6 +352,9 @@ export type UserOrderByWithAggregationInput = {
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePictureId?: Prisma.SortOrderInput | Prisma.SortOrder
+  farmId?: Prisma.SortOrderInput | Prisma.SortOrder
+  savedCVId?: Prisma.SortOrderInput | Prisma.SortOrder
+  notificationSettingsId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -325,6 +369,7 @@ export type UserScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
@@ -332,6 +377,9 @@ export type UserScalarWhereWithAggregatesInput = {
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   lastActiveAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   profilePictureId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  farmId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  savedCVId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  notificationSettingsId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -340,6 +388,7 @@ export type UserCreateInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -349,13 +398,13 @@ export type UserCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -363,6 +412,7 @@ export type UserUncheckedCreateInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -370,15 +420,15 @@ export type UserUncheckedCreateInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -386,6 +436,7 @@ export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -395,13 +446,13 @@ export type UserUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
@@ -409,6 +460,7 @@ export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -416,15 +468,15 @@ export type UserUncheckedUpdateInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -432,6 +484,7 @@ export type UserCreateManyInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -439,6 +492,9 @@ export type UserCreateManyInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -447,6 +503,7 @@ export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -461,6 +518,7 @@ export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -468,6 +526,9 @@ export type UserUncheckedUpdateManyInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -477,20 +538,16 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type UserListRelationFilter = {
-  every?: Prisma.UserWhereInput
-  some?: Prisma.UserWhereInput
-  none?: Prisma.UserWhereInput
-}
-
-export type UserOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -498,6 +555,9 @@ export type UserCountOrderByAggregateInput = {
   lastLoginAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   profilePictureId?: Prisma.SortOrder
+  farmId?: Prisma.SortOrder
+  savedCVId?: Prisma.SortOrder
+  notificationSettingsId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -506,6 +566,7 @@ export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -513,6 +574,9 @@ export type UserMaxOrderByAggregateInput = {
   lastLoginAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   profilePictureId?: Prisma.SortOrder
+  farmId?: Prisma.SortOrder
+  savedCVId?: Prisma.SortOrder
+  notificationSettingsId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -521,6 +585,7 @@ export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
@@ -528,13 +593,11 @@ export type UserMinOrderByAggregateInput = {
   lastLoginAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   profilePictureId?: Prisma.SortOrder
+  farmId?: Prisma.SortOrder
+  savedCVId?: Prisma.SortOrder
+  notificationSettingsId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCreateNestedOneWithoutOtpsInput = {
@@ -565,60 +628,68 @@ export type UserUpdateOneRequiredWithoutRefreshTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRefreshTokensInput, Prisma.UserUpdateWithoutRefreshTokensInput>, Prisma.UserUncheckedUpdateWithoutRefreshTokensInput>
 }
 
-export type UserCreateNestedOneWithoutCvsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCvsInput
+export type UserCreateNestedOneWithoutSavedCVInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSavedCVInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutCvsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCvsInput
-  upsert?: Prisma.UserUpsertWithoutCvsInput
+export type UserUncheckedCreateNestedOneWithoutSavedCVInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSavedCVInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCvsInput, Prisma.UserUpdateWithoutCvsInput>, Prisma.UserUncheckedUpdateWithoutCvsInput>
 }
 
-export type UserCreateNestedManyWithoutProfilePictureInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput> | Prisma.UserCreateWithoutProfilePictureInput[] | Prisma.UserUncheckedCreateWithoutProfilePictureInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput | Prisma.UserCreateOrConnectWithoutProfilePictureInput[]
-  createMany?: Prisma.UserCreateManyProfilePictureInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+export type UserUpdateOneWithoutSavedCVNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSavedCVInput
+  upsert?: Prisma.UserUpsertWithoutSavedCVInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSavedCVInput, Prisma.UserUpdateWithoutSavedCVInput>, Prisma.UserUncheckedUpdateWithoutSavedCVInput>
 }
 
-export type UserUncheckedCreateNestedManyWithoutProfilePictureInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput> | Prisma.UserCreateWithoutProfilePictureInput[] | Prisma.UserUncheckedCreateWithoutProfilePictureInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput | Prisma.UserCreateOrConnectWithoutProfilePictureInput[]
-  createMany?: Prisma.UserCreateManyProfilePictureInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+export type UserUncheckedUpdateOneWithoutSavedCVNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSavedCVInput
+  upsert?: Prisma.UserUpsertWithoutSavedCVInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSavedCVInput, Prisma.UserUpdateWithoutSavedCVInput>, Prisma.UserUncheckedUpdateWithoutSavedCVInput>
 }
 
-export type UserUpdateManyWithoutProfilePictureNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput> | Prisma.UserCreateWithoutProfilePictureInput[] | Prisma.UserUncheckedCreateWithoutProfilePictureInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput | Prisma.UserCreateOrConnectWithoutProfilePictureInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutProfilePictureInput | Prisma.UserUpsertWithWhereUniqueWithoutProfilePictureInput[]
-  createMany?: Prisma.UserCreateManyProfilePictureInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutProfilePictureInput | Prisma.UserUpdateWithWhereUniqueWithoutProfilePictureInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutProfilePictureInput | Prisma.UserUpdateManyWithWhereWithoutProfilePictureInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+export type UserCreateNestedOneWithoutProfilePictureInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput
+  connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUncheckedUpdateManyWithoutProfilePictureNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput> | Prisma.UserCreateWithoutProfilePictureInput[] | Prisma.UserUncheckedCreateWithoutProfilePictureInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput | Prisma.UserCreateOrConnectWithoutProfilePictureInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutProfilePictureInput | Prisma.UserUpsertWithWhereUniqueWithoutProfilePictureInput[]
-  createMany?: Prisma.UserCreateManyProfilePictureInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutProfilePictureInput | Prisma.UserUpdateWithWhereUniqueWithoutProfilePictureInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutProfilePictureInput | Prisma.UserUpdateManyWithWhereWithoutProfilePictureInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+export type UserUncheckedCreateNestedOneWithoutProfilePictureInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutProfilePictureNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput
+  upsert?: Prisma.UserUpsertWithoutProfilePictureInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfilePictureInput, Prisma.UserUpdateWithoutProfilePictureInput>, Prisma.UserUncheckedUpdateWithoutProfilePictureInput>
+}
+
+export type UserUncheckedUpdateOneWithoutProfilePictureNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutProfilePictureInput
+  upsert?: Prisma.UserUpsertWithoutProfilePictureInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutProfilePictureInput, Prisma.UserUpdateWithoutProfilePictureInput>, Prisma.UserUncheckedUpdateWithoutProfilePictureInput>
 }
 
 export type UserCreateNestedOneWithoutJobApplicationsInput = {
@@ -669,10 +740,28 @@ export type UserCreateNestedOneWithoutNotificationSettingsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutNotificationSettingsNestedInput = {
+export type UserUncheckedCreateNestedOneWithoutNotificationSettingsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutNotificationSettingsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
   upsert?: Prisma.UserUpsertWithoutNotificationSettingsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationSettingsInput, Prisma.UserUpdateWithoutNotificationSettingsInput>, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
+}
+
+export type UserUncheckedUpdateOneWithoutNotificationSettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationSettingsInput, Prisma.UserUncheckedCreateWithoutNotificationSettingsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationSettingsInput
+  upsert?: Prisma.UserUpsertWithoutNotificationSettingsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationSettingsInput, Prisma.UserUpdateWithoutNotificationSettingsInput>, Prisma.UserUncheckedUpdateWithoutNotificationSettingsInput>
 }
@@ -685,26 +774,43 @@ export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
 }
 
-export type UserCreateNestedOneWithoutFarmsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmsInput
+export type UserCreateNestedOneWithoutFarmInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmInput, Prisma.UserUncheckedCreateWithoutFarmInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutFarmsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmsInput
-  upsert?: Prisma.UserUpsertWithoutFarmsInput
+export type UserUncheckedCreateNestedOneWithoutFarmInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmInput, Prisma.UserUncheckedCreateWithoutFarmInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutFarmNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmInput, Prisma.UserUncheckedCreateWithoutFarmInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmInput
+  upsert?: Prisma.UserUpsertWithoutFarmInput
   disconnect?: Prisma.UserWhereInput | boolean
   delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFarmsInput, Prisma.UserUpdateWithoutFarmsInput>, Prisma.UserUncheckedUpdateWithoutFarmsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFarmInput, Prisma.UserUpdateWithoutFarmInput>, Prisma.UserUncheckedUpdateWithoutFarmInput>
+}
+
+export type UserUncheckedUpdateOneWithoutFarmNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutFarmInput, Prisma.UserUncheckedCreateWithoutFarmInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmInput
+  upsert?: Prisma.UserUpsertWithoutFarmInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFarmInput, Prisma.UserUpdateWithoutFarmInput>, Prisma.UserUncheckedUpdateWithoutFarmInput>
 }
 
 export type UserCreateWithoutOtpsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -714,12 +820,12 @@ export type UserCreateWithoutOtpsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -727,6 +833,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -734,14 +841,14 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -765,6 +872,7 @@ export type UserUpdateWithoutOtpsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -774,12 +882,12 @@ export type UserUpdateWithoutOtpsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
@@ -787,6 +895,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -794,14 +903,14 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -809,6 +918,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -818,12 +928,12 @@ export type UserCreateWithoutRefreshTokensInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -831,6 +941,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -838,14 +949,14 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -869,6 +980,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -878,12 +990,12 @@ export type UserUpdateWithoutRefreshTokensInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
@@ -891,6 +1003,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -898,21 +1011,22 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutCvsInput = {
+export type UserCreateWithoutSavedCVInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -922,19 +1036,20 @@ export type UserCreateWithoutCvsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutCvsInput = {
+export type UserUncheckedCreateWithoutSavedCVInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -942,37 +1057,38 @@ export type UserUncheckedCreateWithoutCvsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutCvsInput = {
+export type UserCreateOrConnectWithoutSavedCVInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
 }
 
-export type UserUpsertWithoutCvsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCvsInput, Prisma.UserUncheckedUpdateWithoutCvsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
+export type UserUpsertWithoutSavedCVInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSavedCVInput, Prisma.UserUncheckedUpdateWithoutSavedCVInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutCvsInput = {
+export type UserUpdateToOneWithWhereWithoutSavedCVInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCvsInput, Prisma.UserUncheckedUpdateWithoutCvsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSavedCVInput, Prisma.UserUncheckedUpdateWithoutSavedCVInput>
 }
 
-export type UserUpdateWithoutCvsInput = {
+export type UserUpdateWithoutSavedCVInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -982,19 +1098,20 @@ export type UserUpdateWithoutCvsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutCvsInput = {
+export type UserUncheckedUpdateWithoutSavedCVInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1002,13 +1119,13 @@ export type UserUncheckedUpdateWithoutCvsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -1017,6 +1134,7 @@ export type UserCreateWithoutProfilePictureInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1025,13 +1143,13 @@ export type UserCreateWithoutProfilePictureInput = {
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -1039,21 +1157,22 @@ export type UserUncheckedCreateWithoutProfilePictureInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1062,49 +1181,68 @@ export type UserCreateOrConnectWithoutProfilePictureInput = {
   create: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput>
 }
 
-export type UserCreateManyProfilePictureInputEnvelope = {
-  data: Prisma.UserCreateManyProfilePictureInput | Prisma.UserCreateManyProfilePictureInput[]
-  skipDuplicates?: boolean
-}
-
-export type UserUpsertWithWhereUniqueWithoutProfilePictureInput = {
-  where: Prisma.UserWhereUniqueInput
+export type UserUpsertWithoutProfilePictureInput = {
   update: Prisma.XOR<Prisma.UserUpdateWithoutProfilePictureInput, Prisma.UserUncheckedUpdateWithoutProfilePictureInput>
   create: Prisma.XOR<Prisma.UserCreateWithoutProfilePictureInput, Prisma.UserUncheckedCreateWithoutProfilePictureInput>
+  where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateWithWhereUniqueWithoutProfilePictureInput = {
-  where: Prisma.UserWhereUniqueInput
+export type UserUpdateToOneWithWhereWithoutProfilePictureInput = {
+  where?: Prisma.UserWhereInput
   data: Prisma.XOR<Prisma.UserUpdateWithoutProfilePictureInput, Prisma.UserUncheckedUpdateWithoutProfilePictureInput>
 }
 
-export type UserUpdateManyWithWhereWithoutProfilePictureInput = {
-  where: Prisma.UserScalarWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutProfilePictureInput>
+export type UserUpdateWithoutProfilePictureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+  jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
+  savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
-export type UserScalarWhereInput = {
-  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  OR?: Prisma.UserScalarWhereInput[]
-  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  password?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
-  isVerified?: Prisma.BoolFilter<"User"> | boolean
-  lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  profilePictureId?: Prisma.StringNullableFilter<"User"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
+export type UserUncheckedUpdateWithoutProfilePictureInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
+  jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+  savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutJobApplicationsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1114,12 +1252,12 @@ export type UserCreateWithoutJobApplicationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -1127,6 +1265,7 @@ export type UserUncheckedCreateWithoutJobApplicationsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1134,14 +1273,14 @@ export type UserUncheckedCreateWithoutJobApplicationsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1165,6 +1304,7 @@ export type UserUpdateWithoutJobApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1174,12 +1314,12 @@ export type UserUpdateWithoutJobApplicationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
@@ -1187,6 +1327,7 @@ export type UserUncheckedUpdateWithoutJobApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1194,14 +1335,14 @@ export type UserUncheckedUpdateWithoutJobApplicationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1209,6 +1350,7 @@ export type UserCreateWithoutSavedJobsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1218,19 +1360,20 @@ export type UserCreateWithoutSavedJobsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSavedJobsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1238,15 +1381,15 @@ export type UserUncheckedCreateWithoutSavedJobsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSavedJobsInput = {
@@ -1269,6 +1412,7 @@ export type UserUpdateWithoutSavedJobsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1278,19 +1422,20 @@ export type UserUpdateWithoutSavedJobsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSavedJobsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1298,21 +1443,22 @@ export type UserUncheckedUpdateWithoutSavedJobsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1322,12 +1468,12 @@ export type UserCreateWithoutNotificationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -1335,6 +1481,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1342,14 +1489,14 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1373,6 +1520,7 @@ export type UserUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1382,12 +1530,12 @@ export type UserUpdateWithoutNotificationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
@@ -1395,6 +1543,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1402,14 +1551,14 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -1417,6 +1566,7 @@ export type UserCreateWithoutNotificationSettingsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1426,12 +1576,12 @@ export type UserCreateWithoutNotificationSettingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
@@ -1439,6 +1589,7 @@ export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1446,14 +1597,14 @@ export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
-  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutOwnerInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -1477,6 +1628,7 @@ export type UserUpdateWithoutNotificationSettingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1486,12 +1638,12 @@ export type UserUpdateWithoutNotificationSettingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
@@ -1499,6 +1651,7 @@ export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1506,21 +1659,22 @@ export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutFarmsInput = {
+export type UserCreateWithoutFarmInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1530,19 +1684,20 @@ export type UserCreateWithoutFarmsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  notificationSettings?: Prisma.NotificationSettingsCreateNestedManyWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutFarmsInput = {
+export type UserUncheckedCreateWithoutFarmInput = {
   id?: string
   name?: string
   email: string
+  phone?: string | null
   password: string
   role: $Enums.UserRole
   status?: $Enums.UserStatus
@@ -1550,37 +1705,38 @@ export type UserUncheckedCreateWithoutFarmsInput = {
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
-  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutFarmsInput = {
+export type UserCreateOrConnectWithoutFarmInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFarmInput, Prisma.UserUncheckedCreateWithoutFarmInput>
 }
 
-export type UserUpsertWithoutFarmsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutFarmsInput, Prisma.UserUncheckedUpdateWithoutFarmsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
+export type UserUpsertWithoutFarmInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutFarmInput, Prisma.UserUncheckedUpdateWithoutFarmInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutFarmInput, Prisma.UserUncheckedCreateWithoutFarmInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutFarmsInput = {
+export type UserUpdateToOneWithWhereWithoutFarmInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutFarmsInput, Prisma.UserUncheckedUpdateWithoutFarmsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutFarmInput, Prisma.UserUncheckedUpdateWithoutFarmInput>
 }
 
-export type UserUpdateWithoutFarmsInput = {
+export type UserUpdateWithoutFarmInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1590,19 +1746,20 @@ export type UserUpdateWithoutFarmsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutFarmsInput = {
+export type UserUncheckedUpdateWithoutFarmInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
@@ -1610,87 +1767,15 @@ export type UserUncheckedUpdateWithoutFarmsInput = {
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserCreateManyProfilePictureInput = {
-  id?: string
-  name?: string
-  email: string
-  password: string
-  role: $Enums.UserRole
-  status?: $Enums.UserStatus
-  isVerified?: boolean
-  lastLoginAt?: Date | string | null
-  lastActiveAt?: Date | string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type UserUpdateWithoutProfilePictureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
-  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
-  otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUpdateManyWithoutOwnerNestedInput
-  jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
-  savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutProfilePictureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateManyWithoutUserNestedInput
-  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
-  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
-  otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
-  farms?: Prisma.FarmUncheckedUpdateManyWithoutOwnerNestedInput
-  jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
-  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
-  savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateManyWithoutProfilePictureInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1699,24 +1784,18 @@ export type UserUncheckedUpdateManyWithoutProfilePictureInput = {
  */
 
 export type UserCountOutputType = {
-  notificationSettings: number
   notifications: number
   refreshTokens: number
   otps: number
-  farms: number
   jobApplications: number
-  cvs: number
   savedJobs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  notificationSettings?: boolean | UserCountOutputTypeCountNotificationSettingsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
   otps?: boolean | UserCountOutputTypeCountOtpsArgs
-  farms?: boolean | UserCountOutputTypeCountFarmsArgs
   jobApplications?: boolean | UserCountOutputTypeCountJobApplicationsArgs
-  cvs?: boolean | UserCountOutputTypeCountCvsArgs
   savedJobs?: boolean | UserCountOutputTypeCountSavedJobsArgs
 }
 
@@ -1728,13 +1807,6 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountNotificationSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.NotificationSettingsWhereInput
 }
 
 /**
@@ -1761,22 +1833,8 @@ export type UserCountOutputTypeCountOtpsArgs<ExtArgs extends runtime.Types.Exten
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountFarmsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.FarmWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
 export type UserCountOutputTypeCountJobApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.JobApplicationWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountCvsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.CVWhereInput
 }
 
 /**
@@ -1791,6 +1849,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   id?: boolean
   name?: boolean
   email?: boolean
+  phone?: boolean
   password?: boolean
   role?: boolean
   status?: boolean
@@ -1798,16 +1857,19 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
+  farmId?: boolean
+  savedCVId?: boolean
+  notificationSettingsId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
+  farm?: boolean | Prisma.User$farmArgs<ExtArgs>
+  savedCV?: boolean | Prisma.User$savedCVArgs<ExtArgs>
   notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
-  farms?: boolean | Prisma.User$farmsArgs<ExtArgs>
   jobApplications?: boolean | Prisma.User$jobApplicationsArgs<ExtArgs>
-  cvs?: boolean | Prisma.User$cvsArgs<ExtArgs>
   savedJobs?: boolean | Prisma.User$savedJobsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -1816,6 +1878,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   id?: boolean
   name?: boolean
   email?: boolean
+  phone?: boolean
   password?: boolean
   role?: boolean
   status?: boolean
@@ -1823,15 +1886,22 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
+  farmId?: boolean
+  savedCVId?: boolean
+  notificationSettingsId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
+  farm?: boolean | Prisma.User$farmArgs<ExtArgs>
+  savedCV?: boolean | Prisma.User$savedCVArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
   email?: boolean
+  phone?: boolean
   password?: boolean
   role?: boolean
   status?: boolean
@@ -1839,15 +1909,22 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
+  farmId?: boolean
+  savedCVId?: boolean
+  notificationSettingsId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
+  farm?: boolean | Prisma.User$farmArgs<ExtArgs>
+  savedCV?: boolean | Prisma.User$savedCVArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
   name?: boolean
   email?: boolean
+  phone?: boolean
   password?: boolean
   role?: boolean
   status?: boolean
@@ -1855,47 +1932,57 @@ export type UserSelectScalar = {
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
+  farmId?: boolean
+  savedCVId?: boolean
+  notificationSettingsId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "status" | "isVerified" | "lastLoginAt" | "lastActiveAt" | "profilePictureId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "password" | "role" | "status" | "isVerified" | "lastLoginAt" | "lastActiveAt" | "profilePictureId" | "farmId" | "savedCVId" | "notificationSettingsId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
+  farm?: boolean | Prisma.User$farmArgs<ExtArgs>
+  savedCV?: boolean | Prisma.User$savedCVArgs<ExtArgs>
   notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
-  farms?: boolean | Prisma.User$farmsArgs<ExtArgs>
   jobApplications?: boolean | Prisma.User$jobApplicationsArgs<ExtArgs>
-  cvs?: boolean | Prisma.User$cvsArgs<ExtArgs>
   savedJobs?: boolean | Prisma.User$savedJobsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
+  farm?: boolean | Prisma.User$farmArgs<ExtArgs>
+  savedCV?: boolean | Prisma.User$savedCVArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
 }
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
+  farm?: boolean | Prisma.User$farmArgs<ExtArgs>
+  savedCV?: boolean | Prisma.User$savedCVArgs<ExtArgs>
+  notificationSettings?: boolean | Prisma.User$notificationSettingsArgs<ExtArgs>
 }
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
     profilePicture: Prisma.$FileInstancePayload<ExtArgs> | null
-    notificationSettings: Prisma.$NotificationSettingsPayload<ExtArgs>[]
+    farm: Prisma.$FarmPayload<ExtArgs> | null
+    savedCV: Prisma.$CVPayload<ExtArgs> | null
+    notificationSettings: Prisma.$NotificationSettingsPayload<ExtArgs> | null
     notifications: Prisma.$UserNotificationPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
     otps: Prisma.$UserOtpPayload<ExtArgs>[]
-    farms: Prisma.$FarmPayload<ExtArgs>[]
     jobApplications: Prisma.$JobApplicationPayload<ExtArgs>[]
-    cvs: Prisma.$CVPayload<ExtArgs>[]
     savedJobs: Prisma.$SavedJobsPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     email: string
+    phone: string | null
     password: string
     role: $Enums.UserRole
     status: $Enums.UserStatus
@@ -1903,6 +1990,9 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     lastLoginAt: Date | null
     lastActiveAt: Date | null
     profilePictureId: string | null
+    farmId: string | null
+    savedCVId: string | null
+    notificationSettingsId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -2300,13 +2390,13 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   profilePicture<T extends Prisma.User$profilePictureArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$profilePictureArgs<ExtArgs>>): Prisma.Prisma__FileInstanceClient<runtime.Types.Result.GetResult<Prisma.$FileInstancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  notificationSettings<T extends Prisma.User$notificationSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationSettingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationSettingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  farm<T extends Prisma.User$farmArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$farmArgs<ExtArgs>>): Prisma.Prisma__FarmClient<runtime.Types.Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  savedCV<T extends Prisma.User$savedCVArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savedCVArgs<ExtArgs>>): Prisma.Prisma__CVClient<runtime.Types.Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  notificationSettings<T extends Prisma.User$notificationSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationSettingsArgs<ExtArgs>>): Prisma.Prisma__NotificationSettingsClient<runtime.Types.Result.GetResult<Prisma.$NotificationSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserNotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.User$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   otps<T extends Prisma.User$otpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserOtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  farms<T extends Prisma.User$farmsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$farmsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jobApplications<T extends Prisma.User$jobApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  cvs<T extends Prisma.User$cvsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cvsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   savedJobs<T extends Prisma.User$savedJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savedJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedJobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2340,6 +2430,7 @@ export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
+  readonly phone: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
@@ -2347,6 +2438,9 @@ export interface UserFieldRefs {
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly lastActiveAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly profilePictureId: Prisma.FieldRef<"User", 'String'>
+  readonly farmId: Prisma.FieldRef<"User", 'String'>
+  readonly savedCVId: Prisma.FieldRef<"User", 'String'>
+  readonly notificationSettingsId: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -2764,6 +2858,44 @@ export type User$profilePictureArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * User.farm
+ */
+export type User$farmArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Farm
+   */
+  select?: Prisma.FarmSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Farm
+   */
+  omit?: Prisma.FarmOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FarmInclude<ExtArgs> | null
+  where?: Prisma.FarmWhereInput
+}
+
+/**
+ * User.savedCV
+ */
+export type User$savedCVArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CV
+   */
+  select?: Prisma.CVSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CV
+   */
+  omit?: Prisma.CVOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CVInclude<ExtArgs> | null
+  where?: Prisma.CVWhereInput
+}
+
+/**
  * User.notificationSettings
  */
 export type User$notificationSettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2780,11 +2912,6 @@ export type User$notificationSettingsArgs<ExtArgs extends runtime.Types.Extensio
    */
   include?: Prisma.NotificationSettingsInclude<ExtArgs> | null
   where?: Prisma.NotificationSettingsWhereInput
-  orderBy?: Prisma.NotificationSettingsOrderByWithRelationInput | Prisma.NotificationSettingsOrderByWithRelationInput[]
-  cursor?: Prisma.NotificationSettingsWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.NotificationSettingsScalarFieldEnum | Prisma.NotificationSettingsScalarFieldEnum[]
 }
 
 /**
@@ -2860,30 +2987,6 @@ export type User$otpsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
 }
 
 /**
- * User.farms
- */
-export type User$farmsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Farm
-   */
-  select?: Prisma.FarmSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Farm
-   */
-  omit?: Prisma.FarmOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FarmInclude<ExtArgs> | null
-  where?: Prisma.FarmWhereInput
-  orderBy?: Prisma.FarmOrderByWithRelationInput | Prisma.FarmOrderByWithRelationInput[]
-  cursor?: Prisma.FarmWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.FarmScalarFieldEnum | Prisma.FarmScalarFieldEnum[]
-}
-
-/**
  * User.jobApplications
  */
 export type User$jobApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2905,30 +3008,6 @@ export type User$jobApplicationsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.JobApplicationScalarFieldEnum | Prisma.JobApplicationScalarFieldEnum[]
-}
-
-/**
- * User.cvs
- */
-export type User$cvsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the CV
-   */
-  select?: Prisma.CVSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the CV
-   */
-  omit?: Prisma.CVOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.CVInclude<ExtArgs> | null
-  where?: Prisma.CVWhereInput
-  orderBy?: Prisma.CVOrderByWithRelationInput | Prisma.CVOrderByWithRelationInput[]
-  cursor?: Prisma.CVWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.CVScalarFieldEnum | Prisma.CVScalarFieldEnum[]
 }
 
 /**

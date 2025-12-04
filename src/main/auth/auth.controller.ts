@@ -1,4 +1,9 @@
-import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
+import {
+  GetUser,
+  ValidateAuth,
+  ValidateFarmOwner,
+  ValidateUser,
+} from '@/core/jwt/jwt.decorator';
 import { MulterService } from '@/lib/file/services/multer.service';
 import {
   Body,
@@ -19,23 +24,28 @@ import {
 import { FileType } from '@prisma';
 import { LoginDto } from './dto/login.dto';
 import { LogoutDto, RefreshTokenDto } from './dto/logout.dto';
+import {
+  FarmOwnerNotificationSettingsDto,
+  UserNotificationSettingsDto,
+} from './dto/notification-setting.dto';
 import { ResendOtpDto, VerifyOTPDto } from './dto/otp.dto';
 import {
   ChangePasswordDto,
   ForgotPasswordDto,
   ResetPasswordDto,
 } from './dto/password.dto';
-import { RegisterDto } from './dto/register.dto';
-import { UpdateProfileDto } from './dto/update-profile.dto';
+import { FarmRegisterDto, RegisterDto } from './dto/register.dto';
+import { UpdateFarmDto, UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGetProfileService } from './services/auth-get-profile.service';
 import { AuthLoginService } from './services/auth-login.service';
 import { AuthLogoutService } from './services/auth-logout.service';
+import { AuthNotificationService } from './services/auth-notification.service';
 import { AuthOtpService } from './services/auth-otp.service';
 import { AuthPasswordService } from './services/auth-password.service';
 import { AuthRegisterService } from './services/auth-register.service';
 import { AuthUpdateProfileService } from './services/auth-update-profile.service';
 
-@ApiTags('Auth')
+@ApiTags('Auth & Settings')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -46,21 +56,28 @@ export class AuthController {
     private readonly authPasswordService: AuthPasswordService,
     private readonly authGetProfileService: AuthGetProfileService,
     private readonly authUpdateProfileService: AuthUpdateProfileService,
+    private readonly authNotificationService: AuthNotificationService,
   ) {}
 
-  @ApiOperation({ summary: 'User Registration with Email' })
+  @ApiOperation({ summary: 'User Registration' })
   @Post('register')
   async register(@Body() body: RegisterDto) {
     return this.authRegisterService.register(body);
   }
 
-  @ApiOperation({ summary: 'Verify OTP after Registration or Login' })
+  @ApiOperation({ summary: 'Farm Owner Registration' })
+  @Post('register-farm')
+  async registerFarm(@Body() body: FarmRegisterDto) {
+    return this.authRegisterService.farmRegister(body);
+  }
+
+  @ApiOperation({ summary: 'Verify OTP (type VERIFICATION or RESET)' })
   @Post('verify-otp')
   async verifyEmail(@Body() body: VerifyOTPDto) {
     return this.authOtpService.verifyOTP(body);
   }
 
-  @ApiOperation({ summary: 'Resend OTP to Email' })
+  @ApiOperation({ summary: 'Resend OTP to Email (type VERIFICATION or RESET)' })
   @Post('resend-otp')
   async resendOtp(@Body() body: ResendOtpDto) {
     return this.authOtpService.resendOtp(body);
@@ -118,7 +135,7 @@ export class AuthController {
 
   @ApiOperation({ summary: 'Update profile' })
   @ApiBearerAuth()
-  @Patch(':id')
+  @Patch('profile')
   @ValidateAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -133,5 +150,46 @@ export class AuthController {
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.authUpdateProfileService.updateProfile(id, dto, file);
+  }
+
+  @ApiOperation({ summary: 'Update Farm Owner Notification Settings' })
+  @ApiBearerAuth()
+  @Patch('notifications/farm-owner')
+  @ValidateFarmOwner()
+  async updateFarmOwnerNotificationSettings(
+    @GetUser('sub') userId: string,
+    @Body() dto: FarmOwnerNotificationSettingsDto,
+  ) {
+    return this.authNotificationService.updateFarmOwnerSettings(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update User Notification Settings' })
+  @ApiBearerAuth()
+  @Patch('notifications/user')
+  @ValidateUser()
+  async updateUserNotificationSettings(
+    @GetUser('sub') userId: string,
+    @Body() dto: UserNotificationSettingsDto,
+  ) {
+    return this.authNotificationService.updateUserSettings(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update farm profile' })
+  @ApiBearerAuth()
+  @Patch('farm')
+  @ValidateFarmOwner()
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileInterceptor(
+      'image',
+      new MulterService().createMulterOptions('./temp', 'temp', FileType.image),
+    ),
+  )
+  async updateFarm(
+    @GetUser('sub') userId: string,
+    @Body() dto: UpdateFarmDto,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    return this.authUpdateProfileService.updateFarm(userId, dto, file);
   }
 }

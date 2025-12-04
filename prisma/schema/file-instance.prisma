@@ -9,9 +9,9 @@ model FileInstance {
   mimeType         String
   size             Int
 
-  users User[]
-  farms Farm[]
-  cvs   CV[]
+  users User?
+  cvs   CV?
+  farms Farm?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

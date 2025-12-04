@@ -25,7 +25,7 @@ model Job {
 
   status JobStatus @default(ACTIVE)
 
-  idealCandidates IdealCandidate[]
+  idealCandidates IdealCandidate?
   jobApplications JobApplication[]
   savedJobs       SavedJobs[]
 

@@ -30,6 +30,7 @@ export type ExperienceMinAggregateOutputType = {
   jobTitle: string | null
   jobType: $Enums.JobType | null
   company: string | null
+  summary: string | null
   startDate: Date | null
   endDate: Date | null
   isOngoing: boolean | null
@@ -43,6 +44,7 @@ export type ExperienceMaxAggregateOutputType = {
   jobTitle: string | null
   jobType: $Enums.JobType | null
   company: string | null
+  summary: string | null
   startDate: Date | null
   endDate: Date | null
   isOngoing: boolean | null
@@ -56,6 +58,7 @@ export type ExperienceCountAggregateOutputType = {
   jobTitle: number
   jobType: number
   company: number
+  summary: number
   startDate: number
   endDate: number
   isOngoing: number
@@ -71,6 +74,7 @@ export type ExperienceMinAggregateInputType = {
   jobTitle?: true
   jobType?: true
   company?: true
+  summary?: true
   startDate?: true
   endDate?: true
   isOngoing?: true
@@ -84,6 +88,7 @@ export type ExperienceMaxAggregateInputType = {
   jobTitle?: true
   jobType?: true
   company?: true
+  summary?: true
   startDate?: true
   endDate?: true
   isOngoing?: true
@@ -97,6 +102,7 @@ export type ExperienceCountAggregateInputType = {
   jobTitle?: true
   jobType?: true
   company?: true
+  summary?: true
   startDate?: true
   endDate?: true
   isOngoing?: true
@@ -183,6 +189,7 @@ export type ExperienceGroupByOutputType = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date
   endDate: Date | null
   isOngoing: boolean
@@ -217,6 +224,7 @@ export type ExperienceWhereInput = {
   jobTitle?: Prisma.StringFilter<"Experience"> | string
   jobType?: Prisma.EnumJobTypeFilter<"Experience"> | $Enums.JobType
   company?: Prisma.StringFilter<"Experience"> | string
+  summary?: Prisma.StringFilter<"Experience"> | string
   startDate?: Prisma.DateTimeFilter<"Experience"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"Experience"> | Date | string | null
   isOngoing?: Prisma.BoolFilter<"Experience"> | boolean
@@ -231,6 +239,7 @@ export type ExperienceOrderByWithRelationInput = {
   jobTitle?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   isOngoing?: Prisma.SortOrder
@@ -248,6 +257,7 @@ export type ExperienceWhereUniqueInput = Prisma.AtLeast<{
   jobTitle?: Prisma.StringFilter<"Experience"> | string
   jobType?: Prisma.EnumJobTypeFilter<"Experience"> | $Enums.JobType
   company?: Prisma.StringFilter<"Experience"> | string
+  summary?: Prisma.StringFilter<"Experience"> | string
   startDate?: Prisma.DateTimeFilter<"Experience"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"Experience"> | Date | string | null
   isOngoing?: Prisma.BoolFilter<"Experience"> | boolean
@@ -262,6 +272,7 @@ export type ExperienceOrderByWithAggregationInput = {
   jobTitle?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrderInput | Prisma.SortOrder
   isOngoing?: Prisma.SortOrder
@@ -281,6 +292,7 @@ export type ExperienceScalarWhereWithAggregatesInput = {
   jobTitle?: Prisma.StringWithAggregatesFilter<"Experience"> | string
   jobType?: Prisma.EnumJobTypeWithAggregatesFilter<"Experience"> | $Enums.JobType
   company?: Prisma.StringWithAggregatesFilter<"Experience"> | string
+  summary?: Prisma.StringWithAggregatesFilter<"Experience"> | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Experience"> | Date | string
   endDate?: Prisma.DateTimeNullableWithAggregatesFilter<"Experience"> | Date | string | null
   isOngoing?: Prisma.BoolWithAggregatesFilter<"Experience"> | boolean
@@ -293,6 +305,7 @@ export type ExperienceCreateInput = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date | string
   endDate?: Date | string | null
   isOngoing?: boolean
@@ -307,6 +320,7 @@ export type ExperienceUncheckedCreateInput = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date | string
   endDate?: Date | string | null
   isOngoing?: boolean
@@ -319,6 +333,7 @@ export type ExperienceUpdateInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -333,6 +348,7 @@ export type ExperienceUncheckedUpdateInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -346,6 +362,7 @@ export type ExperienceCreateManyInput = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date | string
   endDate?: Date | string | null
   isOngoing?: boolean
@@ -358,6 +375,7 @@ export type ExperienceUpdateManyMutationInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -371,6 +389,7 @@ export type ExperienceUncheckedUpdateManyInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -394,6 +413,7 @@ export type ExperienceCountOrderByAggregateInput = {
   jobTitle?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   isOngoing?: Prisma.SortOrder
@@ -407,6 +427,7 @@ export type ExperienceMaxOrderByAggregateInput = {
   jobTitle?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   isOngoing?: Prisma.SortOrder
@@ -420,6 +441,7 @@ export type ExperienceMinOrderByAggregateInput = {
   jobTitle?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
   company?: Prisma.SortOrder
+  summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
   endDate?: Prisma.SortOrder
   isOngoing?: Prisma.SortOrder
@@ -474,6 +496,7 @@ export type ExperienceCreateWithoutCvInput = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date | string
   endDate?: Date | string | null
   isOngoing?: boolean
@@ -486,6 +509,7 @@ export type ExperienceUncheckedCreateWithoutCvInput = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date | string
   endDate?: Date | string | null
   isOngoing?: boolean
@@ -528,6 +552,7 @@ export type ExperienceScalarWhereInput = {
   jobTitle?: Prisma.StringFilter<"Experience"> | string
   jobType?: Prisma.EnumJobTypeFilter<"Experience"> | $Enums.JobType
   company?: Prisma.StringFilter<"Experience"> | string
+  summary?: Prisma.StringFilter<"Experience"> | string
   startDate?: Prisma.DateTimeFilter<"Experience"> | Date | string
   endDate?: Prisma.DateTimeNullableFilter<"Experience"> | Date | string | null
   isOngoing?: Prisma.BoolFilter<"Experience"> | boolean
@@ -540,6 +565,7 @@ export type ExperienceCreateManyCvInput = {
   jobTitle: string
   jobType: $Enums.JobType
   company: string
+  summary: string
   startDate: Date | string
   endDate?: Date | string | null
   isOngoing?: boolean
@@ -552,6 +578,7 @@ export type ExperienceUpdateWithoutCvInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -564,6 +591,7 @@ export type ExperienceUncheckedUpdateWithoutCvInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -576,6 +604,7 @@ export type ExperienceUncheckedUpdateManyWithoutCvInput = {
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   company?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   isOngoing?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -591,6 +620,7 @@ export type ExperienceSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   jobTitle?: boolean
   jobType?: boolean
   company?: boolean
+  summary?: boolean
   startDate?: boolean
   endDate?: boolean
   isOngoing?: boolean
@@ -605,6 +635,7 @@ export type ExperienceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   jobTitle?: boolean
   jobType?: boolean
   company?: boolean
+  summary?: boolean
   startDate?: boolean
   endDate?: boolean
   isOngoing?: boolean
@@ -619,6 +650,7 @@ export type ExperienceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   jobTitle?: boolean
   jobType?: boolean
   company?: boolean
+  summary?: boolean
   startDate?: boolean
   endDate?: boolean
   isOngoing?: boolean
@@ -633,6 +665,7 @@ export type ExperienceSelectScalar = {
   jobTitle?: boolean
   jobType?: boolean
   company?: boolean
+  summary?: boolean
   startDate?: boolean
   endDate?: boolean
   isOngoing?: boolean
@@ -640,7 +673,7 @@ export type ExperienceSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ExperienceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cvId" | "jobTitle" | "jobType" | "company" | "startDate" | "endDate" | "isOngoing" | "createdAt" | "updatedAt", ExtArgs["result"]["experience"]>
+export type ExperienceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "cvId" | "jobTitle" | "jobType" | "company" | "summary" | "startDate" | "endDate" | "isOngoing" | "createdAt" | "updatedAt", ExtArgs["result"]["experience"]>
 export type ExperienceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   cv?: boolean | Prisma.CVDefaultArgs<ExtArgs>
 }
@@ -662,6 +695,7 @@ export type $ExperiencePayload<ExtArgs extends runtime.Types.Extensions.Internal
     jobTitle: string
     jobType: $Enums.JobType
     company: string
+    summary: string
     startDate: Date
     endDate: Date | null
     isOngoing: boolean
@@ -1096,6 +1130,7 @@ export interface ExperienceFieldRefs {
   readonly jobTitle: Prisma.FieldRef<"Experience", 'String'>
   readonly jobType: Prisma.FieldRef<"Experience", 'JobType'>
   readonly company: Prisma.FieldRef<"Experience", 'String'>
+  readonly summary: Prisma.FieldRef<"Experience", 'String'>
   readonly startDate: Prisma.FieldRef<"Experience", 'DateTime'>
   readonly endDate: Prisma.FieldRef<"Experience", 'DateTime'>
   readonly isOngoing: Prisma.FieldRef<"Experience", 'Boolean'>

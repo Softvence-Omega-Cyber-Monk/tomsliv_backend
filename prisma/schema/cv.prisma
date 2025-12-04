@@ -1,8 +1,6 @@
 model CV {
   id String @id @default(uuid())
 
-  userId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   isSaved Boolean @default(false)
 
@@ -23,12 +21,13 @@ model CV {
 
   workPermitType WorkPermitType @default(OTHER)
 
-  customCVId String?
+  customCVId String? @unique
   customCV   FileInstance? @relation(fields: [customCVId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
+  user   User?
   experiences     Experience[]
   educations      Education[]
   jobApplications JobApplication[]
@@ -53,6 +52,7 @@ model Experience {
   jobTitle String
   jobType  JobType
   company  String
+  summary  String
 
   startDate DateTime
   endDate   DateTime?

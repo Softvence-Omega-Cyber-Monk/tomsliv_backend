@@ -12,6 +12,8 @@ model JobApplication {
 
   isAppliedWithSavedCV Boolean @default(true)
 
+  aiGeneratedScore Float?
+
   status ApplicationStatus @default(NEW)
 
   appliedAt DateTime @default(now())
