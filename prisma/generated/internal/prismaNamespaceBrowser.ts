@@ -54,6 +54,9 @@ export const ModelName = {
   UserOtp: 'UserOtp',
   RefreshToken: 'RefreshToken',
   Contact: 'Contact',
+  CV: 'CV',
+  Experience: 'Experience',
+  Education: 'Education',
   FileInstance: 'FileInstance',
   IdealCandidate: 'IdealCandidate',
   Job: 'Job',
@@ -117,6 +120,59 @@ export const ContactScalarFieldEnum = {
 } as const
 
 export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const CVScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  location: 'location',
+  summary: 'summary',
+  jobTitle: 'jobTitle',
+  jobType: 'jobType',
+  availability: 'availability',
+  hasDrivingLicense: 'hasDrivingLicense',
+  eligibleToWorkInNZ: 'eligibleToWorkInNZ',
+  workPermitType: 'workPermitType',
+  customCVId: 'customCVId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CVScalarFieldEnum = (typeof CVScalarFieldEnum)[keyof typeof CVScalarFieldEnum]
+
+
+export const ExperienceScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  jobTitle: 'jobTitle',
+  jobType: 'jobType',
+  company: 'company',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isOngoing: 'isOngoing',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExperienceScalarFieldEnum = (typeof ExperienceScalarFieldEnum)[keyof typeof ExperienceScalarFieldEnum]
+
+
+export const EducationScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  degree: 'degree',
+  institution: 'institution',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isOngoing: 'isOngoing',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EducationScalarFieldEnum = (typeof EducationScalarFieldEnum)[keyof typeof EducationScalarFieldEnum]
 
 
 export const FileInstanceScalarFieldEnum = {

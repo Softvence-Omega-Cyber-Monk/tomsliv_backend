@@ -17,6 +17,17 @@ export const OtpType = {
 export type OtpType = (typeof OtpType)[keyof typeof OtpType]
 
 
+export const WorkPermitType = {
+  CITIZENSHIP: 'CITIZENSHIP',
+  RESIDENT_VISA: 'RESIDENT_VISA',
+  WORK_VISA: 'WORK_VISA',
+  STUDENT_VISA: 'STUDENT_VISA',
+  OTHER: 'OTHER'
+} as const
+
+export type WorkPermitType = (typeof WorkPermitType)[keyof typeof WorkPermitType]
+
+
 export const FileType = {
   image: 'image',
   docs: 'docs',

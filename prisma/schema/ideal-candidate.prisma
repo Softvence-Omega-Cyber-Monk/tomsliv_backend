@@ -1,17 +1,17 @@
 model IdealCandidate {
   id String @id @default(uuid())
 
-  job   Job   @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
   jobId String
 
   minimumExperienceYears Int
   maximumExperienceYears Int
 
-  coreSkills      String[]
+  coreSkills String[]
 
   desiredPersonalityTraits DesiredPersonalityTrait[]
   preferredCertifications  PreferredCertification[]
-  nonNegotiableSkills NonNegotiableSkill[]
+  nonNegotiableSkills      NonNegotiableSkill[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

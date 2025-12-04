@@ -11,6 +11,7 @@ model FileInstance {
 
   users User[]
   farms Farm[]
+  cvs   CV[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

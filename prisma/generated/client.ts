@@ -53,6 +53,21 @@ export type RefreshToken = Prisma.RefreshTokenModel
  */
 export type Contact = Prisma.ContactModel
 /**
+ * Model CV
+ * 
+ */
+export type CV = Prisma.CVModel
+/**
+ * Model Experience
+ * 
+ */
+export type Experience = Prisma.ExperienceModel
+/**
+ * Model Education
+ * 
+ */
+export type Education = Prisma.EducationModel
+/**
  * Model FileInstance
  * 
  */

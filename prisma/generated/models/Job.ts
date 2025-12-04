@@ -685,10 +685,6 @@ export type JobCreatemachineryExperienceInput = {
   set: string[]
 }
 
-export type EnumJobTypeFieldUpdateOperationsInput = {
-  set?: $Enums.JobType
-}
-
 export type NullableFloatFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number

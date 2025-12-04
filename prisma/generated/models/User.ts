@@ -622,14 +622,6 @@ export type EnumUserStatusFieldUpdateOperationsInput = {
   set?: $Enums.UserStatus
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type UserCreateNestedOneWithoutFarmsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutFarmsInput, Prisma.UserUncheckedCreateWithoutFarmsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutFarmsInput

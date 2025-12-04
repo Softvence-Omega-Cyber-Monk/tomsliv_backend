@@ -24,7 +24,7 @@ model Job {
   farmId String
 
   status JobStatus @default(ACTIVE)
-  
+
   idealCandidates IdealCandidate[]
 
   createdAt DateTime @default(now())
