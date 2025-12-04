@@ -20,10 +20,14 @@ model User {
   profilePicture   FileInstance? @relation(fields: [profilePictureId], references: [id], onDelete: SetNull)
 
   // Relations
-  notifications UserNotification[]
-  refreshTokens RefreshToken[]
-  otps          UserOtp[]
-  farms         Farm[]
+  notificationSettings NotificationSettings[]
+  notifications        UserNotification[]
+  refreshTokens        RefreshToken[]
+  otps                 UserOtp[]
+  farms                Farm[]
+  jobApplications      JobApplication[]
+  cvs                  CV[]
+  savedJobs            SavedJobs[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -48,12 +52,12 @@ model Farm {
   id String @id @default(uuid())
 
   name        String
-  location    String
-  description String
-  website     String
+  location    String?
+  description String?
+  website     String?
 
-  herdSize Int
-  farmType String
+  herdSize Int?
+  farmType String?
 
   owner   User?   @relation(fields: [ownerId], references: [id], onDelete: SetNull)
   ownerId String?
@@ -61,6 +65,8 @@ model Farm {
   // Logo
   logoId String?
   logo   FileInstance? @relation(fields: [logoId], references: [id], onDelete: SetNull)
+
+  jobs Job[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

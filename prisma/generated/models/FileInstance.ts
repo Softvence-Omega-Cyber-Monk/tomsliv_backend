@@ -258,6 +258,7 @@ export type FileInstanceWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"FileInstance"> | Date | string
   users?: Prisma.UserListRelationFilter
   farms?: Prisma.FarmListRelationFilter
+  cvs?: Prisma.CVListRelationFilter
 }
 
 export type FileInstanceOrderByWithRelationInput = {
@@ -273,6 +274,7 @@ export type FileInstanceOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
   farms?: Prisma.FarmOrderByRelationAggregateInput
+  cvs?: Prisma.CVOrderByRelationAggregateInput
 }
 
 export type FileInstanceWhereUniqueInput = Prisma.AtLeast<{
@@ -291,6 +293,7 @@ export type FileInstanceWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"FileInstance"> | Date | string
   users?: Prisma.UserListRelationFilter
   farms?: Prisma.FarmListRelationFilter
+  cvs?: Prisma.CVListRelationFilter
 }, "id">
 
 export type FileInstanceOrderByWithAggregationInput = {
@@ -340,6 +343,7 @@ export type FileInstanceCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutProfilePictureInput
   farms?: Prisma.FarmCreateNestedManyWithoutLogoInput
+  cvs?: Prisma.CVCreateNestedManyWithoutCustomCVInput
 }
 
 export type FileInstanceUncheckedCreateInput = {
@@ -355,6 +359,7 @@ export type FileInstanceUncheckedCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutProfilePictureInput
   farms?: Prisma.FarmUncheckedCreateNestedManyWithoutLogoInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutCustomCVInput
 }
 
 export type FileInstanceUpdateInput = {
@@ -370,6 +375,7 @@ export type FileInstanceUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutProfilePictureNestedInput
   farms?: Prisma.FarmUpdateManyWithoutLogoNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutCustomCVNestedInput
 }
 
 export type FileInstanceUncheckedUpdateInput = {
@@ -385,6 +391,7 @@ export type FileInstanceUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutProfilePictureNestedInput
   farms?: Prisma.FarmUncheckedUpdateManyWithoutLogoNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutCustomCVNestedInput
 }
 
 export type FileInstanceCreateManyInput = {
@@ -424,6 +431,11 @@ export type FileInstanceUncheckedUpdateManyInput = {
   size?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FileInstanceNullableScalarRelationFilter = {
+  is?: Prisma.FileInstanceWhereInput | null
+  isNot?: Prisma.FileInstanceWhereInput | null
 }
 
 export type FileInstanceCountOrderByAggregateInput = {
@@ -473,9 +485,20 @@ export type FileInstanceSumOrderByAggregateInput = {
   size?: Prisma.SortOrder
 }
 
-export type FileInstanceNullableScalarRelationFilter = {
-  is?: Prisma.FileInstanceWhereInput | null
-  isNot?: Prisma.FileInstanceWhereInput | null
+export type FileInstanceCreateNestedOneWithoutCvsInput = {
+  create?: Prisma.XOR<Prisma.FileInstanceCreateWithoutCvsInput, Prisma.FileInstanceUncheckedCreateWithoutCvsInput>
+  connectOrCreate?: Prisma.FileInstanceCreateOrConnectWithoutCvsInput
+  connect?: Prisma.FileInstanceWhereUniqueInput
+}
+
+export type FileInstanceUpdateOneWithoutCvsNestedInput = {
+  create?: Prisma.XOR<Prisma.FileInstanceCreateWithoutCvsInput, Prisma.FileInstanceUncheckedCreateWithoutCvsInput>
+  connectOrCreate?: Prisma.FileInstanceCreateOrConnectWithoutCvsInput
+  upsert?: Prisma.FileInstanceUpsertWithoutCvsInput
+  disconnect?: Prisma.FileInstanceWhereInput | boolean
+  delete?: Prisma.FileInstanceWhereInput | boolean
+  connect?: Prisma.FileInstanceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FileInstanceUpdateToOneWithWhereWithoutCvsInput, Prisma.FileInstanceUpdateWithoutCvsInput>, Prisma.FileInstanceUncheckedUpdateWithoutCvsInput>
 }
 
 export type EnumFileTypeFieldUpdateOperationsInput = {
@@ -522,6 +545,82 @@ export type FileInstanceUpdateOneWithoutFarmsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FileInstanceUpdateToOneWithWhereWithoutFarmsInput, Prisma.FileInstanceUpdateWithoutFarmsInput>, Prisma.FileInstanceUncheckedUpdateWithoutFarmsInput>
 }
 
+export type FileInstanceCreateWithoutCvsInput = {
+  id?: string
+  filename: string
+  originalFilename: string
+  path: string
+  url: string
+  fileType?: $Enums.FileType
+  mimeType: string
+  size: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutProfilePictureInput
+  farms?: Prisma.FarmCreateNestedManyWithoutLogoInput
+}
+
+export type FileInstanceUncheckedCreateWithoutCvsInput = {
+  id?: string
+  filename: string
+  originalFilename: string
+  path: string
+  url: string
+  fileType?: $Enums.FileType
+  mimeType: string
+  size: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutProfilePictureInput
+  farms?: Prisma.FarmUncheckedCreateNestedManyWithoutLogoInput
+}
+
+export type FileInstanceCreateOrConnectWithoutCvsInput = {
+  where: Prisma.FileInstanceWhereUniqueInput
+  create: Prisma.XOR<Prisma.FileInstanceCreateWithoutCvsInput, Prisma.FileInstanceUncheckedCreateWithoutCvsInput>
+}
+
+export type FileInstanceUpsertWithoutCvsInput = {
+  update: Prisma.XOR<Prisma.FileInstanceUpdateWithoutCvsInput, Prisma.FileInstanceUncheckedUpdateWithoutCvsInput>
+  create: Prisma.XOR<Prisma.FileInstanceCreateWithoutCvsInput, Prisma.FileInstanceUncheckedCreateWithoutCvsInput>
+  where?: Prisma.FileInstanceWhereInput
+}
+
+export type FileInstanceUpdateToOneWithWhereWithoutCvsInput = {
+  where?: Prisma.FileInstanceWhereInput
+  data: Prisma.XOR<Prisma.FileInstanceUpdateWithoutCvsInput, Prisma.FileInstanceUncheckedUpdateWithoutCvsInput>
+}
+
+export type FileInstanceUpdateWithoutCvsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  path?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  fileType?: Prisma.EnumFileTypeFieldUpdateOperationsInput | $Enums.FileType
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutProfilePictureNestedInput
+  farms?: Prisma.FarmUpdateManyWithoutLogoNestedInput
+}
+
+export type FileInstanceUncheckedUpdateWithoutCvsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  filename?: Prisma.StringFieldUpdateOperationsInput | string
+  originalFilename?: Prisma.StringFieldUpdateOperationsInput | string
+  path?: Prisma.StringFieldUpdateOperationsInput | string
+  url?: Prisma.StringFieldUpdateOperationsInput | string
+  fileType?: Prisma.EnumFileTypeFieldUpdateOperationsInput | $Enums.FileType
+  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
+  size?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutProfilePictureNestedInput
+  farms?: Prisma.FarmUncheckedUpdateManyWithoutLogoNestedInput
+}
+
 export type FileInstanceCreateWithoutUsersInput = {
   id?: string
   filename: string
@@ -534,6 +633,7 @@ export type FileInstanceCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   farms?: Prisma.FarmCreateNestedManyWithoutLogoInput
+  cvs?: Prisma.CVCreateNestedManyWithoutCustomCVInput
 }
 
 export type FileInstanceUncheckedCreateWithoutUsersInput = {
@@ -548,6 +648,7 @@ export type FileInstanceUncheckedCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   farms?: Prisma.FarmUncheckedCreateNestedManyWithoutLogoInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutCustomCVInput
 }
 
 export type FileInstanceCreateOrConnectWithoutUsersInput = {
@@ -578,6 +679,7 @@ export type FileInstanceUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   farms?: Prisma.FarmUpdateManyWithoutLogoNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutCustomCVNestedInput
 }
 
 export type FileInstanceUncheckedUpdateWithoutUsersInput = {
@@ -592,6 +694,7 @@ export type FileInstanceUncheckedUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   farms?: Prisma.FarmUncheckedUpdateManyWithoutLogoNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutCustomCVNestedInput
 }
 
 export type FileInstanceCreateWithoutFarmsInput = {
@@ -606,6 +709,7 @@ export type FileInstanceCreateWithoutFarmsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutProfilePictureInput
+  cvs?: Prisma.CVCreateNestedManyWithoutCustomCVInput
 }
 
 export type FileInstanceUncheckedCreateWithoutFarmsInput = {
@@ -620,6 +724,7 @@ export type FileInstanceUncheckedCreateWithoutFarmsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutProfilePictureInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutCustomCVInput
 }
 
 export type FileInstanceCreateOrConnectWithoutFarmsInput = {
@@ -650,6 +755,7 @@ export type FileInstanceUpdateWithoutFarmsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutProfilePictureNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutCustomCVNestedInput
 }
 
 export type FileInstanceUncheckedUpdateWithoutFarmsInput = {
@@ -664,6 +770,7 @@ export type FileInstanceUncheckedUpdateWithoutFarmsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutProfilePictureNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutCustomCVNestedInput
 }
 
 
@@ -674,11 +781,13 @@ export type FileInstanceUncheckedUpdateWithoutFarmsInput = {
 export type FileInstanceCountOutputType = {
   users: number
   farms: number
+  cvs: number
 }
 
 export type FileInstanceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | FileInstanceCountOutputTypeCountUsersArgs
   farms?: boolean | FileInstanceCountOutputTypeCountFarmsArgs
+  cvs?: boolean | FileInstanceCountOutputTypeCountCvsArgs
 }
 
 /**
@@ -705,6 +814,13 @@ export type FileInstanceCountOutputTypeCountFarmsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.FarmWhereInput
 }
 
+/**
+ * FileInstanceCountOutputType without action
+ */
+export type FileInstanceCountOutputTypeCountCvsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CVWhereInput
+}
+
 
 export type FileInstanceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -719,6 +835,7 @@ export type FileInstanceSelect<ExtArgs extends runtime.Types.Extensions.Internal
   updatedAt?: boolean
   users?: boolean | Prisma.FileInstance$usersArgs<ExtArgs>
   farms?: boolean | Prisma.FileInstance$farmsArgs<ExtArgs>
+  cvs?: boolean | Prisma.FileInstance$cvsArgs<ExtArgs>
   _count?: boolean | Prisma.FileInstanceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["fileInstance"]>
 
@@ -765,6 +882,7 @@ export type FileInstanceOmit<ExtArgs extends runtime.Types.Extensions.InternalAr
 export type FileInstanceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.FileInstance$usersArgs<ExtArgs>
   farms?: boolean | Prisma.FileInstance$farmsArgs<ExtArgs>
+  cvs?: boolean | Prisma.FileInstance$cvsArgs<ExtArgs>
   _count?: boolean | Prisma.FileInstanceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FileInstanceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -775,6 +893,7 @@ export type $FileInstancePayload<ExtArgs extends runtime.Types.Extensions.Intern
   objects: {
     users: Prisma.$UserPayload<ExtArgs>[]
     farms: Prisma.$FarmPayload<ExtArgs>[]
+    cvs: Prisma.$CVPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1183,6 +1302,7 @@ export interface Prisma__FileInstanceClient<T, Null = never, ExtArgs extends run
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.FileInstance$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileInstance$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   farms<T extends Prisma.FileInstance$farmsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileInstance$farmsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FarmPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cvs<T extends Prisma.FileInstance$cvsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileInstance$cvsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1655,6 +1775,30 @@ export type FileInstance$farmsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.FarmScalarFieldEnum | Prisma.FarmScalarFieldEnum[]
+}
+
+/**
+ * FileInstance.cvs
+ */
+export type FileInstance$cvsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CV
+   */
+  select?: Prisma.CVSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CV
+   */
+  omit?: Prisma.CVOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CVInclude<ExtArgs> | null
+  where?: Prisma.CVWhereInput
+  orderBy?: Prisma.CVOrderByWithRelationInput | Prisma.CVOrderByWithRelationInput[]
+  cursor?: Prisma.CVWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CVScalarFieldEnum | Prisma.CVScalarFieldEnum[]
 }
 
 /**

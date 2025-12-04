@@ -17,6 +17,17 @@ export const OtpType = {
 export type OtpType = (typeof OtpType)[keyof typeof OtpType]
 
 
+export const WorkPermitType = {
+  CITIZENSHIP: 'CITIZENSHIP',
+  RESIDENT_VISA: 'RESIDENT_VISA',
+  WORK_VISA: 'WORK_VISA',
+  STUDENT_VISA: 'STUDENT_VISA',
+  OTHER: 'OTHER'
+} as const
+
+export type WorkPermitType = (typeof WorkPermitType)[keyof typeof WorkPermitType]
+
+
 export const FileType = {
   image: 'image',
   docs: 'docs',
@@ -28,6 +39,74 @@ export const FileType = {
 } as const
 
 export type FileType = (typeof FileType)[keyof typeof FileType]
+
+
+export const DesiredPersonalityTrait = {
+  DETAIL_ORIENTED: 'DETAIL_ORIENTED',
+  TEAM_PLAYER: 'TEAM_PLAYER',
+  SELF_MOTIVATED: 'SELF_MOTIVATED',
+  PROBLEM_SOLVER: 'PROBLEM_SOLVER',
+  ADAPTABLE: 'ADAPTABLE',
+  RELIABLE: 'RELIABLE',
+  PATIENT: 'PATIENT',
+  PHYSICAL_STAMINA: 'PHYSICAL_STAMINA'
+} as const
+
+export type DesiredPersonalityTrait = (typeof DesiredPersonalityTrait)[keyof typeof DesiredPersonalityTrait]
+
+
+export const PreferredCertification = {
+  DAIRY_FARMING_CERTIFICATION: 'DAIRY_FARMING_CERTIFICATION',
+  FIRST_AID_AND_CPR: 'FIRST_AID_AND_CPR',
+  TRACTOR_OPERATION_LICENSE: 'TRACTOR_OPERATION_LICENSE',
+  FOOD_SAFETY_CERTIFICATION: 'FOOD_SAFETY_CERTIFICATION',
+  ANIMAL_WELFARE_CERTIFICATION: 'ANIMAL_WELFARE_CERTIFICATION'
+} as const
+
+export type PreferredCertification = (typeof PreferredCertification)[keyof typeof PreferredCertification]
+
+
+export const NonNegotiableSkill = {
+  ABLE_TO_PERFORM_PHYSICAL_WORK: 'ABLE_TO_PERFORM_PHYSICAL_WORK',
+  ABLE_FOR_EARLY_MORNING_SHIFTS: 'ABLE_FOR_EARLY_MORNING_SHIFTS',
+  AVAILABLE_FOR_WEEKEND_WORK: 'AVAILABLE_FOR_WEEKEND_WORK',
+  VALID_DRIVER_S_LICENSE: 'VALID_DRIVER_S_LICENSE',
+  LOCAL_RESIDENCY_OR_WILLING_TO_RELOCATE: 'LOCAL_RESIDENCY_OR_WILLING_TO_RELOCATE'
+} as const
+
+export type NonNegotiableSkill = (typeof NonNegotiableSkill)[keyof typeof NonNegotiableSkill]
+
+
+export const ApplicationStatus = {
+  NEW: 'NEW',
+  SHORTLISTED: 'SHORTLISTED',
+  REVIEWED: 'REVIEWED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
+
+
+export const JobType = {
+  FULL_TIME: 'FULL_TIME',
+  PART_TIME: 'PART_TIME',
+  CONTRACT: 'CONTRACT',
+  SEASONAL: 'SEASONAL',
+  TEMPORARY: 'TEMPORARY',
+  INTERN: 'INTERN'
+} as const
+
+export type JobType = (typeof JobType)[keyof typeof JobType]
+
+
+export const JobStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
 
 
 export const UserRole = {
