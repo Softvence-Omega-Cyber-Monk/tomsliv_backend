@@ -39,8 +39,7 @@ export class PrismaService implements OnModuleInit, OnModuleDestroy {
     await this.prisma.$disconnect();
     this.logger.log('[DESTROY] Prisma disconnected');
   }
-
-  /** Expose Prisma models (like prisma.user, prisma.post, etc.) */
+  
   get client() {
     return this.prisma;
   }
