@@ -2,6 +2,7 @@ import { successResponse } from '@/common/utils/response.util';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
+import { NotificationSettings } from '@prisma';
 import {
   FarmOwnerNotificationSettingsDto,
   UserNotificationSettingsDto,
@@ -27,7 +28,9 @@ export class AuthNotificationService {
       update: { ...dto },
     });
 
-    return successResponse(updated, 'Farm Owner settings updated');
+    const filtered = this.filterFarmOwnerSettings(updated, userId);
+
+    return successResponse(filtered, 'Farm Owner settings updated');
   }
 
   @HandleError('User settings updated', 'NotificationSettings')
@@ -43,6 +46,32 @@ export class AuthNotificationService {
       update: { ...dto },
     });
 
-    return successResponse(updated, 'User settings updated');
+    const filtered = this.filterUserSettings(updated, userId);
+
+    return successResponse(filtered, 'User settings updated');
+  }
+
+  private filterFarmOwnerSettings(
+    settings: NotificationSettings,
+    userId: string,
+  ) {
+    return {
+      id: settings.id,
+      userId,
+      emailNotifications: settings.emailNotifications,
+      weeklyDigest: settings.weeklyDigest,
+      newApplicantAlert: settings.newApplicantAlert,
+      updatesAndTips: settings.updatesAndTips,
+    };
+  }
+
+  private filterUserSettings(settings: NotificationSettings, userId: string) {
+    return {
+      id: settings.id,
+      userId,
+      emailNotifications: settings.emailNotifications,
+      weeklyDigest: settings.weeklyDigest,
+      newRelatedJobsAlert: settings.newRelatedJobsAlert,
+    };
   }
 }
