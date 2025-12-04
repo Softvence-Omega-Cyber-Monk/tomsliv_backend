@@ -48,6 +48,11 @@ export type UserOtp = Prisma.UserOtpModel
  */
 export type RefreshToken = Prisma.RefreshTokenModel
 /**
+ * Model Contact
+ * 
+ */
+export type Contact = Prisma.ContactModel
+/**
  * Model FileInstance
  * 
  */

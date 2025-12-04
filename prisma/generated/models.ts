@@ -10,6 +10,7 @@
  */
 export type * from './models/UserOtp'
 export type * from './models/RefreshToken'
+export type * from './models/Contact'
 export type * from './models/FileInstance'
 export type * from './models/IdealCandidate'
 export type * from './models/Job'
