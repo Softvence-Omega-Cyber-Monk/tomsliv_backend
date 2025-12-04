@@ -59,6 +59,8 @@ export const ModelName = {
   Education: 'Education',
   FileInstance: 'FileInstance',
   IdealCandidate: 'IdealCandidate',
+  JobApplication: 'JobApplication',
+  SavedJobs: 'SavedJobs',
   Job: 'Job',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
@@ -124,6 +126,8 @@ export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeo
 
 export const CVScalarFieldEnum = {
   id: 'id',
+  userId: 'userId',
+  isSaved: 'isSaved',
   firstName: 'firstName',
   lastName: 'lastName',
   email: 'email',
@@ -205,6 +209,29 @@ export const IdealCandidateScalarFieldEnum = {
 } as const
 
 export type IdealCandidateScalarFieldEnum = (typeof IdealCandidateScalarFieldEnum)[keyof typeof IdealCandidateScalarFieldEnum]
+
+
+export const JobApplicationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  jobId: 'jobId',
+  cvId: 'cvId',
+  isAppliedWithSavedCV: 'isAppliedWithSavedCV',
+  status: 'status',
+  appliedAt: 'appliedAt'
+} as const
+
+export type JobApplicationScalarFieldEnum = (typeof JobApplicationScalarFieldEnum)[keyof typeof JobApplicationScalarFieldEnum]
+
+
+export const SavedJobsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  jobId: 'jobId',
+  savedAt: 'savedAt'
+} as const
+
+export type SavedJobsScalarFieldEnum = (typeof SavedJobsScalarFieldEnum)[keyof typeof SavedJobsScalarFieldEnum]
 
 
 export const JobScalarFieldEnum = {

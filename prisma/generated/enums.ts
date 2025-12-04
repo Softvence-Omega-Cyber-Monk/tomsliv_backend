@@ -77,6 +77,16 @@ export const NonNegotiableSkill = {
 export type NonNegotiableSkill = (typeof NonNegotiableSkill)[keyof typeof NonNegotiableSkill]
 
 
+export const ApplicationStatus = {
+  NEW: 'NEW',
+  SHORTLISTED: 'SHORTLISTED',
+  REVIEWED: 'REVIEWED',
+  REJECTED: 'REJECTED'
+} as const
+
+export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
+
+
 export const JobType = {
   FULL_TIME: 'FULL_TIME',
   PART_TIME: 'PART_TIME',

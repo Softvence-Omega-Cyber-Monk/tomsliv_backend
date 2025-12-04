@@ -1,6 +1,11 @@
 model CV {
   id String @id @default(uuid())
 
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  isSaved Boolean @default(false)
+
   firstName String
   lastName  String
 
@@ -24,8 +29,9 @@ model CV {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  experiences Experience[]
-  educations  Education[]
+  experiences     Experience[]
+  educations      Education[]
+  jobApplications JobApplication[]
 
   @@map("cvs")
 }

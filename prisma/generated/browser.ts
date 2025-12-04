@@ -58,6 +58,16 @@ export type FileInstance = Prisma.FileInstanceModel
  */
 export type IdealCandidate = Prisma.IdealCandidateModel
 /**
+ * Model JobApplication
+ * 
+ */
+export type JobApplication = Prisma.JobApplicationModel
+/**
+ * Model SavedJobs
+ * 
+ */
+export type SavedJobs = Prisma.SavedJobsModel
+/**
  * Model Job
  * 
  */

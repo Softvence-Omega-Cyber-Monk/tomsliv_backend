@@ -1,0 +1,43 @@
+model JobApplication {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  jobId String
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  cv   CV     @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  cvId String
+
+  isAppliedWithSavedCV Boolean @default(true)
+
+  status ApplicationStatus @default(NEW)
+
+  appliedAt DateTime @default(now())
+
+  @@unique([userId, jobId])
+  @@map("job_applications")
+}
+
+enum ApplicationStatus {
+  NEW
+  SHORTLISTED
+  REVIEWED
+  REJECTED
+}
+
+model SavedJobs {
+  id String @id @default(uuid())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId String
+
+  savedAt DateTime @default(now())
+
+  @@unique([userId, jobId])
+  @@map("saved_jobs")
+}
