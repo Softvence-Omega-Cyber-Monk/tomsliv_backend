@@ -42,7 +42,6 @@ export type FarmMinAggregateOutputType = {
   website: string | null
   herdSize: number | null
   farmType: string | null
-  ownerId: string | null
   logoId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -56,7 +55,6 @@ export type FarmMaxAggregateOutputType = {
   website: string | null
   herdSize: number | null
   farmType: string | null
-  ownerId: string | null
   logoId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -70,7 +68,6 @@ export type FarmCountAggregateOutputType = {
   website: number
   herdSize: number
   farmType: number
-  ownerId: number
   logoId: number
   createdAt: number
   updatedAt: number
@@ -94,7 +91,6 @@ export type FarmMinAggregateInputType = {
   website?: true
   herdSize?: true
   farmType?: true
-  ownerId?: true
   logoId?: true
   createdAt?: true
   updatedAt?: true
@@ -108,7 +104,6 @@ export type FarmMaxAggregateInputType = {
   website?: true
   herdSize?: true
   farmType?: true
-  ownerId?: true
   logoId?: true
   createdAt?: true
   updatedAt?: true
@@ -122,7 +117,6 @@ export type FarmCountAggregateInputType = {
   website?: true
   herdSize?: true
   farmType?: true
-  ownerId?: true
   logoId?: true
   createdAt?: true
   updatedAt?: true
@@ -223,7 +217,6 @@ export type FarmGroupByOutputType = {
   website: string | null
   herdSize: number | null
   farmType: string | null
-  ownerId: string | null
   logoId: string | null
   createdAt: Date
   updatedAt: Date
@@ -260,13 +253,12 @@ export type FarmWhereInput = {
   website?: Prisma.StringNullableFilter<"Farm"> | string | null
   herdSize?: Prisma.IntNullableFilter<"Farm"> | number | null
   farmType?: Prisma.StringNullableFilter<"Farm"> | string | null
-  ownerId?: Prisma.StringNullableFilter<"Farm"> | string | null
   logoId?: Prisma.StringNullableFilter<"Farm"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
-  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   logo?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
   jobs?: Prisma.JobListRelationFilter
+  users?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
 }
 
 export type FarmOrderByWithRelationInput = {
@@ -277,17 +269,17 @@ export type FarmOrderByWithRelationInput = {
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   herdSize?: Prisma.SortOrderInput | Prisma.SortOrder
   farmType?: Prisma.SortOrderInput | Prisma.SortOrder
-  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   logoId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  owner?: Prisma.UserOrderByWithRelationInput
   logo?: Prisma.FileInstanceOrderByWithRelationInput
   jobs?: Prisma.JobOrderByRelationAggregateInput
+  users?: Prisma.UserOrderByWithRelationInput
 }
 
 export type FarmWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  logoId?: string
   AND?: Prisma.FarmWhereInput | Prisma.FarmWhereInput[]
   OR?: Prisma.FarmWhereInput[]
   NOT?: Prisma.FarmWhereInput | Prisma.FarmWhereInput[]
@@ -297,14 +289,12 @@ export type FarmWhereUniqueInput = Prisma.AtLeast<{
   website?: Prisma.StringNullableFilter<"Farm"> | string | null
   herdSize?: Prisma.IntNullableFilter<"Farm"> | number | null
   farmType?: Prisma.StringNullableFilter<"Farm"> | string | null
-  ownerId?: Prisma.StringNullableFilter<"Farm"> | string | null
-  logoId?: Prisma.StringNullableFilter<"Farm"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
-  owner?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   logo?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
   jobs?: Prisma.JobListRelationFilter
-}, "id">
+  users?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
+}, "id" | "logoId">
 
 export type FarmOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -314,7 +304,6 @@ export type FarmOrderByWithAggregationInput = {
   website?: Prisma.SortOrderInput | Prisma.SortOrder
   herdSize?: Prisma.SortOrderInput | Prisma.SortOrder
   farmType?: Prisma.SortOrderInput | Prisma.SortOrder
-  ownerId?: Prisma.SortOrderInput | Prisma.SortOrder
   logoId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -336,7 +325,6 @@ export type FarmScalarWhereWithAggregatesInput = {
   website?: Prisma.StringNullableWithAggregatesFilter<"Farm"> | string | null
   herdSize?: Prisma.IntNullableWithAggregatesFilter<"Farm"> | number | null
   farmType?: Prisma.StringNullableWithAggregatesFilter<"Farm"> | string | null
-  ownerId?: Prisma.StringNullableWithAggregatesFilter<"Farm"> | string | null
   logoId?: Prisma.StringNullableWithAggregatesFilter<"Farm"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Farm"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Farm"> | Date | string
@@ -352,9 +340,9 @@ export type FarmCreateInput = {
   farmType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  owner?: Prisma.UserCreateNestedOneWithoutFarmsInput
   logo?: Prisma.FileInstanceCreateNestedOneWithoutFarmsInput
   jobs?: Prisma.JobCreateNestedManyWithoutFarmInput
+  users?: Prisma.UserCreateNestedOneWithoutFarmInput
 }
 
 export type FarmUncheckedCreateInput = {
@@ -365,11 +353,11 @@ export type FarmUncheckedCreateInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
-  ownerId?: string | null
   logoId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutFarmInput
+  users?: Prisma.UserUncheckedCreateNestedOneWithoutFarmInput
 }
 
 export type FarmUpdateInput = {
@@ -382,9 +370,9 @@ export type FarmUpdateInput = {
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  owner?: Prisma.UserUpdateOneWithoutFarmsNestedInput
   logo?: Prisma.FileInstanceUpdateOneWithoutFarmsNestedInput
   jobs?: Prisma.JobUpdateManyWithoutFarmNestedInput
+  users?: Prisma.UserUpdateOneWithoutFarmNestedInput
 }
 
 export type FarmUncheckedUpdateInput = {
@@ -395,11 +383,11 @@ export type FarmUncheckedUpdateInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
+  users?: Prisma.UserUncheckedUpdateOneWithoutFarmNestedInput
 }
 
 export type FarmCreateManyInput = {
@@ -410,7 +398,6 @@ export type FarmCreateManyInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
-  ownerId?: string | null
   logoId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -436,20 +423,14 @@ export type FarmUncheckedUpdateManyInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type FarmListRelationFilter = {
-  every?: Prisma.FarmWhereInput
-  some?: Prisma.FarmWhereInput
-  none?: Prisma.FarmWhereInput
-}
-
-export type FarmOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type FarmNullableScalarRelationFilter = {
+  is?: Prisma.FarmWhereInput | null
+  isNot?: Prisma.FarmWhereInput | null
 }
 
 export type FarmScalarRelationFilter = {
@@ -465,7 +446,6 @@ export type FarmCountOrderByAggregateInput = {
   website?: Prisma.SortOrder
   herdSize?: Prisma.SortOrder
   farmType?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
   logoId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -483,7 +463,6 @@ export type FarmMaxOrderByAggregateInput = {
   website?: Prisma.SortOrder
   herdSize?: Prisma.SortOrder
   farmType?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
   logoId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -497,7 +476,6 @@ export type FarmMinOrderByAggregateInput = {
   website?: Prisma.SortOrder
   herdSize?: Prisma.SortOrder
   farmType?: Prisma.SortOrder
-  ownerId?: Prisma.SortOrder
   logoId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -507,46 +485,36 @@ export type FarmSumOrderByAggregateInput = {
   herdSize?: Prisma.SortOrder
 }
 
-export type FarmCreateNestedManyWithoutLogoInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput> | Prisma.FarmCreateWithoutLogoInput[] | Prisma.FarmUncheckedCreateWithoutLogoInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput | Prisma.FarmCreateOrConnectWithoutLogoInput[]
-  createMany?: Prisma.FarmCreateManyLogoInputEnvelope
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
+export type FarmCreateNestedOneWithoutLogoInput = {
+  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput>
+  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput
+  connect?: Prisma.FarmWhereUniqueInput
 }
 
-export type FarmUncheckedCreateNestedManyWithoutLogoInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput> | Prisma.FarmCreateWithoutLogoInput[] | Prisma.FarmUncheckedCreateWithoutLogoInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput | Prisma.FarmCreateOrConnectWithoutLogoInput[]
-  createMany?: Prisma.FarmCreateManyLogoInputEnvelope
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
+export type FarmUncheckedCreateNestedOneWithoutLogoInput = {
+  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput>
+  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput
+  connect?: Prisma.FarmWhereUniqueInput
 }
 
-export type FarmUpdateManyWithoutLogoNestedInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput> | Prisma.FarmCreateWithoutLogoInput[] | Prisma.FarmUncheckedCreateWithoutLogoInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput | Prisma.FarmCreateOrConnectWithoutLogoInput[]
-  upsert?: Prisma.FarmUpsertWithWhereUniqueWithoutLogoInput | Prisma.FarmUpsertWithWhereUniqueWithoutLogoInput[]
-  createMany?: Prisma.FarmCreateManyLogoInputEnvelope
-  set?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  disconnect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  delete?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  update?: Prisma.FarmUpdateWithWhereUniqueWithoutLogoInput | Prisma.FarmUpdateWithWhereUniqueWithoutLogoInput[]
-  updateMany?: Prisma.FarmUpdateManyWithWhereWithoutLogoInput | Prisma.FarmUpdateManyWithWhereWithoutLogoInput[]
-  deleteMany?: Prisma.FarmScalarWhereInput | Prisma.FarmScalarWhereInput[]
+export type FarmUpdateOneWithoutLogoNestedInput = {
+  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput>
+  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput
+  upsert?: Prisma.FarmUpsertWithoutLogoInput
+  disconnect?: Prisma.FarmWhereInput | boolean
+  delete?: Prisma.FarmWhereInput | boolean
+  connect?: Prisma.FarmWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FarmUpdateToOneWithWhereWithoutLogoInput, Prisma.FarmUpdateWithoutLogoInput>, Prisma.FarmUncheckedUpdateWithoutLogoInput>
 }
 
-export type FarmUncheckedUpdateManyWithoutLogoNestedInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput> | Prisma.FarmCreateWithoutLogoInput[] | Prisma.FarmUncheckedCreateWithoutLogoInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput | Prisma.FarmCreateOrConnectWithoutLogoInput[]
-  upsert?: Prisma.FarmUpsertWithWhereUniqueWithoutLogoInput | Prisma.FarmUpsertWithWhereUniqueWithoutLogoInput[]
-  createMany?: Prisma.FarmCreateManyLogoInputEnvelope
-  set?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  disconnect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  delete?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  update?: Prisma.FarmUpdateWithWhereUniqueWithoutLogoInput | Prisma.FarmUpdateWithWhereUniqueWithoutLogoInput[]
-  updateMany?: Prisma.FarmUpdateManyWithWhereWithoutLogoInput | Prisma.FarmUpdateManyWithWhereWithoutLogoInput[]
-  deleteMany?: Prisma.FarmScalarWhereInput | Prisma.FarmScalarWhereInput[]
+export type FarmUncheckedUpdateOneWithoutLogoNestedInput = {
+  create?: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput>
+  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutLogoInput
+  upsert?: Prisma.FarmUpsertWithoutLogoInput
+  disconnect?: Prisma.FarmWhereInput | boolean
+  delete?: Prisma.FarmWhereInput | boolean
+  connect?: Prisma.FarmWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FarmUpdateToOneWithWhereWithoutLogoInput, Prisma.FarmUpdateWithoutLogoInput>, Prisma.FarmUncheckedUpdateWithoutLogoInput>
 }
 
 export type FarmCreateNestedOneWithoutJobsInput = {
@@ -563,46 +531,20 @@ export type FarmUpdateOneRequiredWithoutJobsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.FarmUpdateToOneWithWhereWithoutJobsInput, Prisma.FarmUpdateWithoutJobsInput>, Prisma.FarmUncheckedUpdateWithoutJobsInput>
 }
 
-export type FarmCreateNestedManyWithoutOwnerInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutOwnerInput, Prisma.FarmUncheckedCreateWithoutOwnerInput> | Prisma.FarmCreateWithoutOwnerInput[] | Prisma.FarmUncheckedCreateWithoutOwnerInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutOwnerInput | Prisma.FarmCreateOrConnectWithoutOwnerInput[]
-  createMany?: Prisma.FarmCreateManyOwnerInputEnvelope
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
+export type FarmCreateNestedOneWithoutUsersInput = {
+  create?: Prisma.XOR<Prisma.FarmCreateWithoutUsersInput, Prisma.FarmUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutUsersInput
+  connect?: Prisma.FarmWhereUniqueInput
 }
 
-export type FarmUncheckedCreateNestedManyWithoutOwnerInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutOwnerInput, Prisma.FarmUncheckedCreateWithoutOwnerInput> | Prisma.FarmCreateWithoutOwnerInput[] | Prisma.FarmUncheckedCreateWithoutOwnerInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutOwnerInput | Prisma.FarmCreateOrConnectWithoutOwnerInput[]
-  createMany?: Prisma.FarmCreateManyOwnerInputEnvelope
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-}
-
-export type FarmUpdateManyWithoutOwnerNestedInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutOwnerInput, Prisma.FarmUncheckedCreateWithoutOwnerInput> | Prisma.FarmCreateWithoutOwnerInput[] | Prisma.FarmUncheckedCreateWithoutOwnerInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutOwnerInput | Prisma.FarmCreateOrConnectWithoutOwnerInput[]
-  upsert?: Prisma.FarmUpsertWithWhereUniqueWithoutOwnerInput | Prisma.FarmUpsertWithWhereUniqueWithoutOwnerInput[]
-  createMany?: Prisma.FarmCreateManyOwnerInputEnvelope
-  set?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  disconnect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  delete?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  update?: Prisma.FarmUpdateWithWhereUniqueWithoutOwnerInput | Prisma.FarmUpdateWithWhereUniqueWithoutOwnerInput[]
-  updateMany?: Prisma.FarmUpdateManyWithWhereWithoutOwnerInput | Prisma.FarmUpdateManyWithWhereWithoutOwnerInput[]
-  deleteMany?: Prisma.FarmScalarWhereInput | Prisma.FarmScalarWhereInput[]
-}
-
-export type FarmUncheckedUpdateManyWithoutOwnerNestedInput = {
-  create?: Prisma.XOR<Prisma.FarmCreateWithoutOwnerInput, Prisma.FarmUncheckedCreateWithoutOwnerInput> | Prisma.FarmCreateWithoutOwnerInput[] | Prisma.FarmUncheckedCreateWithoutOwnerInput[]
-  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutOwnerInput | Prisma.FarmCreateOrConnectWithoutOwnerInput[]
-  upsert?: Prisma.FarmUpsertWithWhereUniqueWithoutOwnerInput | Prisma.FarmUpsertWithWhereUniqueWithoutOwnerInput[]
-  createMany?: Prisma.FarmCreateManyOwnerInputEnvelope
-  set?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  disconnect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  delete?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  connect?: Prisma.FarmWhereUniqueInput | Prisma.FarmWhereUniqueInput[]
-  update?: Prisma.FarmUpdateWithWhereUniqueWithoutOwnerInput | Prisma.FarmUpdateWithWhereUniqueWithoutOwnerInput[]
-  updateMany?: Prisma.FarmUpdateManyWithWhereWithoutOwnerInput | Prisma.FarmUpdateManyWithWhereWithoutOwnerInput[]
-  deleteMany?: Prisma.FarmScalarWhereInput | Prisma.FarmScalarWhereInput[]
+export type FarmUpdateOneWithoutUsersNestedInput = {
+  create?: Prisma.XOR<Prisma.FarmCreateWithoutUsersInput, Prisma.FarmUncheckedCreateWithoutUsersInput>
+  connectOrCreate?: Prisma.FarmCreateOrConnectWithoutUsersInput
+  upsert?: Prisma.FarmUpsertWithoutUsersInput
+  disconnect?: Prisma.FarmWhereInput | boolean
+  delete?: Prisma.FarmWhereInput | boolean
+  connect?: Prisma.FarmWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FarmUpdateToOneWithWhereWithoutUsersInput, Prisma.FarmUpdateWithoutUsersInput>, Prisma.FarmUncheckedUpdateWithoutUsersInput>
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -623,8 +565,8 @@ export type FarmCreateWithoutLogoInput = {
   farmType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  owner?: Prisma.UserCreateNestedOneWithoutFarmsInput
   jobs?: Prisma.JobCreateNestedManyWithoutFarmInput
+  users?: Prisma.UserCreateNestedOneWithoutFarmInput
 }
 
 export type FarmUncheckedCreateWithoutLogoInput = {
@@ -635,10 +577,10 @@ export type FarmUncheckedCreateWithoutLogoInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
-  ownerId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutFarmInput
+  users?: Prisma.UserUncheckedCreateNestedOneWithoutFarmInput
 }
 
 export type FarmCreateOrConnectWithoutLogoInput = {
@@ -646,42 +588,43 @@ export type FarmCreateOrConnectWithoutLogoInput = {
   create: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput>
 }
 
-export type FarmCreateManyLogoInputEnvelope = {
-  data: Prisma.FarmCreateManyLogoInput | Prisma.FarmCreateManyLogoInput[]
-  skipDuplicates?: boolean
-}
-
-export type FarmUpsertWithWhereUniqueWithoutLogoInput = {
-  where: Prisma.FarmWhereUniqueInput
+export type FarmUpsertWithoutLogoInput = {
   update: Prisma.XOR<Prisma.FarmUpdateWithoutLogoInput, Prisma.FarmUncheckedUpdateWithoutLogoInput>
   create: Prisma.XOR<Prisma.FarmCreateWithoutLogoInput, Prisma.FarmUncheckedCreateWithoutLogoInput>
+  where?: Prisma.FarmWhereInput
 }
 
-export type FarmUpdateWithWhereUniqueWithoutLogoInput = {
-  where: Prisma.FarmWhereUniqueInput
+export type FarmUpdateToOneWithWhereWithoutLogoInput = {
+  where?: Prisma.FarmWhereInput
   data: Prisma.XOR<Prisma.FarmUpdateWithoutLogoInput, Prisma.FarmUncheckedUpdateWithoutLogoInput>
 }
 
-export type FarmUpdateManyWithWhereWithoutLogoInput = {
-  where: Prisma.FarmScalarWhereInput
-  data: Prisma.XOR<Prisma.FarmUpdateManyMutationInput, Prisma.FarmUncheckedUpdateManyWithoutLogoInput>
+export type FarmUpdateWithoutLogoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUpdateManyWithoutFarmNestedInput
+  users?: Prisma.UserUpdateOneWithoutFarmNestedInput
 }
 
-export type FarmScalarWhereInput = {
-  AND?: Prisma.FarmScalarWhereInput | Prisma.FarmScalarWhereInput[]
-  OR?: Prisma.FarmScalarWhereInput[]
-  NOT?: Prisma.FarmScalarWhereInput | Prisma.FarmScalarWhereInput[]
-  id?: Prisma.StringFilter<"Farm"> | string
-  name?: Prisma.StringFilter<"Farm"> | string
-  location?: Prisma.StringNullableFilter<"Farm"> | string | null
-  description?: Prisma.StringNullableFilter<"Farm"> | string | null
-  website?: Prisma.StringNullableFilter<"Farm"> | string | null
-  herdSize?: Prisma.IntNullableFilter<"Farm"> | number | null
-  farmType?: Prisma.StringNullableFilter<"Farm"> | string | null
-  ownerId?: Prisma.StringNullableFilter<"Farm"> | string | null
-  logoId?: Prisma.StringNullableFilter<"Farm"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
+export type FarmUncheckedUpdateWithoutLogoInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
+  users?: Prisma.UserUncheckedUpdateOneWithoutFarmNestedInput
 }
 
 export type FarmCreateWithoutJobsInput = {
@@ -694,8 +637,8 @@ export type FarmCreateWithoutJobsInput = {
   farmType?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  owner?: Prisma.UserCreateNestedOneWithoutFarmsInput
   logo?: Prisma.FileInstanceCreateNestedOneWithoutFarmsInput
+  users?: Prisma.UserCreateNestedOneWithoutFarmInput
 }
 
 export type FarmUncheckedCreateWithoutJobsInput = {
@@ -706,10 +649,10 @@ export type FarmUncheckedCreateWithoutJobsInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
-  ownerId?: string | null
   logoId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedOneWithoutFarmInput
 }
 
 export type FarmCreateOrConnectWithoutJobsInput = {
@@ -738,8 +681,8 @@ export type FarmUpdateWithoutJobsInput = {
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  owner?: Prisma.UserUpdateOneWithoutFarmsNestedInput
   logo?: Prisma.FileInstanceUpdateOneWithoutFarmsNestedInput
+  users?: Prisma.UserUpdateOneWithoutFarmNestedInput
 }
 
 export type FarmUncheckedUpdateWithoutJobsInput = {
@@ -750,13 +693,13 @@ export type FarmUncheckedUpdateWithoutJobsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateOneWithoutFarmNestedInput
 }
 
-export type FarmCreateWithoutOwnerInput = {
+export type FarmCreateWithoutUsersInput = {
   id?: string
   name: string
   location?: string | null
@@ -770,7 +713,7 @@ export type FarmCreateWithoutOwnerInput = {
   jobs?: Prisma.JobCreateNestedManyWithoutFarmInput
 }
 
-export type FarmUncheckedCreateWithoutOwnerInput = {
+export type FarmUncheckedCreateWithoutUsersInput = {
   id?: string
   name: string
   location?: string | null
@@ -784,100 +727,23 @@ export type FarmUncheckedCreateWithoutOwnerInput = {
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutFarmInput
 }
 
-export type FarmCreateOrConnectWithoutOwnerInput = {
+export type FarmCreateOrConnectWithoutUsersInput = {
   where: Prisma.FarmWhereUniqueInput
-  create: Prisma.XOR<Prisma.FarmCreateWithoutOwnerInput, Prisma.FarmUncheckedCreateWithoutOwnerInput>
+  create: Prisma.XOR<Prisma.FarmCreateWithoutUsersInput, Prisma.FarmUncheckedCreateWithoutUsersInput>
 }
 
-export type FarmCreateManyOwnerInputEnvelope = {
-  data: Prisma.FarmCreateManyOwnerInput | Prisma.FarmCreateManyOwnerInput[]
-  skipDuplicates?: boolean
+export type FarmUpsertWithoutUsersInput = {
+  update: Prisma.XOR<Prisma.FarmUpdateWithoutUsersInput, Prisma.FarmUncheckedUpdateWithoutUsersInput>
+  create: Prisma.XOR<Prisma.FarmCreateWithoutUsersInput, Prisma.FarmUncheckedCreateWithoutUsersInput>
+  where?: Prisma.FarmWhereInput
 }
 
-export type FarmUpsertWithWhereUniqueWithoutOwnerInput = {
-  where: Prisma.FarmWhereUniqueInput
-  update: Prisma.XOR<Prisma.FarmUpdateWithoutOwnerInput, Prisma.FarmUncheckedUpdateWithoutOwnerInput>
-  create: Prisma.XOR<Prisma.FarmCreateWithoutOwnerInput, Prisma.FarmUncheckedCreateWithoutOwnerInput>
+export type FarmUpdateToOneWithWhereWithoutUsersInput = {
+  where?: Prisma.FarmWhereInput
+  data: Prisma.XOR<Prisma.FarmUpdateWithoutUsersInput, Prisma.FarmUncheckedUpdateWithoutUsersInput>
 }
 
-export type FarmUpdateWithWhereUniqueWithoutOwnerInput = {
-  where: Prisma.FarmWhereUniqueInput
-  data: Prisma.XOR<Prisma.FarmUpdateWithoutOwnerInput, Prisma.FarmUncheckedUpdateWithoutOwnerInput>
-}
-
-export type FarmUpdateManyWithWhereWithoutOwnerInput = {
-  where: Prisma.FarmScalarWhereInput
-  data: Prisma.XOR<Prisma.FarmUpdateManyMutationInput, Prisma.FarmUncheckedUpdateManyWithoutOwnerInput>
-}
-
-export type FarmCreateManyLogoInput = {
-  id?: string
-  name: string
-  location?: string | null
-  description?: string | null
-  website?: string | null
-  herdSize?: number | null
-  farmType?: string | null
-  ownerId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type FarmUpdateWithoutLogoInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  owner?: Prisma.UserUpdateOneWithoutFarmsNestedInput
-  jobs?: Prisma.JobUpdateManyWithoutFarmNestedInput
-}
-
-export type FarmUncheckedUpdateWithoutLogoInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
-}
-
-export type FarmUncheckedUpdateManyWithoutLogoInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  ownerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type FarmCreateManyOwnerInput = {
-  id?: string
-  name: string
-  location?: string | null
-  description?: string | null
-  website?: string | null
-  herdSize?: number | null
-  farmType?: string | null
-  logoId?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type FarmUpdateWithoutOwnerInput = {
+export type FarmUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -891,7 +757,7 @@ export type FarmUpdateWithoutOwnerInput = {
   jobs?: Prisma.JobUpdateManyWithoutFarmNestedInput
 }
 
-export type FarmUncheckedUpdateWithoutOwnerInput = {
+export type FarmUncheckedUpdateWithoutUsersInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -903,19 +769,6 @@ export type FarmUncheckedUpdateWithoutOwnerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
-}
-
-export type FarmUncheckedUpdateManyWithoutOwnerInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -957,13 +810,12 @@ export type FarmSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   website?: boolean
   herdSize?: boolean
   farmType?: boolean
-  ownerId?: boolean
   logoId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  owner?: boolean | Prisma.Farm$ownerArgs<ExtArgs>
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
   jobs?: boolean | Prisma.Farm$jobsArgs<ExtArgs>
+  users?: boolean | Prisma.Farm$usersArgs<ExtArgs>
   _count?: boolean | Prisma.FarmCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["farm"]>
 
@@ -975,11 +827,9 @@ export type FarmSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   website?: boolean
   herdSize?: boolean
   farmType?: boolean
-  ownerId?: boolean
   logoId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  owner?: boolean | Prisma.Farm$ownerArgs<ExtArgs>
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
 }, ExtArgs["result"]["farm"]>
 
@@ -991,11 +841,9 @@ export type FarmSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   website?: boolean
   herdSize?: boolean
   farmType?: boolean
-  ownerId?: boolean
   logoId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  owner?: boolean | Prisma.Farm$ownerArgs<ExtArgs>
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
 }, ExtArgs["result"]["farm"]>
 
@@ -1007,34 +855,31 @@ export type FarmSelectScalar = {
   website?: boolean
   herdSize?: boolean
   farmType?: boolean
-  ownerId?: boolean
   logoId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FarmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "location" | "description" | "website" | "herdSize" | "farmType" | "ownerId" | "logoId" | "createdAt" | "updatedAt", ExtArgs["result"]["farm"]>
+export type FarmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "location" | "description" | "website" | "herdSize" | "farmType" | "logoId" | "createdAt" | "updatedAt", ExtArgs["result"]["farm"]>
 export type FarmInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  owner?: boolean | Prisma.Farm$ownerArgs<ExtArgs>
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
   jobs?: boolean | Prisma.Farm$jobsArgs<ExtArgs>
+  users?: boolean | Prisma.Farm$usersArgs<ExtArgs>
   _count?: boolean | Prisma.FarmCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FarmIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  owner?: boolean | Prisma.Farm$ownerArgs<ExtArgs>
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
 }
 export type FarmIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  owner?: boolean | Prisma.Farm$ownerArgs<ExtArgs>
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
 }
 
 export type $FarmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Farm"
   objects: {
-    owner: Prisma.$UserPayload<ExtArgs> | null
     logo: Prisma.$FileInstancePayload<ExtArgs> | null
     jobs: Prisma.$JobPayload<ExtArgs>[]
+    users: Prisma.$UserPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1044,7 +889,6 @@ export type $FarmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     website: string | null
     herdSize: number | null
     farmType: string | null
-    ownerId: string | null
     logoId: string | null
     createdAt: Date
     updatedAt: Date
@@ -1442,9 +1286,9 @@ readonly fields: FarmFieldRefs;
  */
 export interface Prisma__FarmClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  owner<T extends Prisma.Farm$ownerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Farm$ownerArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   logo<T extends Prisma.Farm$logoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Farm$logoArgs<ExtArgs>>): Prisma.Prisma__FileInstanceClient<runtime.Types.Result.GetResult<Prisma.$FileInstancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   jobs<T extends Prisma.Farm$jobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Farm$jobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  users<T extends Prisma.Farm$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Farm$usersArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1481,7 +1325,6 @@ export interface FarmFieldRefs {
   readonly website: Prisma.FieldRef<"Farm", 'String'>
   readonly herdSize: Prisma.FieldRef<"Farm", 'Int'>
   readonly farmType: Prisma.FieldRef<"Farm", 'String'>
-  readonly ownerId: Prisma.FieldRef<"Farm", 'String'>
   readonly logoId: Prisma.FieldRef<"Farm", 'String'>
   readonly createdAt: Prisma.FieldRef<"Farm", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Farm", 'DateTime'>
@@ -1881,25 +1724,6 @@ export type FarmDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Farm.owner
- */
-export type Farm$ownerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the User
-   */
-  select?: Prisma.UserSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the User
-   */
-  omit?: Prisma.UserOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserInclude<ExtArgs> | null
-  where?: Prisma.UserWhereInput
-}
-
-/**
  * Farm.logo
  */
 export type Farm$logoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1940,6 +1764,25 @@ export type Farm$jobsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   take?: number
   skip?: number
   distinct?: Prisma.JobScalarFieldEnum | Prisma.JobScalarFieldEnum[]
+}
+
+/**
+ * Farm.users
+ */
+export type Farm$usersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the User
+   */
+  select?: Prisma.UserSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the User
+   */
+  omit?: Prisma.UserOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserInclude<ExtArgs> | null
+  where?: Prisma.UserWhereInput
 }
 
 /**

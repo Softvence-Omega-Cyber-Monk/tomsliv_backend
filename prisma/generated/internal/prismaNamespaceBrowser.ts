@@ -126,7 +126,6 @@ export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeo
 
 export const CVScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   isSaved: 'isSaved',
   firstName: 'firstName',
   lastName: 'lastName',
@@ -154,6 +153,7 @@ export const ExperienceScalarFieldEnum = {
   jobTitle: 'jobTitle',
   jobType: 'jobType',
   company: 'company',
+  summary: 'summary',
   startDate: 'startDate',
   endDate: 'endDate',
   isOngoing: 'isOngoing',
@@ -217,6 +217,7 @@ export const JobApplicationScalarFieldEnum = {
   jobId: 'jobId',
   cvId: 'cvId',
   isAppliedWithSavedCV: 'isAppliedWithSavedCV',
+  aiGeneratedScore: 'aiGeneratedScore',
   status: 'status',
   appliedAt: 'appliedAt'
 } as const
@@ -285,7 +286,6 @@ export type UserNotificationScalarFieldEnum = (typeof UserNotificationScalarFiel
 
 export const NotificationSettingsScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   emailNotifications: 'emailNotifications',
   weeklyDigest: 'weeklyDigest',
   newApplicantAlert: 'newApplicantAlert',
@@ -302,6 +302,7 @@ export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  phone: 'phone',
   password: 'password',
   role: 'role',
   status: 'status',
@@ -309,6 +310,9 @@ export const UserScalarFieldEnum = {
   lastLoginAt: 'lastLoginAt',
   lastActiveAt: 'lastActiveAt',
   profilePictureId: 'profilePictureId',
+  farmId: 'farmId',
+  savedCVId: 'savedCVId',
+  notificationSettingsId: 'notificationSettingsId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -324,7 +328,6 @@ export const FarmScalarFieldEnum = {
   website: 'website',
   herdSize: 'herdSize',
   farmType: 'farmType',
-  ownerId: 'ownerId',
   logoId: 'logoId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

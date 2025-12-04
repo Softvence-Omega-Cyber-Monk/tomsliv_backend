@@ -61,6 +61,7 @@ export class AuthLoginService {
 
     return successResponse(
       {
+        loginType: user.role,
         user: await this.utils.sanitizeUser(updatedUser),
         token,
       },

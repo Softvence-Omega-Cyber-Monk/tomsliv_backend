@@ -20,8 +20,18 @@ export type JobApplicationModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateJobApplication = {
   _count: JobApplicationCountAggregateOutputType | null
+  _avg: JobApplicationAvgAggregateOutputType | null
+  _sum: JobApplicationSumAggregateOutputType | null
   _min: JobApplicationMinAggregateOutputType | null
   _max: JobApplicationMaxAggregateOutputType | null
+}
+
+export type JobApplicationAvgAggregateOutputType = {
+  aiGeneratedScore: number | null
+}
+
+export type JobApplicationSumAggregateOutputType = {
+  aiGeneratedScore: number | null
 }
 
 export type JobApplicationMinAggregateOutputType = {
@@ -30,6 +40,7 @@ export type JobApplicationMinAggregateOutputType = {
   jobId: string | null
   cvId: string | null
   isAppliedWithSavedCV: boolean | null
+  aiGeneratedScore: number | null
   status: $Enums.ApplicationStatus | null
   appliedAt: Date | null
 }
@@ -40,6 +51,7 @@ export type JobApplicationMaxAggregateOutputType = {
   jobId: string | null
   cvId: string | null
   isAppliedWithSavedCV: boolean | null
+  aiGeneratedScore: number | null
   status: $Enums.ApplicationStatus | null
   appliedAt: Date | null
 }
@@ -50,11 +62,20 @@ export type JobApplicationCountAggregateOutputType = {
   jobId: number
   cvId: number
   isAppliedWithSavedCV: number
+  aiGeneratedScore: number
   status: number
   appliedAt: number
   _all: number
 }
 
+
+export type JobApplicationAvgAggregateInputType = {
+  aiGeneratedScore?: true
+}
+
+export type JobApplicationSumAggregateInputType = {
+  aiGeneratedScore?: true
+}
 
 export type JobApplicationMinAggregateInputType = {
   id?: true
@@ -62,6 +83,7 @@ export type JobApplicationMinAggregateInputType = {
   jobId?: true
   cvId?: true
   isAppliedWithSavedCV?: true
+  aiGeneratedScore?: true
   status?: true
   appliedAt?: true
 }
@@ -72,6 +94,7 @@ export type JobApplicationMaxAggregateInputType = {
   jobId?: true
   cvId?: true
   isAppliedWithSavedCV?: true
+  aiGeneratedScore?: true
   status?: true
   appliedAt?: true
 }
@@ -82,6 +105,7 @@ export type JobApplicationCountAggregateInputType = {
   jobId?: true
   cvId?: true
   isAppliedWithSavedCV?: true
+  aiGeneratedScore?: true
   status?: true
   appliedAt?: true
   _all?: true
@@ -125,6 +149,18 @@ export type JobApplicationAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: JobApplicationAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: JobApplicationSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: JobApplicationMinAggregateInputType
@@ -155,6 +191,8 @@ export type JobApplicationGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: JobApplicationCountAggregateInputType | true
+  _avg?: JobApplicationAvgAggregateInputType
+  _sum?: JobApplicationSumAggregateInputType
   _min?: JobApplicationMinAggregateInputType
   _max?: JobApplicationMaxAggregateInputType
 }
@@ -165,9 +203,12 @@ export type JobApplicationGroupByOutputType = {
   jobId: string
   cvId: string
   isAppliedWithSavedCV: boolean
+  aiGeneratedScore: number | null
   status: $Enums.ApplicationStatus
   appliedAt: Date
   _count: JobApplicationCountAggregateOutputType | null
+  _avg: JobApplicationAvgAggregateOutputType | null
+  _sum: JobApplicationSumAggregateOutputType | null
   _min: JobApplicationMinAggregateOutputType | null
   _max: JobApplicationMaxAggregateOutputType | null
 }
@@ -196,6 +237,7 @@ export type JobApplicationWhereInput = {
   jobId?: Prisma.StringFilter<"JobApplication"> | string
   cvId?: Prisma.StringFilter<"JobApplication"> | string
   isAppliedWithSavedCV?: Prisma.BoolFilter<"JobApplication"> | boolean
+  aiGeneratedScore?: Prisma.FloatNullableFilter<"JobApplication"> | number | null
   status?: Prisma.EnumApplicationStatusFilter<"JobApplication"> | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFilter<"JobApplication"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -209,6 +251,7 @@ export type JobApplicationOrderByWithRelationInput = {
   jobId?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   isAppliedWithSavedCV?: Prisma.SortOrder
+  aiGeneratedScore?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   appliedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -226,6 +269,7 @@ export type JobApplicationWhereUniqueInput = Prisma.AtLeast<{
   jobId?: Prisma.StringFilter<"JobApplication"> | string
   cvId?: Prisma.StringFilter<"JobApplication"> | string
   isAppliedWithSavedCV?: Prisma.BoolFilter<"JobApplication"> | boolean
+  aiGeneratedScore?: Prisma.FloatNullableFilter<"JobApplication"> | number | null
   status?: Prisma.EnumApplicationStatusFilter<"JobApplication"> | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFilter<"JobApplication"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -239,11 +283,14 @@ export type JobApplicationOrderByWithAggregationInput = {
   jobId?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   isAppliedWithSavedCV?: Prisma.SortOrder
+  aiGeneratedScore?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   appliedAt?: Prisma.SortOrder
   _count?: Prisma.JobApplicationCountOrderByAggregateInput
+  _avg?: Prisma.JobApplicationAvgOrderByAggregateInput
   _max?: Prisma.JobApplicationMaxOrderByAggregateInput
   _min?: Prisma.JobApplicationMinOrderByAggregateInput
+  _sum?: Prisma.JobApplicationSumOrderByAggregateInput
 }
 
 export type JobApplicationScalarWhereWithAggregatesInput = {
@@ -255,6 +302,7 @@ export type JobApplicationScalarWhereWithAggregatesInput = {
   jobId?: Prisma.StringWithAggregatesFilter<"JobApplication"> | string
   cvId?: Prisma.StringWithAggregatesFilter<"JobApplication"> | string
   isAppliedWithSavedCV?: Prisma.BoolWithAggregatesFilter<"JobApplication"> | boolean
+  aiGeneratedScore?: Prisma.FloatNullableWithAggregatesFilter<"JobApplication"> | number | null
   status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"JobApplication"> | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeWithAggregatesFilter<"JobApplication"> | Date | string
 }
@@ -262,6 +310,7 @@ export type JobApplicationScalarWhereWithAggregatesInput = {
 export type JobApplicationCreateInput = {
   id?: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobApplicationsInput
@@ -275,6 +324,7 @@ export type JobApplicationUncheckedCreateInput = {
   jobId: string
   cvId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -282,6 +332,7 @@ export type JobApplicationUncheckedCreateInput = {
 export type JobApplicationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobApplicationsNestedInput
@@ -295,6 +346,7 @@ export type JobApplicationUncheckedUpdateInput = {
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -305,6 +357,7 @@ export type JobApplicationCreateManyInput = {
   jobId: string
   cvId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -312,6 +365,7 @@ export type JobApplicationCreateManyInput = {
 export type JobApplicationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -322,6 +376,7 @@ export type JobApplicationUncheckedUpdateManyInput = {
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -347,8 +402,13 @@ export type JobApplicationCountOrderByAggregateInput = {
   jobId?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   isAppliedWithSavedCV?: Prisma.SortOrder
+  aiGeneratedScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
   appliedAt?: Prisma.SortOrder
+}
+
+export type JobApplicationAvgOrderByAggregateInput = {
+  aiGeneratedScore?: Prisma.SortOrder
 }
 
 export type JobApplicationMaxOrderByAggregateInput = {
@@ -357,6 +417,7 @@ export type JobApplicationMaxOrderByAggregateInput = {
   jobId?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   isAppliedWithSavedCV?: Prisma.SortOrder
+  aiGeneratedScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
   appliedAt?: Prisma.SortOrder
 }
@@ -367,8 +428,13 @@ export type JobApplicationMinOrderByAggregateInput = {
   jobId?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   isAppliedWithSavedCV?: Prisma.SortOrder
+  aiGeneratedScore?: Prisma.SortOrder
   status?: Prisma.SortOrder
   appliedAt?: Prisma.SortOrder
+}
+
+export type JobApplicationSumOrderByAggregateInput = {
+  aiGeneratedScore?: Prisma.SortOrder
 }
 
 export type JobApplicationCreateNestedManyWithoutCvInput = {
@@ -411,6 +477,14 @@ export type JobApplicationUncheckedUpdateManyWithoutCvNestedInput = {
   update?: Prisma.JobApplicationUpdateWithWhereUniqueWithoutCvInput | Prisma.JobApplicationUpdateWithWhereUniqueWithoutCvInput[]
   updateMany?: Prisma.JobApplicationUpdateManyWithWhereWithoutCvInput | Prisma.JobApplicationUpdateManyWithWhereWithoutCvInput[]
   deleteMany?: Prisma.JobApplicationScalarWhereInput | Prisma.JobApplicationScalarWhereInput[]
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type EnumApplicationStatusFieldUpdateOperationsInput = {
@@ -504,6 +578,7 @@ export type JobApplicationUncheckedUpdateManyWithoutUserNestedInput = {
 export type JobApplicationCreateWithoutCvInput = {
   id?: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobApplicationsInput
@@ -515,6 +590,7 @@ export type JobApplicationUncheckedCreateWithoutCvInput = {
   userId: string
   jobId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -554,6 +630,7 @@ export type JobApplicationScalarWhereInput = {
   jobId?: Prisma.StringFilter<"JobApplication"> | string
   cvId?: Prisma.StringFilter<"JobApplication"> | string
   isAppliedWithSavedCV?: Prisma.BoolFilter<"JobApplication"> | boolean
+  aiGeneratedScore?: Prisma.FloatNullableFilter<"JobApplication"> | number | null
   status?: Prisma.EnumApplicationStatusFilter<"JobApplication"> | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFilter<"JobApplication"> | Date | string
 }
@@ -561,6 +638,7 @@ export type JobApplicationScalarWhereInput = {
 export type JobApplicationCreateWithoutJobInput = {
   id?: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutJobApplicationsInput
@@ -572,6 +650,7 @@ export type JobApplicationUncheckedCreateWithoutJobInput = {
   userId: string
   cvId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -605,6 +684,7 @@ export type JobApplicationUpdateManyWithWhereWithoutJobInput = {
 export type JobApplicationCreateWithoutUserInput = {
   id?: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutJobApplicationsInput
@@ -616,6 +696,7 @@ export type JobApplicationUncheckedCreateWithoutUserInput = {
   jobId: string
   cvId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -651,6 +732,7 @@ export type JobApplicationCreateManyCvInput = {
   userId: string
   jobId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -658,6 +740,7 @@ export type JobApplicationCreateManyCvInput = {
 export type JobApplicationUpdateWithoutCvInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobApplicationsNestedInput
@@ -669,6 +752,7 @@ export type JobApplicationUncheckedUpdateWithoutCvInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -678,6 +762,7 @@ export type JobApplicationUncheckedUpdateManyWithoutCvInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -687,6 +772,7 @@ export type JobApplicationCreateManyJobInput = {
   userId: string
   cvId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -694,6 +780,7 @@ export type JobApplicationCreateManyJobInput = {
 export type JobApplicationUpdateWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutJobApplicationsNestedInput
@@ -705,6 +792,7 @@ export type JobApplicationUncheckedUpdateWithoutJobInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -714,6 +802,7 @@ export type JobApplicationUncheckedUpdateManyWithoutJobInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -723,6 +812,7 @@ export type JobApplicationCreateManyUserInput = {
   jobId: string
   cvId: string
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: number | null
   status?: $Enums.ApplicationStatus
   appliedAt?: Date | string
 }
@@ -730,6 +820,7 @@ export type JobApplicationCreateManyUserInput = {
 export type JobApplicationUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutJobApplicationsNestedInput
@@ -741,6 +832,7 @@ export type JobApplicationUncheckedUpdateWithoutUserInput = {
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -750,6 +842,7 @@ export type JobApplicationUncheckedUpdateManyWithoutUserInput = {
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   isAppliedWithSavedCV?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  aiGeneratedScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
   appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -762,6 +855,7 @@ export type JobApplicationSelect<ExtArgs extends runtime.Types.Extensions.Intern
   jobId?: boolean
   cvId?: boolean
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: boolean
   status?: boolean
   appliedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -775,6 +869,7 @@ export type JobApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   jobId?: boolean
   cvId?: boolean
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: boolean
   status?: boolean
   appliedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -788,6 +883,7 @@ export type JobApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   jobId?: boolean
   cvId?: boolean
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: boolean
   status?: boolean
   appliedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -801,11 +897,12 @@ export type JobApplicationSelectScalar = {
   jobId?: boolean
   cvId?: boolean
   isAppliedWithSavedCV?: boolean
+  aiGeneratedScore?: boolean
   status?: boolean
   appliedAt?: boolean
 }
 
-export type JobApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "jobId" | "cvId" | "isAppliedWithSavedCV" | "status" | "appliedAt", ExtArgs["result"]["jobApplication"]>
+export type JobApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "jobId" | "cvId" | "isAppliedWithSavedCV" | "aiGeneratedScore" | "status" | "appliedAt", ExtArgs["result"]["jobApplication"]>
 export type JobApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -835,6 +932,7 @@ export type $JobApplicationPayload<ExtArgs extends runtime.Types.Extensions.Inte
     jobId: string
     cvId: string
     isAppliedWithSavedCV: boolean
+    aiGeneratedScore: number | null
     status: $Enums.ApplicationStatus
     appliedAt: Date
   }, ExtArgs["result"]["jobApplication"]>
@@ -1268,6 +1366,7 @@ export interface JobApplicationFieldRefs {
   readonly jobId: Prisma.FieldRef<"JobApplication", 'String'>
   readonly cvId: Prisma.FieldRef<"JobApplication", 'String'>
   readonly isAppliedWithSavedCV: Prisma.FieldRef<"JobApplication", 'Boolean'>
+  readonly aiGeneratedScore: Prisma.FieldRef<"JobApplication", 'Float'>
   readonly status: Prisma.FieldRef<"JobApplication", 'ApplicationStatus'>
   readonly appliedAt: Prisma.FieldRef<"JobApplication", 'DateTime'>
 }

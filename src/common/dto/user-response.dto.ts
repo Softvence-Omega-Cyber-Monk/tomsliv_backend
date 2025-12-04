@@ -12,6 +12,9 @@ export class UserResponseDto {
   @Expose()
   email: string;
 
+  @Expose()
+  phone?: string;
+
   // ===== Settings =====
   @Expose()
   role: UserRole;
