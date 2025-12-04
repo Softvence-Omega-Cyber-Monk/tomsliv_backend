@@ -6,7 +6,7 @@ import { PrismaService } from '@/lib/prisma/prisma.service';
 import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { Injectable } from '@nestjs/common';
 import { UserRole } from '@prisma';
-import { RegisterDto } from '../dto/register.dto';
+import { FarmRegisterDto, RegisterDto } from '../dto/register.dto';
 
 @Injectable()
 export class AuthRegisterService {
@@ -16,7 +16,7 @@ export class AuthRegisterService {
     private readonly utils: AuthUtilsService,
   ) {}
 
-  @HandleError('Registration failed', 'User')
+  @HandleError('User Registration failed', 'User')
   async register(dto: RegisterDto): Promise<TResponse<any>> {
     const { email, password, name } = dto;
 
@@ -56,6 +56,60 @@ export class AuthRegisterService {
     return successResponse(
       {
         email: newUser.email,
+      },
+      `Registration successful. A verification email has been sent to ${newUser.email}.`,
+    );
+  }
+
+  @HandleError('Farm Owner Registration failed', 'Farm Owner')
+  async farmRegister(dto: FarmRegisterDto): Promise<TResponse<any>> {
+    const { email, password, name, farmName } = dto;
+
+    // Check if user email already exists
+    const existingUser = await this.prisma.client.user.findUnique({
+      where: { email },
+    });
+    if (existingUser) {
+      throw new AppError(400, 'User already exists with this email');
+    }
+
+    // Create new user with farm
+    const newUser = await this.prisma.client.user.create({
+      data: {
+        email,
+        name,
+        role: UserRole.FARM_OWNER,
+        password: await this.utils.hash(password),
+        farm: {
+          create: {
+            name: farmName,
+          },
+        },
+      },
+      include: {
+        farm: true,
+      },
+    });
+
+    // Generate OTP and save
+    const otp = await this.utils.generateOTPAndSave(newUser.id, 'VERIFICATION');
+
+    // Send verification email
+    await this.authMailService.sendVerificationCodeEmail(
+      email,
+      otp.toString(),
+      {
+        subject: 'Verify your email',
+        message:
+          'Welcome to our platform! Your account has been successfully created.',
+      },
+    );
+
+    // Return sanitized response
+    return successResponse(
+      {
+        email: newUser.email,
+        farm: newUser.farm,
       },
       `Registration successful. A verification email has been sent to ${newUser.email}.`,
     );

@@ -263,10 +263,10 @@ export type IdealCandidateOrderByWithRelationInput = {
 
 export type IdealCandidateWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  jobId?: string
   AND?: Prisma.IdealCandidateWhereInput | Prisma.IdealCandidateWhereInput[]
   OR?: Prisma.IdealCandidateWhereInput[]
   NOT?: Prisma.IdealCandidateWhereInput | Prisma.IdealCandidateWhereInput[]
-  jobId?: Prisma.StringFilter<"IdealCandidate"> | string
   minimumExperienceYears?: Prisma.IntFilter<"IdealCandidate"> | number
   maximumExperienceYears?: Prisma.IntFilter<"IdealCandidate"> | number
   coreSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
@@ -276,7 +276,7 @@ export type IdealCandidateWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
-}, "id">
+}, "id" | "jobId">
 
 export type IdealCandidateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -475,14 +475,9 @@ export type IdealCandidateSumOrderByAggregateInput = {
   maximumExperienceYears?: Prisma.SortOrder
 }
 
-export type IdealCandidateListRelationFilter = {
-  every?: Prisma.IdealCandidateWhereInput
-  some?: Prisma.IdealCandidateWhereInput
-  none?: Prisma.IdealCandidateWhereInput
-}
-
-export type IdealCandidateOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
+export type IdealCandidateNullableScalarRelationFilter = {
+  is?: Prisma.IdealCandidateWhereInput | null
+  isNot?: Prisma.IdealCandidateWhereInput | null
 }
 
 export type IdealCandidateCreatecoreSkillsInput = {
@@ -521,46 +516,36 @@ export type IdealCandidateUpdatenonNegotiableSkillsInput = {
   push?: $Enums.NonNegotiableSkill | $Enums.NonNegotiableSkill[]
 }
 
-export type IdealCandidateCreateNestedManyWithoutJobInput = {
-  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput> | Prisma.IdealCandidateCreateWithoutJobInput[] | Prisma.IdealCandidateUncheckedCreateWithoutJobInput[]
-  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput | Prisma.IdealCandidateCreateOrConnectWithoutJobInput[]
-  createMany?: Prisma.IdealCandidateCreateManyJobInputEnvelope
-  connect?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
+export type IdealCandidateCreateNestedOneWithoutJobInput = {
+  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput>
+  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput
+  connect?: Prisma.IdealCandidateWhereUniqueInput
 }
 
-export type IdealCandidateUncheckedCreateNestedManyWithoutJobInput = {
-  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput> | Prisma.IdealCandidateCreateWithoutJobInput[] | Prisma.IdealCandidateUncheckedCreateWithoutJobInput[]
-  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput | Prisma.IdealCandidateCreateOrConnectWithoutJobInput[]
-  createMany?: Prisma.IdealCandidateCreateManyJobInputEnvelope
-  connect?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
+export type IdealCandidateUncheckedCreateNestedOneWithoutJobInput = {
+  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput>
+  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput
+  connect?: Prisma.IdealCandidateWhereUniqueInput
 }
 
-export type IdealCandidateUpdateManyWithoutJobNestedInput = {
-  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput> | Prisma.IdealCandidateCreateWithoutJobInput[] | Prisma.IdealCandidateUncheckedCreateWithoutJobInput[]
-  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput | Prisma.IdealCandidateCreateOrConnectWithoutJobInput[]
-  upsert?: Prisma.IdealCandidateUpsertWithWhereUniqueWithoutJobInput | Prisma.IdealCandidateUpsertWithWhereUniqueWithoutJobInput[]
-  createMany?: Prisma.IdealCandidateCreateManyJobInputEnvelope
-  set?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  disconnect?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  delete?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  connect?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  update?: Prisma.IdealCandidateUpdateWithWhereUniqueWithoutJobInput | Prisma.IdealCandidateUpdateWithWhereUniqueWithoutJobInput[]
-  updateMany?: Prisma.IdealCandidateUpdateManyWithWhereWithoutJobInput | Prisma.IdealCandidateUpdateManyWithWhereWithoutJobInput[]
-  deleteMany?: Prisma.IdealCandidateScalarWhereInput | Prisma.IdealCandidateScalarWhereInput[]
+export type IdealCandidateUpdateOneWithoutJobNestedInput = {
+  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput>
+  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput
+  upsert?: Prisma.IdealCandidateUpsertWithoutJobInput
+  disconnect?: Prisma.IdealCandidateWhereInput | boolean
+  delete?: Prisma.IdealCandidateWhereInput | boolean
+  connect?: Prisma.IdealCandidateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IdealCandidateUpdateToOneWithWhereWithoutJobInput, Prisma.IdealCandidateUpdateWithoutJobInput>, Prisma.IdealCandidateUncheckedUpdateWithoutJobInput>
 }
 
-export type IdealCandidateUncheckedUpdateManyWithoutJobNestedInput = {
-  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput> | Prisma.IdealCandidateCreateWithoutJobInput[] | Prisma.IdealCandidateUncheckedCreateWithoutJobInput[]
-  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput | Prisma.IdealCandidateCreateOrConnectWithoutJobInput[]
-  upsert?: Prisma.IdealCandidateUpsertWithWhereUniqueWithoutJobInput | Prisma.IdealCandidateUpsertWithWhereUniqueWithoutJobInput[]
-  createMany?: Prisma.IdealCandidateCreateManyJobInputEnvelope
-  set?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  disconnect?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  delete?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  connect?: Prisma.IdealCandidateWhereUniqueInput | Prisma.IdealCandidateWhereUniqueInput[]
-  update?: Prisma.IdealCandidateUpdateWithWhereUniqueWithoutJobInput | Prisma.IdealCandidateUpdateWithWhereUniqueWithoutJobInput[]
-  updateMany?: Prisma.IdealCandidateUpdateManyWithWhereWithoutJobInput | Prisma.IdealCandidateUpdateManyWithWhereWithoutJobInput[]
-  deleteMany?: Prisma.IdealCandidateScalarWhereInput | Prisma.IdealCandidateScalarWhereInput[]
+export type IdealCandidateUncheckedUpdateOneWithoutJobNestedInput = {
+  create?: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput>
+  connectOrCreate?: Prisma.IdealCandidateCreateOrConnectWithoutJobInput
+  upsert?: Prisma.IdealCandidateUpsertWithoutJobInput
+  disconnect?: Prisma.IdealCandidateWhereInput | boolean
+  delete?: Prisma.IdealCandidateWhereInput | boolean
+  connect?: Prisma.IdealCandidateWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.IdealCandidateUpdateToOneWithWhereWithoutJobInput, Prisma.IdealCandidateUpdateWithoutJobInput>, Prisma.IdealCandidateUncheckedUpdateWithoutJobInput>
 }
 
 export type IdealCandidateCreateWithoutJobInput = {
@@ -592,53 +577,15 @@ export type IdealCandidateCreateOrConnectWithoutJobInput = {
   create: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput>
 }
 
-export type IdealCandidateCreateManyJobInputEnvelope = {
-  data: Prisma.IdealCandidateCreateManyJobInput | Prisma.IdealCandidateCreateManyJobInput[]
-  skipDuplicates?: boolean
-}
-
-export type IdealCandidateUpsertWithWhereUniqueWithoutJobInput = {
-  where: Prisma.IdealCandidateWhereUniqueInput
+export type IdealCandidateUpsertWithoutJobInput = {
   update: Prisma.XOR<Prisma.IdealCandidateUpdateWithoutJobInput, Prisma.IdealCandidateUncheckedUpdateWithoutJobInput>
   create: Prisma.XOR<Prisma.IdealCandidateCreateWithoutJobInput, Prisma.IdealCandidateUncheckedCreateWithoutJobInput>
+  where?: Prisma.IdealCandidateWhereInput
 }
 
-export type IdealCandidateUpdateWithWhereUniqueWithoutJobInput = {
-  where: Prisma.IdealCandidateWhereUniqueInput
+export type IdealCandidateUpdateToOneWithWhereWithoutJobInput = {
+  where?: Prisma.IdealCandidateWhereInput
   data: Prisma.XOR<Prisma.IdealCandidateUpdateWithoutJobInput, Prisma.IdealCandidateUncheckedUpdateWithoutJobInput>
-}
-
-export type IdealCandidateUpdateManyWithWhereWithoutJobInput = {
-  where: Prisma.IdealCandidateScalarWhereInput
-  data: Prisma.XOR<Prisma.IdealCandidateUpdateManyMutationInput, Prisma.IdealCandidateUncheckedUpdateManyWithoutJobInput>
-}
-
-export type IdealCandidateScalarWhereInput = {
-  AND?: Prisma.IdealCandidateScalarWhereInput | Prisma.IdealCandidateScalarWhereInput[]
-  OR?: Prisma.IdealCandidateScalarWhereInput[]
-  NOT?: Prisma.IdealCandidateScalarWhereInput | Prisma.IdealCandidateScalarWhereInput[]
-  id?: Prisma.StringFilter<"IdealCandidate"> | string
-  jobId?: Prisma.StringFilter<"IdealCandidate"> | string
-  minimumExperienceYears?: Prisma.IntFilter<"IdealCandidate"> | number
-  maximumExperienceYears?: Prisma.IntFilter<"IdealCandidate"> | number
-  coreSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
-  desiredPersonalityTraits?: Prisma.EnumDesiredPersonalityTraitNullableListFilter<"IdealCandidate">
-  preferredCertifications?: Prisma.EnumPreferredCertificationNullableListFilter<"IdealCandidate">
-  nonNegotiableSkills?: Prisma.EnumNonNegotiableSkillNullableListFilter<"IdealCandidate">
-  createdAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
-}
-
-export type IdealCandidateCreateManyJobInput = {
-  id?: string
-  minimumExperienceYears: number
-  maximumExperienceYears: number
-  coreSkills?: Prisma.IdealCandidateCreatecoreSkillsInput | string[]
-  desiredPersonalityTraits?: Prisma.IdealCandidateCreatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateCreatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type IdealCandidateUpdateWithoutJobInput = {
@@ -654,18 +601,6 @@ export type IdealCandidateUpdateWithoutJobInput = {
 }
 
 export type IdealCandidateUncheckedUpdateWithoutJobInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  minimumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
-  maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
-  coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
-  desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type IdealCandidateUncheckedUpdateManyWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   minimumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number

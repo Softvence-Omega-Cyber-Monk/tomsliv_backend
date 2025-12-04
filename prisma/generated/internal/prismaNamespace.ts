@@ -1683,7 +1683,6 @@ export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeo
 
 export const CVScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   isSaved: 'isSaved',
   firstName: 'firstName',
   lastName: 'lastName',
@@ -1711,6 +1710,7 @@ export const ExperienceScalarFieldEnum = {
   jobTitle: 'jobTitle',
   jobType: 'jobType',
   company: 'company',
+  summary: 'summary',
   startDate: 'startDate',
   endDate: 'endDate',
   isOngoing: 'isOngoing',
@@ -1866,6 +1866,8 @@ export const UserScalarFieldEnum = {
   lastLoginAt: 'lastLoginAt',
   lastActiveAt: 'lastActiveAt',
   profilePictureId: 'profilePictureId',
+  farmId: 'farmId',
+  savedCVId: 'savedCVId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1881,7 +1883,6 @@ export const FarmScalarFieldEnum = {
   website: 'website',
   herdSize: 'herdSize',
   farmType: 'farmType',
-  ownerId: 'ownerId',
   logoId: 'logoId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -25,7 +25,7 @@ import {
   ForgotPasswordDto,
   ResetPasswordDto,
 } from './dto/password.dto';
-import { RegisterDto } from './dto/register.dto';
+import { FarmRegisterDto, RegisterDto } from './dto/register.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthGetProfileService } from './services/auth-get-profile.service';
 import { AuthLoginService } from './services/auth-login.service';
@@ -48,10 +48,16 @@ export class AuthController {
     private readonly authUpdateProfileService: AuthUpdateProfileService,
   ) {}
 
-  @ApiOperation({ summary: 'User Registration with Email' })
+  @ApiOperation({ summary: 'User Registration' })
   @Post('register')
   async register(@Body() body: RegisterDto) {
     return this.authRegisterService.register(body);
+  }
+
+  @ApiOperation({ summary: 'Farm Owner Registration' })
+  @Post('register-farm')
+  async registerFarm(@Body() body: FarmRegisterDto) {
+    return this.authRegisterService.farmRegister(body);
   }
 
   @ApiOperation({ summary: 'Verify OTP after Registration or Login' })
