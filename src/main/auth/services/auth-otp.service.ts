@@ -78,11 +78,8 @@ export class AuthOtpService {
   }
 
   @HandleError('OTP verification failed', 'User')
-  async verifyOTP(
-    dto: VerifyOTPDto,
-    type: OtpType = OtpType.VERIFICATION,
-  ): Promise<TResponse<any>> {
-    const { email, otp } = dto;
+  async verifyOTP(dto: VerifyOTPDto): Promise<TResponse<any>> {
+    const { email, otp, type = OtpType.VERIFICATION } = dto;
 
     // 1. Find user
     const user = await this.prisma.client.user.findUnique({ where: { email } });
@@ -106,10 +103,12 @@ export class AuthOtpService {
     const isCorrectOtp = await this.utils.compare(otp, userOtp.code);
     if (!isCorrectOtp) throw new AppError(400, 'Invalid OTP');
 
-    // 3. OTP verified -> delete OTP
-    await this.prisma.client.userOtp.deleteMany({
-      where: { userId: user.id, type },
-    });
+    // 3. OTP verified & is type VERIFICATION -> delete OTP
+    if (type === OtpType.VERIFICATION) {
+      await this.prisma.client.userOtp.deleteMany({
+        where: { userId: user.id, type },
+      });
+    }
 
     // 4. Mark user verified if verification OTP
     const updateData: Prisma.UserUpdateInput = {

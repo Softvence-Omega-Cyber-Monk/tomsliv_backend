@@ -35,4 +35,13 @@ export class VerifyOTPDto {
   })
   @IsEmail()
   email: string;
+
+  @ApiPropertyOptional({
+    example: OtpType.VERIFICATION,
+    description: 'OTP type',
+    enum: OtpType,
+  })
+  @IsNotEmpty()
+  @IsEnum(OtpType)
+  type: OtpType = OtpType.VERIFICATION;
 }

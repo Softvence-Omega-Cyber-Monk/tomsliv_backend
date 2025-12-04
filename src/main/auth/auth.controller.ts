@@ -35,7 +35,7 @@ import { AuthPasswordService } from './services/auth-password.service';
 import { AuthRegisterService } from './services/auth-register.service';
 import { AuthUpdateProfileService } from './services/auth-update-profile.service';
 
-@ApiTags('Auth')
+@ApiTags('Auth & Settings')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -60,13 +60,13 @@ export class AuthController {
     return this.authRegisterService.farmRegister(body);
   }
 
-  @ApiOperation({ summary: 'Verify OTP after Registration or Login' })
+  @ApiOperation({ summary: 'Verify OTP (type VERIFICATION or RESET)' })
   @Post('verify-otp')
   async verifyEmail(@Body() body: VerifyOTPDto) {
     return this.authOtpService.verifyOTP(body);
   }
 
-  @ApiOperation({ summary: 'Resend OTP to Email' })
+  @ApiOperation({ summary: 'Resend OTP to Email (type VERIFICATION or RESET)' })
   @Post('resend-otp')
   async resendOtp(@Body() body: ResendOtpDto) {
     return this.authOtpService.resendOtp(body);
