@@ -35,6 +35,9 @@ export class AuthRegisterService {
         name,
         role: UserRole.USER,
         password: await this.utils.hash(password),
+        notificationSettings: {
+          create: {},
+        },
       },
     });
 
@@ -84,6 +87,9 @@ export class AuthRegisterService {
           create: {
             name: farmName,
           },
+        },
+        notificationSettings: {
+          create: {},
         },
       },
       include: {

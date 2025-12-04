@@ -30,6 +30,18 @@ export class AuthUpdateProfileService {
       throw new AppError(404, 'User not found');
     }
 
+    // * If phone is provided, remove + and check uniqueness
+    if (dto.phone?.trim()) {
+      dto.phone = dto.phone.replace('+', '').trim();
+      const existingUserWithPhone = await this.prisma.client.user.findUnique({
+        where: { phone: dto.phone },
+      });
+
+      if (existingUserWithPhone && existingUserWithPhone.id !== userId) {
+        throw new AppError(400, 'Phone number is already in use');
+      }
+    }
+
     // * if image is provided, upload to S3 and update user
     let fileInstance: FileInstance | undefined;
     if (file) {
@@ -49,6 +61,7 @@ export class AuthUpdateProfileService {
             connect: fileInstance,
           },
         }),
+        phone: dto.phone?.trim() ? dto.phone : user.phone,
       },
       include: { profilePicture: true },
     });

@@ -8,6 +8,14 @@ export class UpdateProfileDto {
   name?: string;
 
   @ApiPropertyOptional({
+    example: '+1234567890',
+    description: 'Optional phone number',
+  })
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @ApiPropertyOptional({
     type: 'string',
     format: 'binary',
     description: 'Optional profile image',

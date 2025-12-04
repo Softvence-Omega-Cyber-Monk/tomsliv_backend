@@ -4,6 +4,7 @@ model User {
   // Identity @unique
   name     String @default("Unnamed User")
   email    String @unique
+  phone    String? @unique
   password String // hashed password
 
   // Settings
@@ -27,8 +28,11 @@ model User {
   savedCVId String? @unique
   savedCV   CV? @relation(fields: [savedCVId], references: [id], onDelete: SetNull)
 
+  // Notification Settings
+  notificationSettingsId String? @unique
+  notificationSettings NotificationSettings? @relation(fields: [notificationSettingsId], references: [id], onDelete: Cascade)
+
   // Relations
-  notificationSettings NotificationSettings[]
   notifications        UserNotification[]
   refreshTokens        RefreshToken[]
   otps                 UserOtp[]
