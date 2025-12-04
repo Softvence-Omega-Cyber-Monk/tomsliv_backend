@@ -28,10 +28,50 @@ export type UserOtp = Prisma.UserOtpModel
  */
 export type RefreshToken = Prisma.RefreshTokenModel
 /**
+ * Model Contact
+ * 
+ */
+export type Contact = Prisma.ContactModel
+/**
+ * Model CV
+ * 
+ */
+export type CV = Prisma.CVModel
+/**
+ * Model Experience
+ * 
+ */
+export type Experience = Prisma.ExperienceModel
+/**
+ * Model Education
+ * 
+ */
+export type Education = Prisma.EducationModel
+/**
  * Model FileInstance
  * 
  */
 export type FileInstance = Prisma.FileInstanceModel
+/**
+ * Model IdealCandidate
+ * 
+ */
+export type IdealCandidate = Prisma.IdealCandidateModel
+/**
+ * Model JobApplication
+ * 
+ */
+export type JobApplication = Prisma.JobApplicationModel
+/**
+ * Model SavedJobs
+ * 
+ */
+export type SavedJobs = Prisma.SavedJobsModel
+/**
+ * Model Job
+ * 
+ */
+export type Job = Prisma.JobModel
 /**
  * Model Notification
  * 
@@ -42,6 +82,11 @@ export type Notification = Prisma.NotificationModel
  * 
  */
 export type UserNotification = Prisma.UserNotificationModel
+/**
+ * Model NotificationSettings
+ * 
+ */
+export type NotificationSettings = Prisma.NotificationSettingsModel
 /**
  * Model User
  * 

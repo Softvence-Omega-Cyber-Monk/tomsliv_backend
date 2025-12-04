@@ -53,9 +53,18 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   UserOtp: 'UserOtp',
   RefreshToken: 'RefreshToken',
+  Contact: 'Contact',
+  CV: 'CV',
+  Experience: 'Experience',
+  Education: 'Education',
   FileInstance: 'FileInstance',
+  IdealCandidate: 'IdealCandidate',
+  JobApplication: 'JobApplication',
+  SavedJobs: 'SavedJobs',
+  Job: 'Job',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
+  NotificationSettings: 'NotificationSettings',
   User: 'User',
   Farm: 'Farm'
 } as const
@@ -101,6 +110,75 @@ export const RefreshTokenScalarFieldEnum = {
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
 
 
+export const ContactScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  subject: 'subject',
+  message: 'message',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+export const CVScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  isSaved: 'isSaved',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  location: 'location',
+  summary: 'summary',
+  jobTitle: 'jobTitle',
+  jobType: 'jobType',
+  availability: 'availability',
+  hasDrivingLicense: 'hasDrivingLicense',
+  eligibleToWorkInNZ: 'eligibleToWorkInNZ',
+  workPermitType: 'workPermitType',
+  customCVId: 'customCVId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CVScalarFieldEnum = (typeof CVScalarFieldEnum)[keyof typeof CVScalarFieldEnum]
+
+
+export const ExperienceScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  jobTitle: 'jobTitle',
+  jobType: 'jobType',
+  company: 'company',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isOngoing: 'isOngoing',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ExperienceScalarFieldEnum = (typeof ExperienceScalarFieldEnum)[keyof typeof ExperienceScalarFieldEnum]
+
+
+export const EducationScalarFieldEnum = {
+  id: 'id',
+  cvId: 'cvId',
+  degree: 'degree',
+  institution: 'institution',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isOngoing: 'isOngoing',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EducationScalarFieldEnum = (typeof EducationScalarFieldEnum)[keyof typeof EducationScalarFieldEnum]
+
+
 export const FileInstanceScalarFieldEnum = {
   id: 'id',
   filename: 'filename',
@@ -115,6 +193,69 @@ export const FileInstanceScalarFieldEnum = {
 } as const
 
 export type FileInstanceScalarFieldEnum = (typeof FileInstanceScalarFieldEnum)[keyof typeof FileInstanceScalarFieldEnum]
+
+
+export const IdealCandidateScalarFieldEnum = {
+  id: 'id',
+  jobId: 'jobId',
+  minimumExperienceYears: 'minimumExperienceYears',
+  maximumExperienceYears: 'maximumExperienceYears',
+  coreSkills: 'coreSkills',
+  desiredPersonalityTraits: 'desiredPersonalityTraits',
+  preferredCertifications: 'preferredCertifications',
+  nonNegotiableSkills: 'nonNegotiableSkills',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type IdealCandidateScalarFieldEnum = (typeof IdealCandidateScalarFieldEnum)[keyof typeof IdealCandidateScalarFieldEnum]
+
+
+export const JobApplicationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  jobId: 'jobId',
+  cvId: 'cvId',
+  isAppliedWithSavedCV: 'isAppliedWithSavedCV',
+  status: 'status',
+  appliedAt: 'appliedAt'
+} as const
+
+export type JobApplicationScalarFieldEnum = (typeof JobApplicationScalarFieldEnum)[keyof typeof JobApplicationScalarFieldEnum]
+
+
+export const SavedJobsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  jobId: 'jobId',
+  savedAt: 'savedAt'
+} as const
+
+export type SavedJobsScalarFieldEnum = (typeof SavedJobsScalarFieldEnum)[keyof typeof SavedJobsScalarFieldEnum]
+
+
+export const JobScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  benefits: 'benefits',
+  location: 'location',
+  jobType: 'jobType',
+  numberOfPositions: 'numberOfPositions',
+  requiredExperience: 'requiredExperience',
+  applicationDeadline: 'applicationDeadline',
+  salaryStart: 'salaryStart',
+  salaryEnd: 'salaryEnd',
+  requiredSkills: 'requiredSkills',
+  certifications: 'certifications',
+  machineryExperience: 'machineryExperience',
+  farmId: 'farmId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type JobScalarFieldEnum = (typeof JobScalarFieldEnum)[keyof typeof JobScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {
@@ -140,6 +281,21 @@ export const UserNotificationScalarFieldEnum = {
 } as const
 
 export type UserNotificationScalarFieldEnum = (typeof UserNotificationScalarFieldEnum)[keyof typeof UserNotificationScalarFieldEnum]
+
+
+export const NotificationSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  emailNotifications: 'emailNotifications',
+  weeklyDigest: 'weeklyDigest',
+  newApplicantAlert: 'newApplicantAlert',
+  updatesAndTips: 'updatesAndTips',
+  newRelatedJobsAlert: 'newRelatedJobsAlert',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationSettingsScalarFieldEnum = (typeof NotificationSettingsScalarFieldEnum)[keyof typeof NotificationSettingsScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {
@@ -200,6 +356,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const JsonNullValueFilter = {
   DbNull: 'DbNull',
   JsonNull: 'JsonNull',
@@ -207,12 +371,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

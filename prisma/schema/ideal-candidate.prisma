@@ -1,0 +1,47 @@
+model IdealCandidate {
+  id String @id @default(uuid())
+
+  job   Job    @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  jobId String
+
+  minimumExperienceYears Int
+  maximumExperienceYears Int
+
+  coreSkills String[]
+
+  desiredPersonalityTraits DesiredPersonalityTrait[]
+  preferredCertifications  PreferredCertification[]
+  nonNegotiableSkills      NonNegotiableSkill[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("ideal_candidates")
+}
+
+enum DesiredPersonalityTrait {
+  DETAIL_ORIENTED
+  TEAM_PLAYER
+  SELF_MOTIVATED
+  PROBLEM_SOLVER
+  ADAPTABLE
+  RELIABLE
+  PATIENT
+  PHYSICAL_STAMINA
+}
+
+enum PreferredCertification {
+  DAIRY_FARMING_CERTIFICATION
+  FIRST_AID_AND_CPR
+  TRACTOR_OPERATION_LICENSE
+  FOOD_SAFETY_CERTIFICATION
+  ANIMAL_WELFARE_CERTIFICATION
+}
+
+enum NonNegotiableSkill {
+  ABLE_TO_PERFORM_PHYSICAL_WORK
+  ABLE_FOR_EARLY_MORNING_SHIFTS
+  AVAILABLE_FOR_WEEKEND_WORK
+  VALID_DRIVER_S_LICENSE
+  LOCAL_RESIDENCY_OR_WILLING_TO_RELOCATE
+}
