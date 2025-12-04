@@ -3,7 +3,7 @@ import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { Injectable } from '@nestjs/common';
-import { NotificationSettings, UserRole } from '@prisma';
+import { Farm, FileInstance, NotificationSettings, UserRole } from '@prisma';
 
 @Injectable()
 export class AuthGetProfileService {
@@ -51,7 +51,10 @@ export class AuthGetProfileService {
     // Build final response
     const data = {
       ...sanitizedUser,
-      farm,
+      ...(user.role === 'FARM_OWNER' &&
+        farm && {
+          farm: this.formatFarmData(farm),
+        }),
       notificationSettings: formattedNotificationSettings,
     };
 
@@ -85,5 +88,17 @@ export class AuthGetProfileService {
     }
 
     return common;
+  }
+
+  private formatFarmData(farm: Farm & { logo: FileInstance | null }) {
+    if (!farm) return null;
+
+    const logoUrl = farm.logoId && farm.logo ? (farm.logo.url ?? null) : null;
+
+    return {
+      ...farm,
+      logoId: farm.logoId ?? null,
+      logo: logoUrl,
+    };
   }
 }
