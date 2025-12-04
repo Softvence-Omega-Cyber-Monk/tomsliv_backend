@@ -63,6 +63,11 @@ export type Notification = Prisma.NotificationModel
  */
 export type UserNotification = Prisma.UserNotificationModel
 /**
+ * Model NotificationSettings
+ * 
+ */
+export type NotificationSettings = Prisma.NotificationSettingsModel
+/**
  * Model User
  * 
  */

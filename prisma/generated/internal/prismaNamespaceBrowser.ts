@@ -56,6 +56,7 @@ export const ModelName = {
   FileInstance: 'FileInstance',
   Notification: 'Notification',
   UserNotification: 'UserNotification',
+  NotificationSettings: 'NotificationSettings',
   User: 'User',
   Farm: 'Farm'
 } as const
@@ -140,6 +141,21 @@ export const UserNotificationScalarFieldEnum = {
 } as const
 
 export type UserNotificationScalarFieldEnum = (typeof UserNotificationScalarFieldEnum)[keyof typeof UserNotificationScalarFieldEnum]
+
+
+export const NotificationSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  emailNotifications: 'emailNotifications',
+  weeklyDigest: 'weeklyDigest',
+  newApplicantAlert: 'newApplicantAlert',
+  updatesAndTips: 'updatesAndTips',
+  newRelatedJobsAlert: 'newRelatedJobsAlert',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationSettingsScalarFieldEnum = (typeof NotificationSettingsScalarFieldEnum)[keyof typeof NotificationSettingsScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

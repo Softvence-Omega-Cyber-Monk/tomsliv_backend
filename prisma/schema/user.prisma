@@ -20,10 +20,11 @@ model User {
   profilePicture   FileInstance? @relation(fields: [profilePictureId], references: [id], onDelete: SetNull)
 
   // Relations
-  notifications UserNotification[]
-  refreshTokens RefreshToken[]
-  otps          UserOtp[]
-  farms         Farm[]
+  notificationSettings NotificationSettings[]
+  notifications        UserNotification[]
+  refreshTokens        RefreshToken[]
+  otps                 UserOtp[]
+  farms                Farm[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
