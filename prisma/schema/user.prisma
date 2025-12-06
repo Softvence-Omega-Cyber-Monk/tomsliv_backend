@@ -2,8 +2,8 @@ model User {
   id String @id @default(uuid())
 
   // Identity @unique
-  name     String @default("Unnamed User")
-  email    String @unique
+  name     String  @default("Unnamed User")
+  email    String  @unique
   phone    String? @unique
   password String // hashed password
 
@@ -17,27 +17,27 @@ model User {
   lastActiveAt DateTime?
 
   // Avatar
-  profilePictureId String? @unique
+  profilePictureId String?       @unique
   profilePicture   FileInstance? @relation(fields: [profilePictureId], references: [id], onDelete: SetNull)
 
   // Farm
   farmId String? @unique
-  farm   Farm? @relation(fields: [farmId], references: [id], onDelete: SetNull)
+  farm   Farm?   @relation(fields: [farmId], references: [id], onDelete: SetNull)
 
   // Saved CV
   savedCVId String? @unique
-  savedCV   CV? @relation(fields: [savedCVId], references: [id], onDelete: SetNull)
+  savedCV   CV?     @relation(fields: [savedCVId], references: [id], onDelete: SetNull)
 
   // Notification Settings
-  notificationSettingsId String? @unique
-  notificationSettings NotificationSettings? @relation(fields: [notificationSettingsId], references: [id], onDelete: Cascade)
+  notificationSettingsId String?               @unique
+  notificationSettings   NotificationSettings? @relation(fields: [notificationSettingsId], references: [id], onDelete: Cascade)
 
   // Relations
-  notifications        UserNotification[]
-  refreshTokens        RefreshToken[]
-  otps                 UserOtp[]
-  jobApplications      JobApplication[]
-  savedJobs            SavedJobs[]
+  notifications   UserNotification[]
+  refreshTokens   RefreshToken[]
+  otps            UserOtp[]
+  jobApplications JobApplication[]
+  savedJobs       SavedJobs[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -70,10 +70,10 @@ model Farm {
   farmType String?
 
   // Logo
-  logoId String? @unique
+  logoId String?       @unique
   logo   FileInstance? @relation(fields: [logoId], references: [id], onDelete: SetNull)
 
-  jobs Job[]
+  jobs  Job[]
   users User?
 
   createdAt DateTime @default(now())

@@ -393,6 +393,7 @@ export const ModelName = {
   FileInstance: 'FileInstance',
   IdealCandidate: 'IdealCandidate',
   JobApplication: 'JobApplication',
+  ApplicationAIResult: 'ApplicationAIResult',
   SavedJobs: 'SavedJobs',
   Job: 'Job',
   Notification: 'Notification',
@@ -415,7 +416,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "userOtp" | "refreshToken" | "contact" | "cV" | "experience" | "education" | "fileInstance" | "idealCandidate" | "jobApplication" | "savedJobs" | "job" | "notification" | "userNotification" | "notificationSettings" | "user" | "farm"
+    modelProps: "userOtp" | "refreshToken" | "contact" | "cV" | "experience" | "education" | "fileInstance" | "idealCandidate" | "jobApplication" | "applicationAIResult" | "savedJobs" | "job" | "notification" | "userNotification" | "notificationSettings" | "user" | "farm"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1082,6 +1083,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.JobApplicationCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.JobApplicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ApplicationAIResult: {
+      payload: Prisma.$ApplicationAIResultPayload<ExtArgs>
+      fields: Prisma.ApplicationAIResultFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ApplicationAIResultFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ApplicationAIResultFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>
+        }
+        findFirst: {
+          args: Prisma.ApplicationAIResultFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ApplicationAIResultFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>
+        }
+        findMany: {
+          args: Prisma.ApplicationAIResultFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>[]
+        }
+        create: {
+          args: Prisma.ApplicationAIResultCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>
+        }
+        createMany: {
+          args: Prisma.ApplicationAIResultCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ApplicationAIResultCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>[]
+        }
+        delete: {
+          args: Prisma.ApplicationAIResultDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>
+        }
+        update: {
+          args: Prisma.ApplicationAIResultUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>
+        }
+        deleteMany: {
+          args: Prisma.ApplicationAIResultDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ApplicationAIResultUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ApplicationAIResultUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>[]
+        }
+        upsert: {
+          args: Prisma.ApplicationAIResultUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ApplicationAIResultPayload>
+        }
+        aggregate: {
+          args: Prisma.ApplicationAIResultAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateApplicationAIResult>
+        }
+        groupBy: {
+          args: Prisma.ApplicationAIResultGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApplicationAIResultGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ApplicationAIResultCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ApplicationAIResultCountAggregateOutputType> | number
         }
       }
     }
@@ -1774,12 +1849,28 @@ export const JobApplicationScalarFieldEnum = {
   jobId: 'jobId',
   cvId: 'cvId',
   isAppliedWithSavedCV: 'isAppliedWithSavedCV',
-  aiGeneratedScore: 'aiGeneratedScore',
   status: 'status',
   appliedAt: 'appliedAt'
 } as const
 
 export type JobApplicationScalarFieldEnum = (typeof JobApplicationScalarFieldEnum)[keyof typeof JobApplicationScalarFieldEnum]
+
+
+export const ApplicationAIResultScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  summary: 'summary',
+  motivation: 'motivation',
+  jobFitScore: 'jobFitScore',
+  suggestedQuestions: 'suggestedQuestions',
+  strengths: 'strengths',
+  areasOfImprovement: 'areasOfImprovement',
+  keyTraits: 'keyTraits',
+  generatedAt: 'generatedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApplicationAIResultScalarFieldEnum = (typeof ApplicationAIResultScalarFieldEnum)[keyof typeof ApplicationAIResultScalarFieldEnum]
 
 
 export const SavedJobsScalarFieldEnum = {
@@ -2087,20 +2178,6 @@ export type EnumNonNegotiableSkillFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
- * Reference to a field of type 'Float'
- */
-export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-/**
- * Reference to a field of type 'Float[]'
- */
-export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
  * Reference to a field of type 'ApplicationStatus'
  */
 export type EnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus'>
@@ -2111,6 +2188,20 @@ export type EnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType
  * Reference to a field of type 'ApplicationStatus[]'
  */
 export type ListEnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -2257,6 +2348,7 @@ export type GlobalOmitConfig = {
   fileInstance?: Prisma.FileInstanceOmit
   idealCandidate?: Prisma.IdealCandidateOmit
   jobApplication?: Prisma.JobApplicationOmit
+  applicationAIResult?: Prisma.ApplicationAIResultOmit
   savedJobs?: Prisma.SavedJobsOmit
   job?: Prisma.JobOmit
   notification?: Prisma.NotificationOmit

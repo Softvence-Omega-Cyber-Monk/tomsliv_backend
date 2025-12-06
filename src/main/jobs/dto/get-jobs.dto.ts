@@ -1,7 +1,7 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { JobStatus, JobType } from '@prisma';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -9,21 +9,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-
-// ---------------- Sort Enums ----------------
-export enum JobSortByEnum {
-  SALARY_START = 'salaryStart',
-  SALARY_END = 'salaryEnd',
-  APPLICATION_DEADLINE = 'applicationDeadline',
-  CREATED_AT = 'createdAt',
-  TITLE = 'title',
-  LOCATION = 'location',
-}
-
-export enum SortOrderEnum {
-  ASC = 'asc',
-  DESC = 'desc',
-}
 
 // ---------------- Farm Owner Jobs DTO ----------------
 export class GetFarmOwnerJobsDto extends PaginationDto {
@@ -40,22 +25,60 @@ export class GetFarmOwnerJobsDto extends PaginationDto {
   search?: string;
 }
 
+// ---------------- Sort Enums ----------------
+export enum JobSortOptionEnum {
+  MOST_RECENT = 'mostRecent',
+  SALARY_HIGH_TO_LOW = 'salaryHighToLow',
+  SALARY_LOW_TO_HIGH = 'salaryLowToHigh',
+  DEADLINE_SOON = 'deadlineSoon',
+}
+
+// ---------------- Salary Range DTO ----------------
+export class SalaryRangeDto {
+  @ApiPropertyOptional({ description: 'Minimum salary', example: 10000 })
+  @Type(() => Number)
+  @IsNumber()
+  min: number;
+
+  @ApiPropertyOptional({ description: 'Maximum salary', example: 50000 })
+  @Type(() => Number)
+  @IsNumber()
+  max: number;
+}
+
 // ---------------- All Jobs DTO ----------------
 export class GetAllJobsDto extends PaginationDto {
   @ApiPropertyOptional({
-    description: 'Filter by job types',
-    enum: JobType,
+    description: 'Filter by job status',
+    enum: JobStatus,
+    example: JobStatus.ACTIVE,
   })
   @IsOptional()
   @Transform(({ value }) => (value === '' ? undefined : value))
-  @IsEnum(JobType)
-  jobTypes?: JobType | '';
+  @IsEnum(JobStatus)
+  status?: JobStatus;
+
+  @ApiPropertyOptional({
+    description: 'Filter by job types',
+    type: [String],
+    example: [JobType.FULL_TIME, JobType.PART_TIME],
+  })
+  @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
+  @IsArray()
+  @IsEnum(JobType, { each: true })
+  jobTypes?: JobType[];
 
   @ApiPropertyOptional({
     description: 'Filter by job roles (titles)',
     type: [String],
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
   @IsArray()
   @IsString({ each: true })
   roles?: string[];
@@ -65,19 +88,25 @@ export class GetAllJobsDto extends PaginationDto {
     type: [String],
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
   @IsArray()
   @IsString({ each: true })
   locations?: string[];
 
   @ApiPropertyOptional({
-    description: 'Filter by salary range: [min, max]',
-    type: [Number],
-    example: [10000, 50000],
+    description: 'Filter by salary range: [{min: number, max: number}]',
+    type: [SalaryRangeDto],
+    example: [{ min: 10000, max: 50000 }],
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
+  @Type(() => SalaryRangeDto)
   @IsArray()
-  @IsNumber({}, { each: true })
-  salaryRange?: [number, number];
+  salaryRange?: SalaryRangeDto[];
 
   @ApiPropertyOptional({
     description: 'Search text (job title or description)',
@@ -87,18 +116,10 @@ export class GetAllJobsDto extends PaginationDto {
   search?: string;
 
   @ApiPropertyOptional({
-    description: 'Sort field',
-    enum: JobSortByEnum,
+    description: 'Predefined sorting option',
+    enum: JobSortOptionEnum,
   })
   @IsOptional()
-  @IsEnum(JobSortByEnum)
-  sortBy?: JobSortByEnum;
-
-  @ApiPropertyOptional({
-    description: 'Sort order',
-    enum: SortOrderEnum,
-  })
-  @IsOptional()
-  @IsEnum(SortOrderEnum)
-  sortOrder?: SortOrderEnum;
+  @IsEnum(JobSortOptionEnum)
+  sortOption?: JobSortOptionEnum;
 }

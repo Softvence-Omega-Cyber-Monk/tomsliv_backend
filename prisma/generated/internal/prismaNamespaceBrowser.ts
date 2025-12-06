@@ -60,6 +60,7 @@ export const ModelName = {
   FileInstance: 'FileInstance',
   IdealCandidate: 'IdealCandidate',
   JobApplication: 'JobApplication',
+  ApplicationAIResult: 'ApplicationAIResult',
   SavedJobs: 'SavedJobs',
   Job: 'Job',
   Notification: 'Notification',
@@ -217,12 +218,28 @@ export const JobApplicationScalarFieldEnum = {
   jobId: 'jobId',
   cvId: 'cvId',
   isAppliedWithSavedCV: 'isAppliedWithSavedCV',
-  aiGeneratedScore: 'aiGeneratedScore',
   status: 'status',
   appliedAt: 'appliedAt'
 } as const
 
 export type JobApplicationScalarFieldEnum = (typeof JobApplicationScalarFieldEnum)[keyof typeof JobApplicationScalarFieldEnum]
+
+
+export const ApplicationAIResultScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  summary: 'summary',
+  motivation: 'motivation',
+  jobFitScore: 'jobFitScore',
+  suggestedQuestions: 'suggestedQuestions',
+  strengths: 'strengths',
+  areasOfImprovement: 'areasOfImprovement',
+  keyTraits: 'keyTraits',
+  generatedAt: 'generatedAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ApplicationAIResultScalarFieldEnum = (typeof ApplicationAIResultScalarFieldEnum)[keyof typeof ApplicationAIResultScalarFieldEnum]
 
 
 export const SavedJobsScalarFieldEnum = {
