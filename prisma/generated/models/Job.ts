@@ -727,6 +727,14 @@ export type JobCreatemachineryExperienceInput = {
   set: string[]
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type JobUpdaterequiredSkillsInput = {
   set?: string[]
   push?: string | string[]

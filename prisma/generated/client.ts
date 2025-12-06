@@ -83,6 +83,11 @@ export type IdealCandidate = Prisma.IdealCandidateModel
  */
 export type JobApplication = Prisma.JobApplicationModel
 /**
+ * Model ApplicationAIResult
+ * 
+ */
+export type ApplicationAIResult = Prisma.ApplicationAIResultModel
+/**
  * Model SavedJobs
  * 
  */

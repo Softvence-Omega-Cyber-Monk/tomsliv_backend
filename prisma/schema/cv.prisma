@@ -1,7 +1,6 @@
 model CV {
   id String @id @default(uuid())
 
-
   isSaved Boolean @default(false)
 
   firstName String
@@ -21,13 +20,13 @@ model CV {
 
   workPermitType WorkPermitType @default(OTHER)
 
-  customCVId String? @unique
+  customCVId String?       @unique
   customCV   FileInstance? @relation(fields: [customCVId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  user   User?
+  user            User?
   experiences     Experience[]
   educations      Education[]
   jobApplications JobApplication[]
