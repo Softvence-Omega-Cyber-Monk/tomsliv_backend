@@ -6,10 +6,10 @@ import {
 } from '@/core/jwt/jwt.decorator';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CreateJobDto } from './dto/create-job.dto';
-import { GetFarmOwnerJobsDto } from './dto/get-jobs.dto';
-import { ManageJobStatusDto } from './dto/manage-job-status.dto';
-import { JobService } from './services/job.service';
+import { JobService } from '../services/job.service';
+import { CreateJobDto } from '../dto/create-job.dto';
+import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
+import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
 
 @ApiTags('Jobs')
 @ApiBearerAuth()
