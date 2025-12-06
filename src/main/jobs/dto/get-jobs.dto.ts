@@ -1,7 +1,7 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { JobStatus, JobType } from '@prisma';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -40,16 +40,33 @@ export class GetFarmOwnerJobsDto extends PaginationDto {
   search?: string;
 }
 
+export class SalaryRangeDto {
+  @ApiProperty({ description: 'Minimum salary', example: 10000 })
+  @Type(() => Number)
+  @IsNumber()
+  min: number;
+
+  @ApiProperty({ description: 'Maximum salary', example: 50000 })
+  @Type(() => Number)
+  @IsNumber()
+  max: number;
+}
+
 // ---------------- All Jobs DTO ----------------
 export class GetAllJobsDto extends PaginationDto {
   @ApiPropertyOptional({
     description: 'Filter by job types',
-    enum: JobType,
+    type: [String],
+    example: [JobType.FULL_TIME, JobType.PART_TIME],
   })
   @IsOptional()
-  @Transform(({ value }) => (value === '' ? undefined : value))
-  @IsEnum(JobType)
-  jobTypes?: JobType | '';
+  @IsArray()
+  @Transform(({ value }) => {
+    if (!value) return undefined;
+    return Array.isArray(value ? value : []) ? value : [value];
+  })
+  @IsEnum(JobType, { each: true })
+  jobTypes?: JobType[];
 
   @ApiPropertyOptional({
     description: 'Filter by job roles (titles)',
@@ -57,6 +74,10 @@ export class GetAllJobsDto extends PaginationDto {
   })
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) => {
+    if (!value) return undefined;
+    return Array.isArray(value ? value : []) ? value : [value];
+  })
   @IsString({ each: true })
   roles?: string[];
 
@@ -66,18 +87,26 @@ export class GetAllJobsDto extends PaginationDto {
   })
   @IsOptional()
   @IsArray()
+  @Transform(({ value }) => {
+    if (!value) return undefined;
+    return Array.isArray(value ? value : []) ? value : [value];
+  })
   @IsString({ each: true })
   locations?: string[];
 
   @ApiPropertyOptional({
-    description: 'Filter by salary range: [min, max]',
-    type: [Number],
-    example: [10000, 50000],
+    description: 'Filter by salary range: [{min: number, max: number}]',
+    type: [SalaryRangeDto],
+    example: [{ min: 10000, max: 50000 }],
   })
   @IsOptional()
+  @Transform(({ value }) => {
+    if (!value) return undefined;
+    return Array.isArray(value) ? value : [value];
+  })
+  @Type(() => SalaryRangeDto)
   @IsArray()
-  @IsNumber({}, { each: true })
-  salaryRange?: [number, number];
+  salaryRange?: SalaryRangeDto[];
 
   @ApiPropertyOptional({
     description: 'Search text (job title or description)',
