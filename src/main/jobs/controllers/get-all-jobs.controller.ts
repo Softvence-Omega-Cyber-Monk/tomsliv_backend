@@ -12,4 +12,10 @@ export class GetAllJobsController {
   async getAllJobs() {
     return this.getAllJobsService.getJobTypesWithCounts();
   }
+
+  @ApiOperation({ summary: 'Get salary buckets' })
+  @Get('salary-buckets')
+  async getSalaryBuckets() {
+    return this.getAllJobsService.getSalaryBuckets();
+  }
 }
