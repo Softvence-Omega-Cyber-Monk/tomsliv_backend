@@ -3,8 +3,9 @@ import { AuthModule } from './auth/auth.module';
 import { ContactModule } from './contact/contact.module';
 import { JobsModule } from './jobs/jobs.module';
 import { UploadModule } from './upload/upload.module';
+import { CvModule } from './cv/cv.module';
 
 @Module({
-  imports: [AuthModule, UploadModule, ContactModule, JobsModule],
+  imports: [AuthModule, UploadModule, ContactModule, JobsModule, CvModule],
 })
 export class MainModule {}
