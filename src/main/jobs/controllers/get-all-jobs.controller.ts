@@ -1,18 +1,21 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { GetAllJobsDto } from '../dto/get-jobs.dto';
 import { GetAllJobsStatsService } from '../services/get-all-jobs-stats.service';
+import { GetAllJobsService } from '../services/get-all-jobs.service';
 
 @ApiTags('Get All Jobs')
-@Controller('all-jobs')
+@Controller('jobs-stats')
 export class GetAllJobsController {
   constructor(
     private readonly getAllJobsStatsService: GetAllJobsStatsService,
+    private readonly getAllJobsService: GetAllJobsService,
   ) {}
 
   @ApiOperation({ summary: 'Get job types with counts' })
   @Get('job-types-with-counts')
-  async getAllJobs() {
+  async getAllJobsWithCounts() {
     return this.getAllJobsStatsService.getJobTypesWithCounts();
   }
 
@@ -32,5 +35,11 @@ export class GetAllJobsController {
   @Get('locations-with-counts')
   async getLocationsWithCounts(@Query() pg: PaginationDto) {
     return this.getAllJobsStatsService.getJobLocationsWithCounts(pg);
+  }
+
+  @ApiOperation({ summary: 'Get job types with counts' })
+  @Get('all-jobs')
+  async getAllJobs(@Query() query: GetAllJobsDto) {
+    return this.getAllJobsService.getAllJobs(query);
   }
 }
