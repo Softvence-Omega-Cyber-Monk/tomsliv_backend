@@ -1,9 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { JobType } from '@prisma';
+import { Type } from 'class-transformer';
 import {
   IsArray,
-  IsDateString,
   IsEnum,
+  IsISO8601,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -24,58 +25,55 @@ export class CreateJobDto {
   @IsNotEmpty()
   description: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Job benefits',
     example: 'Health insurance, Paid leave',
   })
   @IsString()
-  @IsOptional()
-  benefits?: string;
+  benefits: string;
 
   @ApiProperty({ description: 'Job location', example: 'California, USA' })
   @IsString()
   @IsNotEmpty()
   location: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     enum: JobType,
     description: 'Type of job',
     example: JobType.FULL_TIME,
   })
   @IsEnum(JobType)
-  @IsOptional()
-  jobType?: JobType;
+  jobType: JobType;
 
-  @ApiPropertyOptional({ description: 'Number of open positions', example: 3 })
+  @ApiProperty({ description: 'Number of open positions', example: 3 })
+  @Type(() => Number)
   @IsNumber()
-  @IsOptional()
-  numberOfPositions?: number;
+  numberOfPositions: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Required experience in years',
     example: 2,
   })
+  @Type(() => Number)
   @IsNumber()
-  @IsOptional()
-  requiredExperience?: number;
+  requiredExperience: number;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     description: 'Application deadline',
     example: '2025-12-31T23:59:59.000Z',
   })
-  @IsDateString()
-  @IsOptional()
-  applicationDeadline?: string;
+  @IsISO8601()
+  applicationDeadline: string;
 
-  @ApiPropertyOptional({ description: 'Starting salary', example: 30000 })
+  @ApiProperty({ description: 'Starting salary', example: 30000 })
+  @Type(() => Number)
   @IsNumber()
-  @IsOptional()
-  salaryStart?: number;
+  salaryStart: number;
 
-  @ApiPropertyOptional({ description: 'Ending salary', example: 50000 })
+  @ApiProperty({ description: 'Ending salary', example: 50000 })
+  @Type(() => Number)
   @IsNumber()
-  @IsOptional()
-  salaryEnd?: number;
+  salaryEnd: number;
 
   @ApiPropertyOptional({
     description: 'Required skills',
