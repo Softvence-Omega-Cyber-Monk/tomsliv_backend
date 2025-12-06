@@ -1,0 +1,62 @@
+import {
+  GetUser,
+  Public,
+  ValidateAdmin,
+  ValidateFarmOwner,
+} from '@/core/jwt/jwt.decorator';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { JobService } from '../services/job.service';
+import { CreateJobDto } from '../dto/create-job.dto';
+import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
+import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
+
+@ApiTags('Jobs')
+@ApiBearerAuth()
+@ValidateFarmOwner()
+@Controller('jobs')
+export class JobsController {
+  constructor(private readonly jobService: JobService) {}
+
+  @ApiOperation({ summary: 'Create a new job by farm owner' })
+  @Post()
+  async createJob(@GetUser('sub') userId: string, @Body() dto: CreateJobDto) {
+    return this.jobService.createJob(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Manage job status by farm owner or admin' })
+  @Post('manage-status/:jobId')
+  async manageJobStatus(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+    @Query() dto: ManageJobStatusDto,
+  ) {
+    return this.jobService.manageStatus(userId, jobId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get farm owner jobs by farm owner' })
+  @Get('my-jobs')
+  async getFarmOwnerJobs(
+    @GetUser('sub') userId: string,
+    @Query() dto: GetFarmOwnerJobsDto,
+  ) {
+    return this.jobService.getFarmOwnerJobs(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get farm owner jobs by admin' })
+  @ValidateAdmin()
+  @Get('farm-owner/:userId/jobs')
+  async getAllFarmOwnerJobs(
+    @Param('userId') userId: string,
+    @Query() dto: GetFarmOwnerJobsDto,
+  ) {
+    return this.jobService.getFarmOwnerJobs(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get single job (Public)' })
+  @Public()
+  @Get('details/:jobId')
+  async getSingleJob(@Param('jobId') jobId: string) {
+    return this.jobService.getSingleJob(jobId);
+  }
+}
