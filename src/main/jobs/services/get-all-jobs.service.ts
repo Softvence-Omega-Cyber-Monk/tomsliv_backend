@@ -1,3 +1,4 @@
+import { PaginationDto } from '@/common/dto/pagination.dto';
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
@@ -5,28 +6,29 @@ import { Injectable } from '@nestjs/common';
 import { JobType } from '@prisma';
 
 @Injectable()
-export class GetAllJobsService {
+export class GetAllJobsStatsService {
   constructor(private readonly prisma: PrismaService) {}
 
+  // ---------------- Job Type ----------------
   @HandleError('Failed to get job types with counts', 'Jobs')
   async getJobTypesWithCounts(): Promise<TResponse<any>> {
-    // Group jobs by enum value
     const counts = await this.prisma.client.job.groupBy({
       by: ['jobType'],
       _count: { jobType: true },
     });
 
-    // Map counts for easy lookup
     const map = Object.fromEntries(
       counts.map((c) => [c.jobType, c._count.jobType]),
     );
 
-    // Build final array with readable labels
-    const jobTypes = Object.values(JobType).map((t) => ({
-      type: t,
-      label: this.jobTypeLabels[t],
-      count: map[t] ?? 0,
-    }));
+    const jobTypes = Object.values(JobType).map((t) => {
+      const count = map[t] ?? 0;
+      return {
+        type: t,
+        label: `${this.jobTypeLabels[t]} (${count})`,
+        count,
+      };
+    });
 
     return successResponse(
       jobTypes,
@@ -34,15 +36,14 @@ export class GetAllJobsService {
     );
   }
 
+  // ---------------- Salary Buckets ----------------
   @HandleError('Failed to get salary buckets', 'Jobs')
   async getSalaryBuckets(): Promise<TResponse<any>> {
-    // Fetch all jobs with salaries
     const jobs = await this.prisma.client.job.findMany({
       select: { salaryStart: true },
       where: { salaryStart: { not: null } },
     });
 
-    // Calculate counts for each bucket
     const buckets = this.salaryBuckets.map((bucket) => {
       const count = jobs.filter(
         (j) => j.salaryStart! >= bucket.min && j.salaryStart! <= bucket.max,
@@ -66,6 +67,59 @@ export class GetAllJobsService {
     return successResponse(buckets, 'Fetched jobs salary buckets successfully');
   }
 
+  // ---------------- Job Roles ----------------
+  @HandleError('Failed to get job roles with counts', 'Jobs')
+  async getJobRolesWithCounts(pg: PaginationDto): Promise<TResponse<any>> {
+    const page = pg.page && pg.page > 0 ? pg.page : 1;
+    const limit = pg.limit && pg.limit > 0 ? pg.limit : 10;
+    const skip = (page - 1) * limit;
+
+    const counts = await this.prisma.client.job.groupBy({
+      by: ['title'],
+      _count: { title: true },
+    });
+
+    const roles = counts.map((c) => ({
+      role: c.title,
+      count: c._count.title,
+      label: `${c.title} (${c._count.title})`,
+    }));
+
+    const paginatedRoles = roles.slice(skip, skip + limit);
+
+    return successResponse(
+      paginatedRoles,
+      'Fetched job roles with counts successfully',
+    );
+  }
+
+  // ---------------- Locations ----------------
+  @HandleError('Failed to get job locations with counts', 'Jobs')
+  async getJobLocationsWithCounts(pg: PaginationDto): Promise<TResponse<any>> {
+    const page = pg.page && pg.page > 0 ? pg.page : 1;
+    const limit = pg.limit && pg.limit > 0 ? pg.limit : 10;
+    const skip = (page - 1) * limit;
+
+    const counts = await this.prisma.client.job.groupBy({
+      by: ['location'],
+      _count: { location: true },
+    });
+
+    const locations = counts.map((c) => ({
+      location: c.location,
+      count: c._count.location,
+      label: `${c.location} (${c._count.location})`,
+    }));
+
+    const paginatedLocations = locations.slice(skip, skip + limit);
+
+    return successResponse(
+      paginatedLocations,
+      'Fetched job locations with counts successfully',
+    );
+  }
+
+  // ---------------- Helpers ----------------
   private readonly jobTypeLabels: Record<JobType, string> = {
     FULL_TIME: 'Full Time',
     PART_TIME: 'Part Time',

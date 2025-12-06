@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "devw": "set PATH=%PATH%;C:\\Windows\\System32 && npx nest start --watch",
+    "devw": "set PATH=C:\\Windows\\System32;%PATH% && npx nest start --watch",
     "dev": "npx nest start --watch",
     "build": "npx nest build",
     "start": "npx prisma generate && npx prisma migrate deploy && node dist/src/main",
