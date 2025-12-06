@@ -1,7 +1,7 @@
+import { PaginationDto } from '@/common/dto/pagination.dto';
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { GetAllJobsStatsService } from '../services/get-all-jobs.service';
-import { PaginationDto } from '@/common/dto/pagination.dto';
+import { GetAllJobsStatsService } from '../services/get-all-jobs-stats.service';
 
 @ApiTags('Get All Jobs')
 @Controller('all-jobs')

@@ -1,5 +1,9 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
-import { successResponse, TResponse } from '@/common/utils/response.util';
+import {
+  successPaginatedResponse,
+  successResponse,
+  TResponse,
+} from '@/common/utils/response.util';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
@@ -87,8 +91,13 @@ export class GetAllJobsStatsService {
 
     const paginatedRoles = roles.slice(skip, skip + limit);
 
-    return successResponse(
+    return successPaginatedResponse(
       paginatedRoles,
+      {
+        page,
+        limit,
+        total: roles.length,
+      },
       'Fetched job roles with counts successfully',
     );
   }
@@ -113,8 +122,13 @@ export class GetAllJobsStatsService {
 
     const paginatedLocations = locations.slice(skip, skip + limit);
 
-    return successResponse(
+    return successPaginatedResponse(
       paginatedLocations,
+      {
+        page,
+        limit,
+        total: locations.length,
+      },
       'Fetched job locations with counts successfully',
     );
   }
