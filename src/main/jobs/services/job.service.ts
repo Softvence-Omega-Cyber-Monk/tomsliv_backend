@@ -15,6 +15,7 @@ import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
 @Injectable()
 export class JobService {
   private readonly logger = new Logger(JobService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   @HandleError('Failed to create job', 'Job')
