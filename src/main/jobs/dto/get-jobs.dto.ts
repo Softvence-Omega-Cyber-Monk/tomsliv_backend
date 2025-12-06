@@ -1,5 +1,5 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiPropertyOptional } from '@nestjs/swagger';
 import { JobStatus, JobType } from '@prisma';
 import { Transform, Type } from 'class-transformer';
 import {
@@ -9,21 +9,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-
-// ---------------- Sort Enums ----------------
-export enum JobSortByEnum {
-  SALARY_START = 'salaryStart',
-  SALARY_END = 'salaryEnd',
-  APPLICATION_DEADLINE = 'applicationDeadline',
-  CREATED_AT = 'createdAt',
-  TITLE = 'title',
-  LOCATION = 'location',
-}
-
-export enum SortOrderEnum {
-  ASC = 'asc',
-  DESC = 'desc',
-}
 
 // ---------------- Farm Owner Jobs DTO ----------------
 export class GetFarmOwnerJobsDto extends PaginationDto {
@@ -40,13 +25,22 @@ export class GetFarmOwnerJobsDto extends PaginationDto {
   search?: string;
 }
 
+// ---------------- Sort Enums ----------------
+export enum JobSortOptionEnum {
+  MOST_RECENT = 'mostRecent',
+  SALARY_HIGH_TO_LOW = 'salaryHighToLow',
+  SALARY_LOW_TO_HIGH = 'salaryLowToHigh',
+  DEADLINE_SOON = 'deadlineSoon',
+}
+
+// ---------------- Salary Range DTO ----------------
 export class SalaryRangeDto {
-  @ApiProperty({ description: 'Minimum salary', example: 10000 })
+  @ApiPropertyOptional({ description: 'Minimum salary', example: 10000 })
   @Type(() => Number)
   @IsNumber()
   min: number;
 
-  @ApiProperty({ description: 'Maximum salary', example: 50000 })
+  @ApiPropertyOptional({ description: 'Maximum salary', example: 50000 })
   @Type(() => Number)
   @IsNumber()
   max: number;
@@ -55,16 +49,25 @@ export class SalaryRangeDto {
 // ---------------- All Jobs DTO ----------------
 export class GetAllJobsDto extends PaginationDto {
   @ApiPropertyOptional({
+    description: 'Filter by job status',
+    enum: JobStatus,
+    example: JobStatus.ACTIVE,
+  })
+  @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
+  @IsEnum(JobStatus)
+  status?: JobStatus;
+
+  @ApiPropertyOptional({
     description: 'Filter by job types',
     type: [String],
     example: [JobType.FULL_TIME, JobType.PART_TIME],
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
   @IsArray()
-  @Transform(({ value }) => {
-    if (!value) return undefined;
-    return Array.isArray(value ? value : []) ? value : [value];
-  })
   @IsEnum(JobType, { each: true })
   jobTypes?: JobType[];
 
@@ -73,11 +76,10 @@ export class GetAllJobsDto extends PaginationDto {
     type: [String],
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
   @IsArray()
-  @Transform(({ value }) => {
-    if (!value) return undefined;
-    return Array.isArray(value ? value : []) ? value : [value];
-  })
   @IsString({ each: true })
   roles?: string[];
 
@@ -86,11 +88,10 @@ export class GetAllJobsDto extends PaginationDto {
     type: [String],
   })
   @IsOptional()
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
   @IsArray()
-  @Transform(({ value }) => {
-    if (!value) return undefined;
-    return Array.isArray(value ? value : []) ? value : [value];
-  })
   @IsString({ each: true })
   locations?: string[];
 
@@ -100,10 +101,9 @@ export class GetAllJobsDto extends PaginationDto {
     example: [{ min: 10000, max: 50000 }],
   })
   @IsOptional()
-  @Transform(({ value }) => {
-    if (!value) return undefined;
-    return Array.isArray(value) ? value : [value];
-  })
+  @Transform(({ value }) =>
+    value ? (Array.isArray(value) ? value : [value]) : undefined,
+  )
   @Type(() => SalaryRangeDto)
   @IsArray()
   salaryRange?: SalaryRangeDto[];
@@ -116,18 +116,10 @@ export class GetAllJobsDto extends PaginationDto {
   search?: string;
 
   @ApiPropertyOptional({
-    description: 'Sort field',
-    enum: JobSortByEnum,
+    description: 'Predefined sorting option',
+    enum: JobSortOptionEnum,
   })
   @IsOptional()
-  @IsEnum(JobSortByEnum)
-  sortBy?: JobSortByEnum;
-
-  @ApiPropertyOptional({
-    description: 'Sort order',
-    enum: SortOrderEnum,
-  })
-  @IsOptional()
-  @IsEnum(SortOrderEnum)
-  sortOrder?: SortOrderEnum;
+  @IsEnum(JobSortOptionEnum)
+  sortOption?: JobSortOptionEnum;
 }
