@@ -4,12 +4,22 @@ import {
   ValidateAdmin,
   ValidateFarmOwner,
 } from '@/core/jwt/jwt.decorator';
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JobService } from '../services/job.service';
 import { CreateJobDto } from '../dto/create-job.dto';
-import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
+import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
+import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
+import { UpdateJobDto } from '../dto/update-job.dto';
+import { JobService } from '../services/job.service';
 
 @ApiTags('Jobs')
 @ApiBearerAuth()
@@ -22,6 +32,16 @@ export class JobsController {
   @Post()
   async createJob(@GetUser('sub') userId: string, @Body() dto: CreateJobDto) {
     return this.jobService.createJob(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update a job by farm owner' })
+  @Patch(':jobId')
+  async updateJob(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+    @Body() dto: UpdateJobDto,
+  ) {
+    return this.jobService.updateJob(userId, jobId, dto);
   }
 
   @ApiOperation({ summary: 'Manage job status by farm owner or admin' })
@@ -58,5 +78,26 @@ export class JobsController {
   @Get('details/:jobId')
   async getSingleJob(@Param('jobId') jobId: string) {
     return this.jobService.getSingleJob(jobId);
+  }
+
+  @ApiOperation({
+    summary: 'Create or update ideal candidate profile for a job',
+  })
+  @Post(':jobId/ideal-candidate')
+  async upsertIdealCandidate(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+    @Body() dto: UpsertIdealCandidateDto,
+  ) {
+    return this.jobService.upsertIdealCandidate(userId, jobId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get ideal candidate profile for a job' })
+  @Get(':jobId/ideal-candidate')
+  async getIdealCandidate(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+  ) {
+    return this.jobService.getIdealCandidate(userId, jobId);
   }
 }

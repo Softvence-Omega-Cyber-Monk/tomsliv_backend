@@ -6,17 +6,23 @@ import {
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { UserRole } from '@prisma';
 import { CreateJobDto } from '../dto/create-job.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
+import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
 import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
+import { UpdateJobDto } from '../dto/update-job.dto';
 
 @Injectable()
 export class JobService {
   private readonly logger = new Logger(JobService.name);
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly applicationAITrigger: ApplicationAITriggerService,
+  ) {}
 
   @HandleError('Failed to create job', 'Job')
   async createJob(userId: string, dto: CreateJobDto): Promise<TResponse<any>> {
@@ -39,6 +45,55 @@ export class JobService {
     });
 
     return successResponse(job, 'Job created successfully');
+  }
+
+  @HandleError('Failed to update job', 'Job')
+  async updateJob(
+    userId: string,
+    jobId: string,
+    dto: UpdateJobDto,
+  ): Promise<TResponse<any>> {
+    // Verify job exists and belongs to user's farm
+    const job = await this.prisma.client.job.findUnique({
+      where: { id: jobId },
+      include: { farm: true },
+    });
+
+    if (!job) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'Job not found');
+    }
+
+    const user = await this.prisma.client.user.findUniqueOrThrow({
+      where: { id: userId },
+      include: { farm: true },
+    });
+
+    const farm = user.farm;
+    if (!farm) {
+      this.logger.warn(`User with ID ${userId} has no associated farm.`);
+      throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
+    }
+
+    if (job.farmId !== farm.id) {
+      this.logger.warn(
+        `User ${userId} attempted to update job ${jobId} from another farm`,
+      );
+      throw new AppError(
+        HttpStatus.FORBIDDEN,
+        'You can only update jobs from your own farm',
+      );
+    }
+
+    // Update the job
+    const updatedJob = await this.prisma.client.job.update({
+      where: { id: jobId },
+      data: dto,
+    });
+
+    // Trigger AI analysis for all applications of this job
+    await this.applicationAITrigger.triggerForJobUpdate(jobId);
+
+    return successResponse(updatedJob, 'Job updated successfully');
   }
 
   @HandleError('Failed to manage job status', 'Job')
@@ -85,6 +140,9 @@ export class JobService {
         status: dto.status,
       },
     });
+
+    // Trigger AI analysis for all applications of this job
+    await this.applicationAITrigger.triggerForJobUpdate(jobId);
 
     return successResponse(updated, `Job status updated to ${dto.status}`);
   }
@@ -152,5 +210,117 @@ export class JobService {
     });
 
     return successResponse(job, 'Job details fetched successfully');
+  }
+
+  @HandleError('Failed to upsert ideal candidate', 'IdealCandidate')
+  async upsertIdealCandidate(
+    userId: string,
+    jobId: string,
+    dto: UpsertIdealCandidateDto,
+  ): Promise<TResponse<any>> {
+    // Verify job exists and belongs to user's farm
+    const job = await this.prisma.client.job.findUnique({
+      where: { id: jobId },
+      include: { farm: true },
+    });
+
+    if (!job) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'Job not found');
+    }
+
+    const user = await this.prisma.client.user.findUniqueOrThrow({
+      where: { id: userId },
+      include: { farm: true },
+    });
+
+    const farm = user.farm;
+    if (!farm) {
+      this.logger.warn(`User with ID ${userId} has no associated farm.`);
+      throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
+    }
+
+    if (job.farmId !== farm.id) {
+      this.logger.warn(
+        `User ${userId} attempted to manage ideal candidate for job ${jobId} from another farm`,
+      );
+      throw new AppError(
+        HttpStatus.FORBIDDEN,
+        'You can only manage ideal candidates for jobs from your own farm',
+      );
+    }
+
+    // Upsert ideal candidate
+    const idealCandidate = await this.prisma.client.idealCandidate.upsert({
+      where: { jobId },
+      create: {
+        jobId,
+        ...dto,
+      },
+      update: {
+        ...dto,
+      },
+    });
+
+    // Trigger AI analysis for all applications of this job
+    await this.applicationAITrigger.triggerForIdealCandidateUpdate(jobId);
+
+    return successResponse(
+      idealCandidate,
+      'Ideal candidate profile saved successfully',
+    );
+  }
+
+  @HandleError('Failed to get ideal candidate', 'IdealCandidate')
+  async getIdealCandidate(
+    userId: string,
+    jobId: string,
+  ): Promise<TResponse<any>> {
+    // Verify job exists and belongs to user's farm
+    const job = await this.prisma.client.job.findUnique({
+      where: { id: jobId },
+      include: { farm: true },
+    });
+
+    if (!job) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'Job not found');
+    }
+
+    const user = await this.prisma.client.user.findUniqueOrThrow({
+      where: { id: userId },
+      include: { farm: true },
+    });
+
+    const farm = user.farm;
+    if (!farm) {
+      this.logger.warn(`User with ID ${userId} has no associated farm.`);
+      throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
+    }
+
+    if (job.farmId !== farm.id) {
+      this.logger.warn(
+        `User ${userId} attempted to access ideal candidate for job ${jobId} from another farm`,
+      );
+      throw new AppError(
+        HttpStatus.FORBIDDEN,
+        'You can only view ideal candidates for jobs from your own farm',
+      );
+    }
+
+    // Get ideal candidate
+    const idealCandidate = await this.prisma.client.idealCandidate.findUnique({
+      where: { jobId },
+    });
+
+    if (!idealCandidate) {
+      throw new AppError(
+        HttpStatus.NOT_FOUND,
+        'No ideal candidate profile found for this job',
+      );
+    }
+
+    return successResponse(
+      idealCandidate,
+      'Ideal candidate profile fetched successfully',
+    );
   }
 }
