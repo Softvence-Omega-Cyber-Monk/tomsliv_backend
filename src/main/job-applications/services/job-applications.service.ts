@@ -2,8 +2,8 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { CreateCvDto } from '@/main/cv/dto/cv.dto';
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { ApplyAsGuestDto, ApplyWithSavedCvDto } from '../dto/apply-job.dto';
 
 @Injectable()
 export class JobApplicationsService {
@@ -12,7 +12,7 @@ export class JobApplicationsService {
   @HandleError('Failed to apply with saved CV', 'JobApplication')
   async applyWithSavedCv(
     userId: string,
-    dto: ApplyWithSavedCvDto,
+    jobId: string,
   ): Promise<TResponse<any>> {
     // 1. Check if user has a saved CV
     const user = await this.prisma.client.user.findUnique({
@@ -30,7 +30,7 @@ export class JobApplicationsService {
         where: {
           userId_jobId: {
             userId,
-            jobId: dto.jobId,
+            jobId,
           },
         },
       });
@@ -43,7 +43,7 @@ export class JobApplicationsService {
     const application = await this.prisma.client.jobApplication.create({
       data: {
         userId,
-        jobId: dto.jobId,
+        jobId,
         cvId: user.savedCVId,
         isAppliedWithSavedCV: true,
       },
@@ -55,7 +55,8 @@ export class JobApplicationsService {
   @HandleError('Failed to apply with new CV', 'JobApplication')
   async applyWithNewCv(
     userId: string,
-    dto: ApplyAsGuestDto,
+    dto: CreateCvDto,
+    jobId: string,
   ): Promise<TResponse<any>> {
     // 1. Check if already applied
     const existingApplication =
@@ -63,7 +64,7 @@ export class JobApplicationsService {
         where: {
           userId_jobId: {
             userId,
-            jobId: dto.jobId,
+            jobId,
           },
         },
       });
@@ -88,7 +89,6 @@ export class JobApplicationsService {
         hasDrivingLicense: dto.hasDrivingLicense,
         eligibleToWorkInNZ: dto.eligibleToWorkInNZ,
         workPermitType: dto.workPermitType,
-        customCVId: dto.customCVId,
         isSaved: false, // Explicitly not the "Saved CV"
 
         experiences: {
@@ -118,7 +118,7 @@ export class JobApplicationsService {
     const application = await this.prisma.client.jobApplication.create({
       data: {
         userId,
-        jobId: dto.jobId,
+        jobId,
         cvId: cv.id,
         isAppliedWithSavedCV: false,
       },

@@ -1,8 +1,16 @@
 import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
-import { Body, Controller, Post } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ApplyAsGuestDto, ApplyWithSavedCvDto } from '../dto/apply-job.dto';
+import { MulterService } from '@/lib/file/services/multer.service';
+import { Body, Controller, Param, Post, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  ApiBearerAuth,
+  ApiConsumes,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { FileType } from '@prisma';
 import { JobApplicationsService } from '../services/job-applications.service';
+import { CreateCvDto } from '@/main/cv/dto/cv.dto';
 
 @ApiTags('Job Applications')
 @ApiBearerAuth()
@@ -14,20 +22,29 @@ export class JobApplicationsController {
   ) {}
 
   @ApiOperation({ summary: 'Apply with user saved CV' })
-  @Post('apply-saved')
+  @Post('apply-saved/:jobId')
   async applyWithSavedCv(
     @GetUser('sub') userId: string,
-    @Body() dto: ApplyWithSavedCvDto,
+    @Param('jobId') jobId: string,
   ) {
-    return this.jobApplicationsService.applyWithSavedCv(userId, dto);
+    return this.jobApplicationsService.applyWithSavedCv(userId, jobId);
   }
 
   @ApiOperation({ summary: 'Apply with new CV' })
-  @Post('apply-new')
+  @ApiConsumes('multipart/form-data')
+  @Post()
+  @UseInterceptors(
+    FileInterceptor(
+      'file',
+      new MulterService().createMulterOptions('./temp', 'temp', FileType.docs),
+    ),
+  )
+  @Post('apply-new/:jobId')
   async applyWithNewCv(
     @GetUser('sub') userId: string,
-    @Body() dto: ApplyAsGuestDto,
+    @Body() dto: CreateCvDto,
+    @Param('jobId') jobId: string,
   ) {
-    return this.jobApplicationsService.applyWithNewCv(userId, dto);
+    return this.jobApplicationsService.applyWithNewCv(userId, dto, jobId);
   }
 }
