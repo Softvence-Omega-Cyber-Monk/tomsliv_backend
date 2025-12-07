@@ -3,6 +3,7 @@ import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { S3Service } from '@/lib/file/services/s3.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { FileInstance, Prisma } from '@prisma';
 import { CreateCvDto } from '../dto/cv.dto';
@@ -12,6 +13,7 @@ export class CvService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly s3: S3Service,
+    private readonly applicationAITrigger: ApplicationAITriggerService,
   ) {}
 
   @HandleError('Failed to save CV', 'CV')
@@ -129,6 +131,9 @@ export class CvService {
         data: { savedCVId: cv.id },
       });
     }
+
+    // Trigger AI analysis for all applications using this CV
+    await this.applicationAITrigger.triggerForCVUpdate(cv.id);
 
     return successResponse(cv, 'CV saved successfully');
   }

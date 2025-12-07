@@ -4,12 +4,21 @@ import {
   ValidateAdmin,
   ValidateFarmOwner,
 } from '@/core/jwt/jwt.decorator';
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateJobDto } from '../dto/create-job.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
 import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
 import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
+import { UpdateJobDto } from '../dto/update-job.dto';
 import { JobService } from '../services/job.service';
 
 @ApiTags('Jobs')
@@ -23,6 +32,16 @@ export class JobsController {
   @Post()
   async createJob(@GetUser('sub') userId: string, @Body() dto: CreateJobDto) {
     return this.jobService.createJob(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update a job by farm owner' })
+  @Patch(':jobId')
+  async updateJob(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+    @Body() dto: UpdateJobDto,
+  ) {
+    return this.jobService.updateJob(userId, jobId, dto);
   }
 
   @ApiOperation({ summary: 'Manage job status by farm owner or admin' })

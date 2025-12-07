@@ -2,12 +2,16 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { CreateCvDto } from '@/main/cv/dto/cv.dto';
 import { HttpStatus, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class JobApplicationsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly applicationAITrigger: ApplicationAITriggerService,
+  ) {}
 
   @HandleError('Failed to apply with saved CV', 'JobApplication')
   async applyWithSavedCv(
@@ -48,6 +52,12 @@ export class JobApplicationsService {
         isAppliedWithSavedCV: true,
       },
     });
+
+    // Trigger AI analysis for this new application
+    await this.applicationAITrigger.triggerAIAnalysis(
+      application.id,
+      'new-application',
+    );
 
     return successResponse(application, 'Applied successfully with saved CV');
   }
@@ -123,6 +133,12 @@ export class JobApplicationsService {
         isAppliedWithSavedCV: false,
       },
     });
+
+    // Trigger AI analysis for this new application
+    await this.applicationAITrigger.triggerAIAnalysis(
+      application.id,
+      'new-application',
+    );
 
     return successResponse(application, 'Applied successfully with new CV');
   }
