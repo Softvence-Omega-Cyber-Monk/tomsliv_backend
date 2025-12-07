@@ -32,7 +32,7 @@ export class JobApplicationsController {
     private readonly manageJobApplicationsService: ManageJobApplicationsService,
   ) {}
 
-  @ApiOperation({ summary: 'Apply with user saved CV' })
+  @ApiOperation({ summary: 'Apply with user saved CV (User)' })
   @Post('apply-saved/:jobId')
   async applyWithSavedCv(
     @GetUser('sub') userId: string,
@@ -41,7 +41,7 @@ export class JobApplicationsController {
     return this.jobApplicationsService.applyWithSavedCv(userId, jobId);
   }
 
-  @ApiOperation({ summary: 'Apply with new CV' })
+  @ApiOperation({ summary: 'Apply with new CV (User)' })
   @Post('apply-new/:jobId')
   async applyWithNewCv(
     @GetUser('sub') userId: string,
@@ -51,7 +51,7 @@ export class JobApplicationsController {
     return this.jobApplicationsService.applyWithNewCv(userId, dto, jobId);
   }
 
-  @ApiOperation({ summary: 'Get applied jobs' })
+  @ApiOperation({ summary: 'Get applied jobs (User)' })
   @Get('applied-jobs')
   async getAppliedJobs(
     @GetUser('sub') userId: string,
@@ -60,7 +60,7 @@ export class JobApplicationsController {
     return this.jobApplicationsService.getAppliedJobs(userId, dto);
   }
 
-  @ApiOperation({ summary: 'Get farm owner applications' })
+  @ApiOperation({ summary: 'Get farm owner applications (Farm Owner)' })
   @ValidateFarmOwner()
   @Get('farm-owner')
   async getFarmOwnerApplications(
@@ -70,7 +70,7 @@ export class JobApplicationsController {
     return this.getFarmOwnerApplicationsService.getApplications(userId, dto);
   }
 
-  @ApiOperation({ summary: 'Get single application details' })
+  @ApiOperation({ summary: 'Get single application details (Farm Owner)' })
   @ValidateFarmOwner()
   @Get('farm-owner/:id')
   async getApplication(
@@ -86,7 +86,7 @@ export class JobApplicationsController {
   async updateApplicationStatus(
     @GetUser('sub') userId: string,
     @Param('id') id: string,
-    @Body() dto: ManageApplicationStatusDto,
+    @Query() dto: ManageApplicationStatusDto,
   ) {
     return this.manageJobApplicationsService.updateStatus(userId, id, dto);
   }

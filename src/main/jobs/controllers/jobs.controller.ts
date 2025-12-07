@@ -85,7 +85,7 @@ export class JobsController {
   }
 
   @ApiOperation({
-    summary: 'Create or update ideal candidate profile for a job',
+    summary: 'Create or update ideal candidate profile for a job (Farm Owner)',
   })
   @Post(':jobId/ideal-candidate')
   async upsertIdealCandidate(
@@ -96,7 +96,9 @@ export class JobsController {
     return this.idealCandidateService.upsertIdealCandidate(userId, jobId, dto);
   }
 
-  @ApiOperation({ summary: 'Get ideal candidate profile for a job' })
+  @ApiOperation({
+    summary: 'Get ideal candidate profile for a job (Farm Owner)',
+  })
   @Get(':jobId/ideal-candidate')
   async getIdealCandidate(
     @GetUser('sub') userId: string,

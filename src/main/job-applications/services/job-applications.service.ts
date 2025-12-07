@@ -150,10 +150,20 @@ export class JobApplicationsService {
     // 3. Create Application linked to this new CV
     const application = await this.prisma.client.jobApplication.create({
       data: {
-        userId,
-        jobId,
-        cvId: cv.id,
+        user: { connect: { id: userId } },
+        job: { connect: { id: jobId } },
+        cv: { connect: { id: cv.id } },
         isAppliedWithSavedCV: false,
+        applicationAIResults: {
+          create: {
+            motivation: '',
+            jobFitScore: 0,
+            keyTraits: [],
+            summary: '',
+            areasOfImprovement: [],
+            strengths: [],
+          },
+        },
       },
     });
 
