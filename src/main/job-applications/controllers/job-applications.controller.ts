@@ -4,12 +4,22 @@ import {
   ValidateFarmOwner,
 } from '@/core/jwt/jwt.decorator';
 import { CreateCvBodyDto } from '@/main/cv/dto/create-cv.dto';
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetAppliedJobsDto } from '../dto/get-applied-jobs.dto';
 import { GetFarmOwnerApplicationsDto } from '../dto/get-farm-owner-applications.dto';
+import { ManageApplicationStatusDto } from '../dto/manage-application-status.dto';
 import { GetFarmOwnerApplicationsService } from '../services/get-farm-owner-applications.service';
 import { JobApplicationsService } from '../services/job-applications.service';
+import { ManageJobApplicationsService } from '../services/manage-job-applications.service';
 
 @ApiTags('Job Applications')
 @ApiBearerAuth()
@@ -19,6 +29,7 @@ export class JobApplicationsController {
   constructor(
     private readonly jobApplicationsService: JobApplicationsService,
     private readonly getFarmOwnerApplicationsService: GetFarmOwnerApplicationsService,
+    private readonly manageJobApplicationsService: ManageJobApplicationsService,
   ) {}
 
   @ApiOperation({ summary: 'Apply with user saved CV' })
@@ -57,5 +68,26 @@ export class JobApplicationsController {
     @Query() dto: GetFarmOwnerApplicationsDto,
   ) {
     return this.getFarmOwnerApplicationsService.getApplications(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get single application details' })
+  @ValidateFarmOwner()
+  @Get('farm-owner/:id')
+  async getApplication(
+    @GetUser('sub') userId: string,
+    @Param('id') id: string,
+  ) {
+    return this.manageJobApplicationsService.getApplication(userId, id);
+  }
+
+  @ApiOperation({ summary: 'Update application status (Shortlist/Reject)' })
+  @ValidateFarmOwner()
+  @Patch('farm-owner/:id/status')
+  async updateApplicationStatus(
+    @GetUser('sub') userId: string,
+    @Param('id') id: string,
+    @Body() dto: ManageApplicationStatusDto,
+  ) {
+    return this.manageJobApplicationsService.updateStatus(userId, id, dto);
   }
 }
