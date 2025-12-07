@@ -17,7 +17,6 @@ export class ApplicationAIWorkerService extends WorkerHost {
     );
 
     try {
-      // ✅ Placeholder for future AI service integration
       // TODO: In the future, this will:
       // 1. Fetch application, job, CV, and ideal candidate data from database
       // 2. Call external AI service API with the data

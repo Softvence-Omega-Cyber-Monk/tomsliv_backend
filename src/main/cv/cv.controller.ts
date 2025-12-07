@@ -1,23 +1,7 @@
 import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
-import { MulterService } from '@/lib/file/services/multer.service';
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBearerAuth,
-  ApiConsumes,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
-import { FileType } from '@prisma';
-import { CreateCvDto } from './dto/cv.dto';
+import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CreateCvBodyDto } from './dto/create-cv.dto';
 import { CvService } from './services/cv.service';
 
 @ApiTags('CV')
@@ -34,20 +18,9 @@ export class CvController {
   }
 
   @ApiOperation({ summary: 'Save or Update CV' })
-  @ApiConsumes('multipart/form-data')
   @Post()
-  @UseInterceptors(
-    FileInterceptor(
-      'file',
-      new MulterService().createMulterOptions('./temp', 'temp', FileType.docs),
-    ),
-  )
-  async saveCv(
-    @GetUser('sub') userId: string,
-    @Body() data: CreateCvDto,
-    @UploadedFile() file?: Express.Multer.File,
-  ) {
-    return this.cvService.upsertCv(userId, data, file);
+  async saveCv(@GetUser('sub') userId: string, @Body() data: CreateCvBodyDto) {
+    return this.cvService.upsertCv(userId, data);
   }
 
   @ApiOperation({ summary: 'Delete saved CV' })

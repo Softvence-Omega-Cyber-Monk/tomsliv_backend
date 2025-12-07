@@ -1,153 +1,128 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { JobType, WorkPermitType } from '@prisma';
-import { Type } from 'class-transformer';
 import {
-  IsArray,
   IsBoolean,
-  IsDateString,
   IsEnum,
+  IsISO8601,
   IsOptional,
   IsString,
-  ValidateNested,
 } from 'class-validator';
 
 export class ExperienceDto {
-  @ApiProperty({ description: 'Job title for this experience' })
+  @ApiProperty({ example: 'Software Engineer' })
   @IsString()
   jobTitle: string;
 
-  @ApiProperty({ enum: JobType, description: 'Type of job' })
+  @ApiProperty({ enum: JobType, example: JobType.FULL_TIME })
   @IsEnum(JobType)
   jobType: JobType;
 
-  @ApiProperty({ description: 'Company name' })
+  @ApiProperty({ example: 'TechCorp Solutions Ltd' })
   @IsString()
   company: string;
 
-  @ApiProperty({ description: 'Summary of responsibilities and achievements' })
+  @ApiProperty({
+    example:
+      'Developed backend services, improved API performance by 30%, mentored junior engineers.',
+  })
   @IsString()
   summary: string;
 
-  @ApiProperty({ description: 'Start date (ISO 8601 format)' })
-  @IsDateString()
+  @ApiProperty({ example: '2021-02-15T00:00:00.000Z' })
+  @IsISO8601()
   startDate: string;
 
-  @ApiPropertyOptional({ description: 'End date (ISO 8601 format)' })
+  @ApiPropertyOptional({ example: '2023-09-30T00:00:00.000Z' })
   @IsOptional()
-  @IsDateString()
+  @IsISO8601()
   endDate?: string;
 
-  @ApiPropertyOptional({ description: 'Whether this is an ongoing position' })
+  @ApiPropertyOptional({ example: false })
   @IsOptional()
   @IsBoolean()
   isOngoing?: boolean;
 }
 
 export class EducationDto {
-  @ApiProperty({ description: 'Degree or qualification' })
+  @ApiProperty({ example: 'Bachelor of Computer Science' })
   @IsString()
   degree: string;
 
-  @ApiProperty({ description: 'Institution name' })
+  @ApiProperty({ example: 'University of Auckland' })
   @IsString()
   institution: string;
 
-  @ApiProperty({ description: 'Start date (ISO 8601 format)' })
-  @IsDateString()
+  @ApiProperty({ example: '2017-01-10T00:00:00.000Z' })
+  @IsISO8601()
   startDate: string;
 
-  @ApiPropertyOptional({ description: 'End date (ISO 8601 format)' })
+  @ApiPropertyOptional({ example: '2020-12-15T00:00:00.000Z' })
   @IsOptional()
-  @IsDateString()
+  @IsISO8601()
   endDate?: string;
 
-  @ApiPropertyOptional({ description: 'Whether this is ongoing education' })
+  @ApiPropertyOptional({ example: false })
   @IsOptional()
   @IsBoolean()
   isOngoing?: boolean;
 }
 
-export class CreateCvDto {
-  @ApiProperty({ description: 'First name' })
+export class CoreCvDto {
+  @ApiProperty({ example: 'John' })
   @IsString()
   firstName: string;
 
-  @ApiProperty({ description: 'Last name' })
+  @ApiProperty({ example: 'Doe' })
   @IsString()
   lastName: string;
 
-  @ApiProperty({ description: 'Email address' })
+  @ApiProperty({ example: 'john.doe@example.com' })
   @IsString()
   email: string;
 
-  @ApiProperty({ description: 'Phone number' })
+  @ApiProperty({ example: '+64 21 123 4567' })
   @IsString()
   phone: string;
 
-  @ApiProperty({ description: 'Location/Address' })
+  @ApiProperty({ example: 'Auckland, New Zealand' })
   @IsString()
   location: string;
 
-  @ApiProperty({ description: 'Professional summary' })
+  @ApiProperty({
+    example:
+      'Experienced backend developer with 4+ years specialising in Node.js, NestJS, and cloud infrastructure.',
+  })
   @IsString()
   summary: string;
 
-  @ApiProperty({ description: 'Current/Desired job title' })
+  @ApiProperty({ example: 'Backend Developer' })
   @IsString()
   jobTitle: string;
 
-  @ApiProperty({ enum: JobType, description: 'Preferred job type' })
+  @ApiProperty({ enum: JobType, example: JobType.FULL_TIME })
   @IsEnum(JobType)
   jobType: JobType;
 
-  @ApiPropertyOptional({ description: 'Availability date (ISO 8601 format)' })
+  @ApiPropertyOptional({ example: '2025-01-01T00:00:00.000Z' })
   @IsOptional()
-  @IsDateString()
+  @IsISO8601()
   availability?: string;
 
-  @ApiPropertyOptional({ description: 'Has driving license' })
+  @ApiPropertyOptional({ example: true })
   @IsOptional()
   @IsBoolean()
   hasDrivingLicense?: boolean;
 
-  @ApiPropertyOptional({ description: 'Eligible to work in New Zealand' })
+  @ApiPropertyOptional({ example: true })
   @IsOptional()
   @IsBoolean()
   eligibleToWorkInNZ?: boolean;
 
   @ApiPropertyOptional({
     enum: WorkPermitType,
-    description: 'Work permit type',
+    example: WorkPermitType.WORK_VISA,
   })
   @IsOptional()
   @IsEnum(WorkPermitType)
   workPermitType?: WorkPermitType;
-
-  @ApiPropertyOptional({
-    type: [ExperienceDto],
-    description: 'Work experiences',
-  })
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => ExperienceDto)
-  experiences?: ExperienceDto[];
-
-  @ApiPropertyOptional({
-    type: [EducationDto],
-    description: 'Education history',
-  })
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => EducationDto)
-  educations?: EducationDto[];
-
-  @ApiPropertyOptional({
-    type: 'string',
-    format: 'binary',
-    description: 'Optional custom CV file (PDF/DOC)',
-  })
-  @IsOptional()
-  file?: Express.Multer.File;
 }

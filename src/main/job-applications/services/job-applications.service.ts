@@ -3,7 +3,7 @@ import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
-import { CreateCvDto } from '@/main/cv/dto/cv.dto';
+import { CreateCvBodyDto } from '@/main/cv/dto/create-cv.dto';
 import { HttpStatus, Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -65,7 +65,7 @@ export class JobApplicationsService {
   @HandleError('Failed to apply with new CV', 'JobApplication')
   async applyWithNewCv(
     userId: string,
-    dto: CreateCvDto,
+    dto: CreateCvBodyDto,
     jobId: string,
   ): Promise<TResponse<any>> {
     // 1. Check if already applied
@@ -87,20 +87,24 @@ export class JobApplicationsService {
     // Structure similar to CvService but create-only
     const cv = await this.prisma.client.cV.create({
       data: {
-        firstName: dto.firstName,
-        lastName: dto.lastName,
-        email: dto.email,
-        phone: dto.phone,
-        location: dto.location,
-        summary: dto.summary,
-        jobTitle: dto.jobTitle,
-        jobType: dto.jobType,
-        availability: dto.availability,
-        hasDrivingLicense: dto.hasDrivingLicense,
-        eligibleToWorkInNZ: dto.eligibleToWorkInNZ,
-        workPermitType: dto.workPermitType,
-        isSaved: false, // Explicitly not the "Saved CV"
-
+        firstName: dto.coreInfo.firstName,
+        lastName: dto.coreInfo.lastName,
+        email: dto.coreInfo.email,
+        phone: dto.coreInfo.phone,
+        location: dto.coreInfo.location,
+        summary: dto.coreInfo.summary,
+        jobTitle: dto.coreInfo.jobTitle,
+        jobType: dto.coreInfo.jobType,
+        availability: dto.coreInfo.availability,
+        hasDrivingLicense: dto.coreInfo.hasDrivingLicense,
+        eligibleToWorkInNZ: dto.coreInfo.eligibleToWorkInNZ,
+        workPermitType: dto.coreInfo.workPermitType,
+        isSaved: false,
+        ...(dto.fileId && {
+          customCV: {
+            connect: { id: dto.fileId },
+          },
+        }),
         experiences: {
           create: dto.experiences?.map((exp) => ({
             jobTitle: exp.jobTitle,

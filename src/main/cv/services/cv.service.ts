@@ -5,8 +5,8 @@ import { S3Service } from '@/lib/file/services/s3.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
-import { FileInstance, Prisma } from '@prisma';
-import { CreateCvDto } from '../dto/cv.dto';
+import { Prisma } from '@prisma';
+import { CreateCvBodyDto } from '../dto/create-cv.dto';
 
 @Injectable()
 export class CvService {
@@ -19,8 +19,7 @@ export class CvService {
   @HandleError('Failed to save CV', 'CV')
   async upsertCv(
     userId: string,
-    dto: CreateCvDto,
-    file?: Express.Multer.File,
+    dto: CreateCvBodyDto,
   ): Promise<TResponse<any>> {
     // 1. Get user to check existence
     const user = await this.prisma.client.user.findUniqueOrThrow({
@@ -28,29 +27,31 @@ export class CvService {
       include: { savedCV: true },
     });
 
-    // 2. Handle file upload if provided
-    let fileInstance: FileInstance | undefined;
-    if (file) {
-      const uploadFile = await this.s3.uploadFile(file);
-      if (uploadFile) {
-        fileInstance = uploadFile;
+    // If fileId is provided check its existence
+    if (dto.fileId) {
+      const file = await this.prisma.client.fileInstance.findUnique({
+        where: { id: dto.fileId },
+      });
+
+      if (!file) {
+        throw new AppError(404, 'File not found');
       }
     }
 
-    // 3. Prepare data for create/update
+    // 2. Prepare data for create/update
     const cvData: Prisma.CVCreateInput = {
-      firstName: dto.firstName,
-      lastName: dto.lastName,
-      email: dto.email,
-      phone: dto.phone,
-      location: dto.location,
-      summary: dto.summary,
-      jobTitle: dto.jobTitle,
-      jobType: dto.jobType,
-      availability: dto.availability,
-      hasDrivingLicense: dto.hasDrivingLicense,
-      eligibleToWorkInNZ: dto.eligibleToWorkInNZ,
-      workPermitType: dto.workPermitType,
+      firstName: dto.coreInfo.firstName,
+      lastName: dto.coreInfo.lastName,
+      email: dto.coreInfo.email,
+      phone: dto.coreInfo.phone,
+      location: dto.coreInfo.location,
+      summary: dto.coreInfo.summary,
+      jobTitle: dto.coreInfo.jobTitle,
+      jobType: dto.coreInfo.jobType,
+      availability: dto.coreInfo.availability,
+      hasDrivingLicense: dto.coreInfo.hasDrivingLicense,
+      eligibleToWorkInNZ: dto.coreInfo.eligibleToWorkInNZ,
+      workPermitType: dto.coreInfo.workPermitType,
       isSaved: true,
     };
 
@@ -82,9 +83,9 @@ export class CvService {
         where: { id: user.savedCVId },
         data: {
           ...cvData,
-          ...(fileInstance && {
+          ...(dto.fileId && {
             customCV: {
-              connect: fileInstance,
+              connect: { id: dto.fileId },
             },
           }),
           experiences: {
@@ -107,9 +108,9 @@ export class CvService {
       cv = await this.prisma.client.cV.create({
         data: {
           ...cvData,
-          ...(fileInstance && {
+          ...(dto.fileId && {
             customCV: {
-              connect: fileInstance,
+              connect: { id: dto.fileId },
             },
           }),
           experiences: {
