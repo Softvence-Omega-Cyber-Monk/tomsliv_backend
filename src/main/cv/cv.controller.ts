@@ -1,6 +1,11 @@
-import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
-import { Body, Controller, Delete, Get, Post } from '@nestjs/common';
+import {
+  GetUser,
+  ValidateAuth,
+  ValidateFarmOwner,
+} from '@/core/jwt/jwt.decorator';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CompareCvDto } from './dto/compare-cv.dto';
 import { CreateCvBodyDto } from './dto/create-cv.dto';
 import { CvService } from './services/cv.service';
 
@@ -27,5 +32,28 @@ export class CvController {
   @Delete()
   async deleteCv(@GetUser('sub') userId: string) {
     return this.cvService.deleteCv(userId);
+  }
+
+  // Farm Owner Endpoints
+
+  @ApiOperation({ summary: 'Get recent CVs from applications (Farm Owner)' })
+  @ValidateFarmOwner()
+  @Get('farm-owner/recent')
+  async getRecentCVs(@GetUser('sub') userId: string) {
+    return this.cvService.getRecentCVsForFarmOwner(userId);
+  }
+
+  @ApiOperation({ summary: 'Compare two CVs (Farm Owner)' })
+  @ValidateFarmOwner()
+  @Post('farm-owner/compare')
+  async compareCVs(@Body() data: CompareCvDto) {
+    return this.cvService.compareCVs(data);
+  }
+
+  @ApiOperation({ summary: 'Get details of a specific CV (Farm Owner)' })
+  @ValidateFarmOwner()
+  @Get('farm-owner/:id')
+  async getCvById(@Param('id') id: string) {
+    return this.cvService.getCvById(id);
   }
 }

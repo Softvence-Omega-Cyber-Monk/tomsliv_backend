@@ -3,9 +3,11 @@ import { AppError } from '@/core/error/handle-error.app';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import {
   DeleteObjectCommand,
+  GetObjectCommand,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { FileType } from '@prisma';
@@ -63,6 +65,14 @@ export class S3Service {
         Key: key,
       }),
     );
+  }
+
+  async getSignedUrl(key: string, expiresIn = 3600): Promise<string> {
+    const command = new GetObjectCommand({
+      Bucket: this.AWS_S3_BUCKET_NAME,
+      Key: key,
+    });
+    return getSignedUrl(this.s3, command, { expiresIn });
   }
 
   async uploadFile(file: Express.Multer.File) {

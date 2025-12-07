@@ -6,6 +6,7 @@ import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma';
+import { CompareCvDto } from '../dto/compare-cv.dto';
 import { CreateCvBodyDto } from '../dto/create-cv.dto';
 
 @Injectable()
@@ -177,5 +178,152 @@ export class CvService {
     });
 
     return successResponse(null, 'CV deleted successfully');
+  }
+  @HandleError('Failed to get recent CVs', 'CV')
+  async getRecentCVsForFarmOwner(
+    userId: string,
+    limit: number = 10,
+  ): Promise<TResponse<any>> {
+    // 1. Get the farm ID for the user
+    // Depending on schema, it seems User holds farmId, or Farm is linked to User.
+    // Based on user.prisma: user has farmId, unique.
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+      select: { farmId: true },
+    });
+
+    if (!user || !user.farmId) {
+      return successResponse([], 'No farm found for this user');
+    }
+
+    // 2. Find latest applications to jobs of this farm
+    const applications = await this.prisma.client.jobApplication.findMany({
+      where: {
+        job: {
+          farmId: user.farmId,
+        },
+      },
+      orderBy: { appliedAt: 'desc' },
+      take: limit,
+      include: {
+        cv: {
+          include: {
+            experiences: true,
+            educations: true,
+            customCV: true,
+          },
+        },
+        job: {
+          select: { title: true, id: true },
+        },
+        user: {
+          select: {
+            email: true,
+            name: true,
+            profilePicture: true,
+          },
+        },
+      },
+    });
+
+    // Extract CVs with application context
+    const recentCVs = applications.map((app) => ({
+      ...app.cv,
+      appliedJob: app.job,
+      applicant: app.user,
+      appliedAt: app.appliedAt,
+      applicationId: app.id,
+    }));
+
+    return successResponse(recentCVs, 'Recent CVs fetched successfully');
+  }
+
+  @HandleError('Failed to get CV', 'CV')
+  async getCvById(id: string): Promise<TResponse<any>> {
+    const cv = await this.prisma.client.cV.findUnique({
+      where: { id },
+      include: {
+        experiences: true,
+        educations: true,
+        customCV: true,
+      },
+    });
+
+    if (!cv) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'CV not found');
+    }
+
+    return successResponse(cv, 'CV fetched successfully');
+  }
+
+  @HandleError('Failed to compare CVs', 'CV')
+  async compareCVs(dto: CompareCvDto): Promise<TResponse<any>> {
+    const { cvId1, cvId2 } = dto;
+
+    const [cv1, cv2] = await this.prisma.client.$transaction([
+      this.prisma.client.cV.findUnique({
+        where: { id: cvId1 },
+        include: {
+          experiences: true,
+          educations: true,
+          customCV: true,
+          user: {
+            select: {
+              email: true,
+              name: true,
+              profilePicture: true,
+            },
+          },
+        },
+      }),
+      this.prisma.client.cV.findUnique({
+        where: { id: cvId2 },
+        include: {
+          experiences: true,
+          educations: true,
+          customCV: true,
+          user: {
+            select: {
+              email: true,
+              name: true,
+              profilePicture: true,
+            },
+          },
+        },
+      }),
+    ]);
+
+    if (!cv1 || !cv2) {
+      throw new AppError(HttpStatus.NOT_FOUND, 'One or both CVs not found');
+    }
+
+    const [processedCv1, processedCv2] = await Promise.all([
+      this.processCvProfile(cv1),
+      this.processCvProfile(cv2),
+    ]);
+
+    return successResponse(
+      { cv1: processedCv1, cv2: processedCv2 },
+      'CVs compared successfully',
+    );
+  }
+
+  private async processCvProfile(cv: any) {
+    if (!cv) return null;
+
+    const user = cv.user;
+    const flatUser = {
+      name: user?.name,
+      email: user?.email,
+      profileUrl: user?.profilePicture?.url || null,
+    };
+
+    // Remove the original user object with nested profilePicture
+    const { user: _, ...rest } = cv;
+
+    return {
+      ...rest,
+      user: flatUser,
+    };
   }
 }
