@@ -1,8 +1,14 @@
-import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
+import {
+  GetUser,
+  ValidateAuth,
+  ValidateFarmOwner,
+} from '@/core/jwt/jwt.decorator';
 import { CreateCvBodyDto } from '@/main/cv/dto/create-cv.dto';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetAppliedJobsDto } from '../dto/get-applied-jobs.dto';
+import { GetFarmOwnerApplicationsDto } from '../dto/get-farm-owner-applications.dto';
+import { GetFarmOwnerApplicationsService } from '../services/get-farm-owner-applications.service';
 import { JobApplicationsService } from '../services/job-applications.service';
 
 @ApiTags('Job Applications')
@@ -12,6 +18,7 @@ import { JobApplicationsService } from '../services/job-applications.service';
 export class JobApplicationsController {
   constructor(
     private readonly jobApplicationsService: JobApplicationsService,
+    private readonly getFarmOwnerApplicationsService: GetFarmOwnerApplicationsService,
   ) {}
 
   @ApiOperation({ summary: 'Apply with user saved CV' })
@@ -40,5 +47,15 @@ export class JobApplicationsController {
     @Query() dto: GetAppliedJobsDto,
   ) {
     return this.jobApplicationsService.getAppliedJobs(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get farm owner applications' })
+  @ValidateFarmOwner()
+  @Get('farm-owner')
+  async getFarmOwnerApplications(
+    @GetUser('sub') userId: string,
+    @Query() dto: GetFarmOwnerApplicationsDto,
+  ) {
+    return this.getFarmOwnerApplicationsService.getApplications(userId, dto);
   }
 }
