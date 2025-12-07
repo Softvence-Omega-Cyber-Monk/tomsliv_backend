@@ -29,6 +29,7 @@ export class ShortlistMailService {
         text: `Good news, ${candidateName}! You have been shortlisted for ${jobTitle} at ${farmName}.`,
       });
     } catch (error) {
+      console.error(error);
       throw new AppError(500, 'Failed to send shortlist email');
     }
   }

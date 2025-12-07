@@ -329,6 +329,7 @@ export class CvService {
     };
 
     // Remove the original user object with nested profilePicture
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { user: _, ...rest } = cv;
 
     return {
