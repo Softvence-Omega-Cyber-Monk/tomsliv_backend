@@ -171,10 +171,6 @@ export class CvService {
       throw new AppError(HttpStatus.NOT_FOUND, 'CV not found');
     }
 
-    // Disconnect from user first (or delete directly if cascade? OnDelete is SetNull in User)
-    // User schema: savedCV CV? @relation(..., onDelete: SetNull)
-    // So deleting CV will set User.savedCVId to null.
-
     await this.prisma.client.cV.delete({
       where: { id: user.savedCVId },
     });
