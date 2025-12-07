@@ -1,7 +1,8 @@
 import { GetUser, ValidateAuth } from '@/core/jwt/jwt.decorator';
 import { CreateCvBodyDto } from '@/main/cv/dto/create-cv.dto';
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { GetAppliedJobsDto } from '../dto/get-applied-jobs.dto';
 import { JobApplicationsService } from '../services/job-applications.service';
 
 @ApiTags('Job Applications')
@@ -30,5 +31,14 @@ export class JobApplicationsController {
     @Param('jobId') jobId: string,
   ) {
     return this.jobApplicationsService.applyWithNewCv(userId, dto, jobId);
+  }
+
+  @ApiOperation({ summary: 'Get applied jobs' })
+  @Get('applied-jobs')
+  async getAppliedJobs(
+    @GetUser('sub') userId: string,
+    @Query() dto: GetAppliedJobsDto,
+  ) {
+    return this.jobApplicationsService.getAppliedJobs(userId, dto);
   }
 }

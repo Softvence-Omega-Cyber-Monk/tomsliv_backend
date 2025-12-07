@@ -34,7 +34,7 @@ export class CvService {
       });
 
       if (!file) {
-        throw new AppError(404, 'File not found');
+        throw new AppError(HttpStatus.NOT_FOUND, 'File not found');
       }
     }
 
