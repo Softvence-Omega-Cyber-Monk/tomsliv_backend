@@ -1,7 +1,6 @@
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
-import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { Injectable } from '@nestjs/common';
@@ -12,7 +11,6 @@ import { FarmRegisterDto, RegisterDto } from '../dto/register.dto';
 export class AuthRegisterService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly authMailService: AuthMailService,
     private readonly utils: AuthUtilsService,
   ) {}
 
@@ -35,32 +33,22 @@ export class AuthRegisterService {
         name,
         role: UserRole.USER,
         password: await this.utils.hash(password),
+        isVerified: true,
         notificationSettings: {
           create: {},
         },
       },
     });
 
-    // Generate OTP and save
-    const otp = await this.utils.generateOTPAndSave(newUser.id, 'VERIFICATION');
-
-    // Send verification email
-    await this.authMailService.sendVerificationCodeEmail(
-      email,
-      otp.toString(),
-      {
-        subject: 'Verify your email',
-        message:
-          'Welcome to our platform! Your account has been successfully created.',
-      },
-    );
+    // Removed verification flow as per requirement
 
     // Return sanitized response
     return successResponse(
       {
         email: newUser.email,
+        isVerified: newUser.isVerified,
       },
-      `Registration successful. A verification email has been sent to ${newUser.email}.`,
+      `Registration successful. Welcome to TomsLiv.`,
     );
   }
 
@@ -83,6 +71,7 @@ export class AuthRegisterService {
         name,
         role: UserRole.FARM_OWNER,
         password: await this.utils.hash(password),
+        isVerified: true,
         farm: {
           create: {
             name: farmName,
@@ -97,27 +86,16 @@ export class AuthRegisterService {
       },
     });
 
-    // Generate OTP and save
-    const otp = await this.utils.generateOTPAndSave(newUser.id, 'VERIFICATION');
-
-    // Send verification email
-    await this.authMailService.sendVerificationCodeEmail(
-      email,
-      otp.toString(),
-      {
-        subject: 'Verify your email',
-        message:
-          'Welcome to our platform! Your account has been successfully created.',
-      },
-    );
+    // Removed verification flow as per requirement
 
     // Return sanitized response
     return successResponse(
       {
         email: newUser.email,
         farm: newUser.farm,
+        isVerified: newUser.isVerified,
       },
-      `Registration successful. A verification email has been sent to ${newUser.email}.`,
+      `Registration successful. Welcome to TomsLiv.`,
     );
   }
 }

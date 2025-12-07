@@ -71,6 +71,12 @@ export class JobApplicationsService {
     await this.applyWithNewCv(userId, dto, jobId);
 
     // 4. Send Email
+    const job = await this.prisma.client.job.findUnique({
+      where: { id: jobId },
+      select: { title: true },
+    });
+    const jobTitle = job?.title || 'Job Application';
+
     if (isNewUser) {
       // Generate standard OTP for password reset/setup
       const otp = await this.authUtils.generateOTPAndSave(
@@ -80,7 +86,12 @@ export class JobApplicationsService {
       await this.authMail.sendWelcomeGuestEmail(email, otp.toString());
     } else {
       // Optional: Send "Application Received" email for existing users
-      // await this.authMail.sendApplicationReceivedEmail(...)
+      await this.authMail.sendApplicationReceivedEmail(
+        email,
+        `${dto.coreInfo.firstName} ${dto.coreInfo.lastName}`,
+        jobTitle,
+        true,
+      );
     }
 
     return successResponse(
