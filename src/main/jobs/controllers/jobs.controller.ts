@@ -19,14 +19,18 @@ import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
 import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
 import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
 import { UpdateJobDto } from '../dto/update-job.dto';
+import { IdealCandidateService } from '../services/ideal-candidate.service';
 import { JobService } from '../services/job.service';
 
-@ApiTags('Jobs')
+@ApiTags('Jobs & Ideal candidate')
 @ApiBearerAuth()
 @ValidateFarmOwner()
 @Controller('jobs')
 export class JobsController {
-  constructor(private readonly jobService: JobService) {}
+  constructor(
+    private readonly jobService: JobService,
+    private readonly idealCandidateService: IdealCandidateService,
+  ) {}
 
   @ApiOperation({ summary: 'Create a new job by farm owner' })
   @Post()
@@ -89,7 +93,7 @@ export class JobsController {
     @Param('jobId') jobId: string,
     @Body() dto: UpsertIdealCandidateDto,
   ) {
-    return this.jobService.upsertIdealCandidate(userId, jobId, dto);
+    return this.idealCandidateService.upsertIdealCandidate(userId, jobId, dto);
   }
 
   @ApiOperation({ summary: 'Get ideal candidate profile for a job' })
@@ -98,6 +102,6 @@ export class JobsController {
     @GetUser('sub') userId: string,
     @Param('jobId') jobId: string,
   ) {
-    return this.jobService.getIdealCandidate(userId, jobId);
+    return this.idealCandidateService.getIdealCandidate(userId, jobId);
   }
 }

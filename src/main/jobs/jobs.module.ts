@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { GetAllJobsController } from './controllers/get-all-jobs.controller';
 import { JobsController } from './controllers/jobs.controller';
-import { GetAllJobsStatsService } from './services/get-all-jobs-stats.service';
-import { JobService } from './services/job.service';
-import { GetAllJobsService } from './services/get-all-jobs.service';
 import { UserJobsController } from './controllers/user-jobs.controller';
+import { GetAllJobsStatsService } from './services/get-all-jobs-stats.service';
+import { GetAllJobsService } from './services/get-all-jobs.service';
+import { IdealCandidateService } from './services/ideal-candidate.service';
+import { JobService } from './services/job.service';
 import { UserJobsService } from './services/user-jobs.service';
 
 @Module({
@@ -14,6 +15,7 @@ import { UserJobsService } from './services/user-jobs.service';
     GetAllJobsStatsService,
     GetAllJobsService,
     UserJobsService,
+    IdealCandidateService,
   ],
 })
 export class JobsModule {}

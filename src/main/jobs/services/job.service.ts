@@ -8,10 +8,9 @@ import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { UserRole } from '@prisma';
+import { Prisma, UserRole } from '@prisma';
 import { CreateJobDto } from '../dto/create-job.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
-import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
 import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
 import { UpdateJobDto } from '../dto/update-job.dto';
 
@@ -84,10 +83,27 @@ export class JobService {
       );
     }
 
+    // Build update job data
+    const updateData: Prisma.JobUpdateInput = {
+      title: dto.title ? dto.title.trim() : job.title,
+      description: dto.description ? dto.description.trim() : job.description,
+      location: dto.location ? dto.location.trim() : job.location,
+      benefits: dto.benefits ? dto.benefits.trim() : job.benefits,
+      jobType: dto.jobType || job.jobType,
+      numberOfPositions: dto.numberOfPositions || job.numberOfPositions,
+      requiredExperience: dto.requiredExperience || job.requiredExperience,
+      applicationDeadline: dto.applicationDeadline || job.applicationDeadline,
+      salaryStart: dto.salaryStart || job.salaryStart,
+      salaryEnd: dto.salaryEnd || job.salaryEnd,
+      requiredSkills: dto.requiredSkills || job.requiredSkills,
+      certifications: dto.certifications || job.certifications,
+      machineryExperience: dto.machineryExperience || job.machineryExperience,
+    };
+
     // Update the job
     const updatedJob = await this.prisma.client.job.update({
       where: { id: jobId },
-      data: dto,
+      data: updateData,
     });
 
     // Trigger AI analysis for all applications of this job
@@ -210,117 +226,5 @@ export class JobService {
     });
 
     return successResponse(job, 'Job details fetched successfully');
-  }
-
-  @HandleError('Failed to upsert ideal candidate', 'IdealCandidate')
-  async upsertIdealCandidate(
-    userId: string,
-    jobId: string,
-    dto: UpsertIdealCandidateDto,
-  ): Promise<TResponse<any>> {
-    // Verify job exists and belongs to user's farm
-    const job = await this.prisma.client.job.findUnique({
-      where: { id: jobId },
-      include: { farm: true },
-    });
-
-    if (!job) {
-      throw new AppError(HttpStatus.NOT_FOUND, 'Job not found');
-    }
-
-    const user = await this.prisma.client.user.findUniqueOrThrow({
-      where: { id: userId },
-      include: { farm: true },
-    });
-
-    const farm = user.farm;
-    if (!farm) {
-      this.logger.warn(`User with ID ${userId} has no associated farm.`);
-      throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
-    }
-
-    if (job.farmId !== farm.id) {
-      this.logger.warn(
-        `User ${userId} attempted to manage ideal candidate for job ${jobId} from another farm`,
-      );
-      throw new AppError(
-        HttpStatus.FORBIDDEN,
-        'You can only manage ideal candidates for jobs from your own farm',
-      );
-    }
-
-    // Upsert ideal candidate
-    const idealCandidate = await this.prisma.client.idealCandidate.upsert({
-      where: { jobId },
-      create: {
-        jobId,
-        ...dto,
-      },
-      update: {
-        ...dto,
-      },
-    });
-
-    // Trigger AI analysis for all applications of this job
-    await this.applicationAITrigger.triggerForIdealCandidateUpdate(jobId);
-
-    return successResponse(
-      idealCandidate,
-      'Ideal candidate profile saved successfully',
-    );
-  }
-
-  @HandleError('Failed to get ideal candidate', 'IdealCandidate')
-  async getIdealCandidate(
-    userId: string,
-    jobId: string,
-  ): Promise<TResponse<any>> {
-    // Verify job exists and belongs to user's farm
-    const job = await this.prisma.client.job.findUnique({
-      where: { id: jobId },
-      include: { farm: true },
-    });
-
-    if (!job) {
-      throw new AppError(HttpStatus.NOT_FOUND, 'Job not found');
-    }
-
-    const user = await this.prisma.client.user.findUniqueOrThrow({
-      where: { id: userId },
-      include: { farm: true },
-    });
-
-    const farm = user.farm;
-    if (!farm) {
-      this.logger.warn(`User with ID ${userId} has no associated farm.`);
-      throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
-    }
-
-    if (job.farmId !== farm.id) {
-      this.logger.warn(
-        `User ${userId} attempted to access ideal candidate for job ${jobId} from another farm`,
-      );
-      throw new AppError(
-        HttpStatus.FORBIDDEN,
-        'You can only view ideal candidates for jobs from your own farm',
-      );
-    }
-
-    // Get ideal candidate
-    const idealCandidate = await this.prisma.client.idealCandidate.findUnique({
-      where: { jobId },
-    });
-
-    if (!idealCandidate) {
-      throw new AppError(
-        HttpStatus.NOT_FOUND,
-        'No ideal candidate profile found for this job',
-      );
-    }
-
-    return successResponse(
-      idealCandidate,
-      'Ideal candidate profile fetched successfully',
-    );
   }
 }

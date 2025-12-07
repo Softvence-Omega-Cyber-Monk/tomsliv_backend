@@ -58,7 +58,11 @@ export class UserJobsService {
       this.prisma.client.savedJobs.findMany({
         where: { userId },
         include: {
-          job: true,
+          job: {
+            include: {
+              farm: true,
+            },
+          },
         },
         skip,
         take: limit,
