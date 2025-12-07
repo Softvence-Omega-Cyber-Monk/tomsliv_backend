@@ -6,10 +6,11 @@ import {
 } from '@/core/jwt/jwt.decorator';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { JobService } from '../services/job.service';
 import { CreateJobDto } from '../dto/create-job.dto';
-import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
+import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
+import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
+import { JobService } from '../services/job.service';
 
 @ApiTags('Jobs')
 @ApiBearerAuth()
@@ -58,5 +59,26 @@ export class JobsController {
   @Get('details/:jobId')
   async getSingleJob(@Param('jobId') jobId: string) {
     return this.jobService.getSingleJob(jobId);
+  }
+
+  @ApiOperation({
+    summary: 'Create or update ideal candidate profile for a job',
+  })
+  @Post(':jobId/ideal-candidate')
+  async upsertIdealCandidate(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+    @Body() dto: UpsertIdealCandidateDto,
+  ) {
+    return this.jobService.upsertIdealCandidate(userId, jobId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get ideal candidate profile for a job' })
+  @Get(':jobId/ideal-candidate')
+  async getIdealCandidate(
+    @GetUser('sub') userId: string,
+    @Param('jobId') jobId: string,
+  ) {
+    return this.jobService.getIdealCandidate(userId, jobId);
   }
 }
