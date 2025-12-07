@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CvController } from './controllers/cv.controller';
+import { CvController } from './cv.controller';
 import { CvService } from './services/cv.service';
 
 @Module({
