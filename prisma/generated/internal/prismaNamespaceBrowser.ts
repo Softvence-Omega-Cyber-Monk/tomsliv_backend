@@ -142,7 +142,8 @@ export const CVScalarFieldEnum = {
   workPermitType: 'workPermitType',
   customCVId: 'customCVId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 } as const
 
 export type CVScalarFieldEnum = (typeof CVScalarFieldEnum)[keyof typeof CVScalarFieldEnum]

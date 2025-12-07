@@ -26,7 +26,7 @@ model User {
 
   // Saved CV
   savedCVId String? @unique
-  savedCV   CV?     @relation(fields: [savedCVId], references: [id], onDelete: SetNull)
+  savedCV   CV?     @relation("SavedCV", fields: [savedCVId], references: [id], onDelete: SetNull)
 
   // Notification Settings
   notificationSettingsId String?               @unique
@@ -38,6 +38,7 @@ model User {
   otps            UserOtp[]
   jobApplications JobApplication[]
   savedJobs       SavedJobs[]
+  cvs             CV[]             @relation("UserCVs")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

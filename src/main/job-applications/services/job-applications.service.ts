@@ -119,6 +119,7 @@ export class JobApplicationsService {
         eligibleToWorkInNZ: dto.coreInfo.eligibleToWorkInNZ,
         workPermitType: dto.coreInfo.workPermitType,
         isSaved: false,
+        user: { connect: { id: userId } },
         ...(dto.fileId && {
           customCV: {
             connect: { id: dto.fileId },

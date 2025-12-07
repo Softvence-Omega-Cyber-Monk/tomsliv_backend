@@ -109,6 +109,7 @@ export class CvService {
       cv = await this.prisma.client.cV.create({
         data: {
           ...cvData,
+          user: { connect: { id: userId } },
           ...(dto.fileId && {
             customCV: {
               connect: { id: dto.fileId },
@@ -246,6 +247,13 @@ export class CvService {
         experiences: true,
         educations: true,
         customCV: true,
+        user: {
+          select: {
+            email: true,
+            name: true,
+            profilePicture: true,
+          },
+        },
       },
     });
 
@@ -253,7 +261,9 @@ export class CvService {
       throw new AppError(HttpStatus.NOT_FOUND, 'CV not found');
     }
 
-    return successResponse(cv, 'CV fetched successfully');
+    const processedCv = await this.processCvProfile(cv);
+
+    return successResponse(processedCv, 'CV fetched successfully');
   }
 
   @HandleError('Failed to compare CVs', 'CV')
