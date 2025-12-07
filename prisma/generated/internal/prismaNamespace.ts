@@ -1835,8 +1835,10 @@ export const IdealCandidateScalarFieldEnum = {
   maximumExperienceYears: 'maximumExperienceYears',
   coreSkills: 'coreSkills',
   desiredPersonalityTraits: 'desiredPersonalityTraits',
-  preferredCertifications: 'preferredCertifications',
   nonNegotiableSkills: 'nonNegotiableSkills',
+  recruiterValues: 'recruiterValues',
+  recruiterHobbies: 'recruiterHobbies',
+  recruiterPassions: 'recruiterPassions',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2147,34 +2149,6 @@ export type ListEnumDesiredPersonalityTraitFieldRefInput<$PrismaModel> = FieldRe
  * Reference to a field of type 'DesiredPersonalityTrait'
  */
 export type EnumDesiredPersonalityTraitFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DesiredPersonalityTrait'>
-    
-
-
-/**
- * Reference to a field of type 'PreferredCertification[]'
- */
-export type ListEnumPreferredCertificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferredCertification[]'>
-    
-
-
-/**
- * Reference to a field of type 'PreferredCertification'
- */
-export type EnumPreferredCertificationFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PreferredCertification'>
-    
-
-
-/**
- * Reference to a field of type 'NonNegotiableSkill[]'
- */
-export type ListEnumNonNegotiableSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NonNegotiableSkill[]'>
-    
-
-
-/**
- * Reference to a field of type 'NonNegotiableSkill'
- */
-export type EnumNonNegotiableSkillFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NonNegotiableSkill'>
     
 
 

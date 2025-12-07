@@ -2,13 +2,17 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { ApplicationStatus } from '@prisma';
 import { ManageApplicationStatusDto } from '../dto/manage-application-status.dto';
 
 @Injectable()
 export class ManageJobApplicationsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly applicationAITrigger: ApplicationAITriggerService,
+  ) {}
 
   @HandleError('Failed to get application', 'JobApplication')
   async getApplication(
@@ -108,6 +112,11 @@ export class ManageJobApplicationsService {
       where: { id: applicationId },
       data: { status: dto.status },
     });
+
+    // Send email to the user if the application is shortlisted
+    if (dto.status === ApplicationStatus.SHORTLISTED) {
+      await this.applicationAITrigger.triggerShortlistEmail(applicationId);
+    }
 
     return successResponse(updatedApp, 'Application status updated');
   }

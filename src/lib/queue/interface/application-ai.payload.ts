@@ -7,5 +7,6 @@ export interface ApplicationAIPayload {
     | 'job-updated'
     | 'cv-updated'
     | 'ideal-candidate-updated'
-    | 'new-application';
+    | 'new-application'
+    | 'application-shortlisted';
 }

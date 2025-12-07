@@ -204,8 +204,10 @@ export const IdealCandidateScalarFieldEnum = {
   maximumExperienceYears: 'maximumExperienceYears',
   coreSkills: 'coreSkills',
   desiredPersonalityTraits: 'desiredPersonalityTraits',
-  preferredCertifications: 'preferredCertifications',
   nonNegotiableSkills: 'nonNegotiableSkills',
+  recruiterValues: 'recruiterValues',
+  recruiterHobbies: 'recruiterHobbies',
+  recruiterPassions: 'recruiterPassions',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

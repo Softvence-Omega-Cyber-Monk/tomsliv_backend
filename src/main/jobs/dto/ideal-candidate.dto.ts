@@ -1,9 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import {
-  DesiredPersonalityTrait,
-  NonNegotiableSkill,
-  PreferredCertification,
-} from '@prisma';
+import { DesiredPersonalityTrait } from '@prisma';
 import { Type } from 'class-transformer';
 import {
   IsArray,
@@ -80,30 +76,46 @@ export class UpsertIdealCandidateDto {
   desiredPersonalityTraits?: DesiredPersonalityTrait[];
 
   @ApiPropertyOptional({
-    description: 'Preferred certifications',
-    enum: PreferredCertification,
-    isArray: true,
-    example: [
-      PreferredCertification.DAIRY_FARMING_CERTIFICATION,
-      PreferredCertification.FIRST_AID_AND_CPR,
-    ],
+    description: 'Non-negotiable skills or requirements',
+    example: ['Able to perform physical work', 'Valid driver license'],
+    type: [String],
   })
   @IsArray()
-  @IsEnum(PreferredCertification, { each: true })
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
   @IsOptional()
-  preferredCertifications?: PreferredCertification[];
+  nonNegotiableSkills?: string[];
 
   @ApiPropertyOptional({
-    description: 'Non-negotiable skills or requirements',
-    enum: NonNegotiableSkill,
-    isArray: true,
-    example: [
-      NonNegotiableSkill.ABLE_TO_PERFORM_PHYSICAL_WORK,
-      NonNegotiableSkill.VALID_DRIVER_S_LICENSE,
-    ],
+    description: 'Recruiter values',
+    example: ['Honesty', 'Integrity'],
+    type: [String],
   })
   @IsArray()
-  @IsEnum(NonNegotiableSkill, { each: true })
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
   @IsOptional()
-  nonNegotiableSkills?: NonNegotiableSkill[];
+  recruiterValues?: string[];
+
+  @ApiPropertyOptional({
+    description: 'Recruiter hobbies',
+    example: ['Fishing', 'Hiking'],
+    type: [String],
+  })
+  @IsArray()
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
+  @IsOptional()
+  recruiterHobbies?: string[];
+
+  @ApiPropertyOptional({
+    description: 'Recruiter passions',
+    example: ['Sustainability', 'Community'],
+    type: [String],
+  })
+  @IsArray()
+  @IsString({ each: true })
+  @IsNotEmpty({ each: true })
+  @IsOptional()
+  recruiterPassions?: string[];
 }

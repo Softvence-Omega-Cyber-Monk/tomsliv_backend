@@ -134,4 +134,11 @@ export class ApplicationAITriggerService {
       );
     }
   }
+
+  /**
+   * Trigger email generation for shortlisted application
+   */
+  async triggerShortlistEmail(applicationId: string) {
+    await this.triggerAIAnalysis(applicationId, 'application-shortlisted');
+  }
 }
