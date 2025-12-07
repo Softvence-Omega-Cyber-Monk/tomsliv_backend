@@ -8,4 +8,5 @@ export enum QueueEventsEnum {
   // === Notification events ===
   NOTIFICATION = 'queue:notification',
   GENERIC = 'queue:generic',
+  APPLICATION_AI_ANALYSIS = 'queue:application-ai-analysis',
 }

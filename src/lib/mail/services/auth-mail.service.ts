@@ -5,6 +5,7 @@ import { OtpType } from '@prisma';
 import * as he from 'he';
 import * as nodemailer from 'nodemailer';
 import { MailService } from '../mail.service';
+import { applicationReceivedTemplate } from '../templates/application-received.template';
 import { otpTemplate } from '../templates/otp.template';
 import { passwordResetConfirmationTemplate } from '../templates/reset-password-confirm.template';
 import { resetPasswordLinkTemplate } from '../templates/reset-password-link.template';
@@ -100,6 +101,50 @@ export class AuthMailService {
       subject,
       passwordResetConfirmationTemplate(message),
       message,
+    );
+  }
+  async sendWelcomeGuestEmail(
+    to: string,
+    code: string,
+    options: EmailOptions = {},
+  ): Promise<nodemailer.SentMessageInfo> {
+    const message = this.sanitize(
+      options.message || 'Welcome to TomsLiv! Your account has been created.',
+    );
+    const safeCode = this.sanitize(code);
+    const subject = options.subject || 'Welcome to TomsLiv';
+
+    const resetLink = `${this.frontendUrl}/reset-password?code=${code}&type=${OtpType.RESET}&email=${to}`;
+
+    return this.sendEmail(
+      to,
+      subject,
+      resetPasswordLinkTemplate({
+        title: '🎉 Welcome to TomsLiv!',
+        message,
+        code: safeCode,
+        footer:
+          'To access your account and track your application, please set your password using the link above.',
+        link: resetLink,
+      }),
+      `${message}\nSet your password using this link: ${resetLink}`,
+    );
+  }
+
+  async sendApplicationReceivedEmail(
+    to: string,
+    candidateName: string,
+    jobTitle: string,
+    isExistingUser: boolean,
+  ): Promise<nodemailer.SentMessageInfo> {
+    const subject = `Application Received: ${jobTitle}`;
+    const text = `Hi ${candidateName}, we have received your application for ${jobTitle}.`;
+
+    return this.sendEmail(
+      to,
+      subject,
+      applicationReceivedTemplate(candidateName, jobTitle, isExistingUser),
+      text,
     );
   }
 }

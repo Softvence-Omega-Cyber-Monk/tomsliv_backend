@@ -279,6 +279,7 @@ export type UserWhereInput = {
   otps?: Prisma.UserOtpListRelationFilter
   jobApplications?: Prisma.JobApplicationListRelationFilter
   savedJobs?: Prisma.SavedJobsListRelationFilter
+  cvs?: Prisma.CVListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -307,6 +308,7 @@ export type UserOrderByWithRelationInput = {
   otps?: Prisma.UserOtpOrderByRelationAggregateInput
   jobApplications?: Prisma.JobApplicationOrderByRelationAggregateInput
   savedJobs?: Prisma.SavedJobsOrderByRelationAggregateInput
+  cvs?: Prisma.CVOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -338,6 +340,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   otps?: Prisma.UserOtpListRelationFilter
   jobApplications?: Prisma.JobApplicationListRelationFilter
   savedJobs?: Prisma.SavedJobsListRelationFilter
+  cvs?: Prisma.CVListRelationFilter
 }, "id" | "email" | "phone" | "profilePictureId" | "farmId" | "savedCVId" | "notificationSettingsId">
 
 export type UserOrderByWithAggregationInput = {
@@ -399,13 +402,14 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -430,6 +434,7 @@ export type UserUncheckedCreateInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -447,13 +452,14 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -478,6 +484,7 @@ export type UserUncheckedUpdateInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -628,6 +635,12 @@ export type UserUpdateOneRequiredWithoutRefreshTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRefreshTokensInput, Prisma.UserUpdateWithoutRefreshTokensInput>, Prisma.UserUncheckedUpdateWithoutRefreshTokensInput>
 }
 
+export type UserCreateNestedOneWithoutCvsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCvsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserCreateNestedOneWithoutSavedCVInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSavedCVInput
@@ -638,6 +651,16 @@ export type UserUncheckedCreateNestedOneWithoutSavedCVInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSavedCVInput
   connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneWithoutCvsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCvsInput
+  upsert?: Prisma.UserUpsertWithoutCvsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCvsInput, Prisma.UserUpdateWithoutCvsInput>, Prisma.UserUncheckedUpdateWithoutCvsInput>
 }
 
 export type UserUpdateOneWithoutSavedCVNestedInput = {
@@ -821,12 +844,13 @@ export type UserCreateWithoutOtpsInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOtpsInput = {
@@ -850,6 +874,7 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOtpsInput = {
@@ -883,12 +908,13 @@ export type UserUpdateWithoutOtpsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOtpsInput = {
@@ -912,6 +938,7 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -929,12 +956,13 @@ export type UserCreateWithoutRefreshTokensInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -958,6 +986,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -991,12 +1020,13 @@ export type UserUpdateWithoutRefreshTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -1020,6 +1050,60 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutCvsInput = {
+  id?: string
+  name?: string
+  email: string
+  phone?: string | null
+  password: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  isVerified?: boolean
+  lastLoginAt?: Date | string | null
+  lastActiveAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
+  farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
+  notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
+  jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
+  savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCvsInput = {
+  id?: string
+  name?: string
+  email: string
+  phone?: string | null
+  password: string
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  isVerified?: boolean
+  lastLoginAt?: Date | string | null
+  lastActiveAt?: Date | string | null
+  profilePictureId?: string | null
+  farmId?: string | null
+  savedCVId?: string | null
+  notificationSettingsId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  notifications?: Prisma.UserNotificationUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
+  jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
+  savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCvsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
 }
 
 export type UserCreateWithoutSavedCVInput = {
@@ -1043,6 +1127,7 @@ export type UserCreateWithoutSavedCVInput = {
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSavedCVInput = {
@@ -1066,11 +1151,71 @@ export type UserUncheckedCreateWithoutSavedCVInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSavedCVInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutSavedCVInput, Prisma.UserUncheckedCreateWithoutSavedCVInput>
+}
+
+export type UserUpsertWithoutCvsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCvsInput, Prisma.UserUncheckedUpdateWithoutCvsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCvsInput, Prisma.UserUncheckedCreateWithoutCvsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCvsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCvsInput, Prisma.UserUncheckedUpdateWithoutCvsInput>
+}
+
+export type UserUpdateWithoutCvsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
+  farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
+  notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
+  jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
+  savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCvsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notificationSettingsId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  notifications?: Prisma.UserNotificationUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
+  jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+  savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutSavedCVInput = {
@@ -1105,6 +1250,7 @@ export type UserUpdateWithoutSavedCVInput = {
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSavedCVInput = {
@@ -1128,6 +1274,7 @@ export type UserUncheckedUpdateWithoutSavedCVInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutProfilePictureInput = {
@@ -1144,13 +1291,14 @@ export type UserCreateWithoutProfilePictureInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutProfilePictureInput = {
@@ -1174,6 +1322,7 @@ export type UserUncheckedCreateWithoutProfilePictureInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutProfilePictureInput = {
@@ -1206,13 +1355,14 @@ export type UserUpdateWithoutProfilePictureInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfilePictureInput = {
@@ -1236,6 +1386,7 @@ export type UserUncheckedUpdateWithoutProfilePictureInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutJobApplicationsInput = {
@@ -1253,12 +1404,13 @@ export type UserCreateWithoutJobApplicationsInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutJobApplicationsInput = {
@@ -1282,6 +1434,7 @@ export type UserUncheckedCreateWithoutJobApplicationsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutJobApplicationsInput = {
@@ -1315,12 +1468,13 @@ export type UserUpdateWithoutJobApplicationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutJobApplicationsInput = {
@@ -1344,6 +1498,7 @@ export type UserUncheckedUpdateWithoutJobApplicationsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSavedJobsInput = {
@@ -1361,12 +1516,13 @@ export type UserCreateWithoutSavedJobsInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSavedJobsInput = {
@@ -1390,6 +1546,7 @@ export type UserUncheckedCreateWithoutSavedJobsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSavedJobsInput = {
@@ -1423,12 +1580,13 @@ export type UserUpdateWithoutSavedJobsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSavedJobsInput = {
@@ -1452,6 +1610,7 @@ export type UserUncheckedUpdateWithoutSavedJobsInput = {
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1469,12 +1628,13 @@ export type UserCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1498,6 +1658,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1531,12 +1692,13 @@ export type UserUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1560,6 +1722,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationSettingsInput = {
@@ -1577,12 +1740,13 @@ export type UserCreateWithoutNotificationSettingsInput = {
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
   farm?: Prisma.FarmCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationSettingsInput = {
@@ -1606,6 +1770,7 @@ export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationSettingsInput = {
@@ -1639,12 +1804,13 @@ export type UserUpdateWithoutNotificationSettingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
   farm?: Prisma.FarmUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
@@ -1668,6 +1834,7 @@ export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFarmInput = {
@@ -1684,13 +1851,14 @@ export type UserCreateWithoutFarmInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   profilePicture?: Prisma.FileInstanceCreateNestedOneWithoutUsersInput
-  savedCV?: Prisma.CVCreateNestedOneWithoutUserInput
+  savedCV?: Prisma.CVCreateNestedOneWithoutSavedByInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutUserInput
   notifications?: Prisma.UserNotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
   otps?: Prisma.UserOtpCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFarmInput = {
@@ -1714,6 +1882,7 @@ export type UserUncheckedCreateWithoutFarmInput = {
   otps?: Prisma.UserOtpUncheckedCreateNestedManyWithoutUserInput
   jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutUserInput
   savedJobs?: Prisma.SavedJobsUncheckedCreateNestedManyWithoutUserInput
+  cvs?: Prisma.CVUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFarmInput = {
@@ -1746,13 +1915,14 @@ export type UserUpdateWithoutFarmInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   profilePicture?: Prisma.FileInstanceUpdateOneWithoutUsersNestedInput
-  savedCV?: Prisma.CVUpdateOneWithoutUserNestedInput
+  savedCV?: Prisma.CVUpdateOneWithoutSavedByNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutUserNestedInput
   notifications?: Prisma.UserNotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
   otps?: Prisma.UserOtpUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFarmInput = {
@@ -1776,6 +1946,7 @@ export type UserUncheckedUpdateWithoutFarmInput = {
   otps?: Prisma.UserOtpUncheckedUpdateManyWithoutUserNestedInput
   jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutUserNestedInput
   savedJobs?: Prisma.SavedJobsUncheckedUpdateManyWithoutUserNestedInput
+  cvs?: Prisma.CVUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1789,6 +1960,7 @@ export type UserCountOutputType = {
   otps: number
   jobApplications: number
   savedJobs: number
+  cvs: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1797,6 +1969,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   otps?: boolean | UserCountOutputTypeCountOtpsArgs
   jobApplications?: boolean | UserCountOutputTypeCountJobApplicationsArgs
   savedJobs?: boolean | UserCountOutputTypeCountSavedJobsArgs
+  cvs?: boolean | UserCountOutputTypeCountCvsArgs
 }
 
 /**
@@ -1844,6 +2017,13 @@ export type UserCountOutputTypeCountSavedJobsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.SavedJobsWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCvsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CVWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1871,6 +2051,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
   jobApplications?: boolean | Prisma.User$jobApplicationsArgs<ExtArgs>
   savedJobs?: boolean | Prisma.User$savedJobsArgs<ExtArgs>
+  cvs?: boolean | Prisma.User$cvsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1950,6 +2131,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   otps?: boolean | Prisma.User$otpsArgs<ExtArgs>
   jobApplications?: boolean | Prisma.User$jobApplicationsArgs<ExtArgs>
   savedJobs?: boolean | Prisma.User$savedJobsArgs<ExtArgs>
+  cvs?: boolean | Prisma.User$cvsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1977,6 +2159,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     otps: Prisma.$UserOtpPayload<ExtArgs>[]
     jobApplications: Prisma.$JobApplicationPayload<ExtArgs>[]
     savedJobs: Prisma.$SavedJobsPayload<ExtArgs>[]
+    cvs: Prisma.$CVPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2398,6 +2581,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   otps<T extends Prisma.User$otpsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$otpsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserOtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   jobApplications<T extends Prisma.User$jobApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$jobApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$JobApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   savedJobs<T extends Prisma.User$savedJobsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$savedJobsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SavedJobsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  cvs<T extends Prisma.User$cvsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cvsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CVPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3032,6 +3216,30 @@ export type User$savedJobsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.SavedJobsScalarFieldEnum | Prisma.SavedJobsScalarFieldEnum[]
+}
+
+/**
+ * User.cvs
+ */
+export type User$cvsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CV
+   */
+  select?: Prisma.CVSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CV
+   */
+  omit?: Prisma.CVOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CVInclude<ExtArgs> | null
+  where?: Prisma.CVWhereInput
+  orderBy?: Prisma.CVOrderByWithRelationInput | Prisma.CVOrderByWithRelationInput[]
+  cursor?: Prisma.CVWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CVScalarFieldEnum | Prisma.CVScalarFieldEnum[]
 }
 
 /**

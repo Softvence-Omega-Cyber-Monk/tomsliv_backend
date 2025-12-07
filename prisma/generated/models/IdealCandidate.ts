@@ -61,8 +61,10 @@ export type IdealCandidateCountAggregateOutputType = {
   maximumExperienceYears: number
   coreSkills: number
   desiredPersonalityTraits: number
-  preferredCertifications: number
   nonNegotiableSkills: number
+  recruiterValues: number
+  recruiterHobbies: number
+  recruiterPassions: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -104,8 +106,10 @@ export type IdealCandidateCountAggregateInputType = {
   maximumExperienceYears?: true
   coreSkills?: true
   desiredPersonalityTraits?: true
-  preferredCertifications?: true
   nonNegotiableSkills?: true
+  recruiterValues?: true
+  recruiterHobbies?: true
+  recruiterPassions?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,8 +208,10 @@ export type IdealCandidateGroupByOutputType = {
   maximumExperienceYears: number
   coreSkills: string[]
   desiredPersonalityTraits: $Enums.DesiredPersonalityTrait[]
-  preferredCertifications: $Enums.PreferredCertification[]
-  nonNegotiableSkills: $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills: string[]
+  recruiterValues: string[]
+  recruiterHobbies: string[]
+  recruiterPassions: string[]
   createdAt: Date
   updatedAt: Date
   _count: IdealCandidateCountAggregateOutputType | null
@@ -240,8 +246,10 @@ export type IdealCandidateWhereInput = {
   maximumExperienceYears?: Prisma.IntFilter<"IdealCandidate"> | number
   coreSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
   desiredPersonalityTraits?: Prisma.EnumDesiredPersonalityTraitNullableListFilter<"IdealCandidate">
-  preferredCertifications?: Prisma.EnumPreferredCertificationNullableListFilter<"IdealCandidate">
-  nonNegotiableSkills?: Prisma.EnumNonNegotiableSkillNullableListFilter<"IdealCandidate">
+  nonNegotiableSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterValues?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterHobbies?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterPassions?: Prisma.StringNullableListFilter<"IdealCandidate">
   createdAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
@@ -254,8 +262,10 @@ export type IdealCandidateOrderByWithRelationInput = {
   maximumExperienceYears?: Prisma.SortOrder
   coreSkills?: Prisma.SortOrder
   desiredPersonalityTraits?: Prisma.SortOrder
-  preferredCertifications?: Prisma.SortOrder
   nonNegotiableSkills?: Prisma.SortOrder
+  recruiterValues?: Prisma.SortOrder
+  recruiterHobbies?: Prisma.SortOrder
+  recruiterPassions?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   job?: Prisma.JobOrderByWithRelationInput
@@ -271,8 +281,10 @@ export type IdealCandidateWhereUniqueInput = Prisma.AtLeast<{
   maximumExperienceYears?: Prisma.IntFilter<"IdealCandidate"> | number
   coreSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
   desiredPersonalityTraits?: Prisma.EnumDesiredPersonalityTraitNullableListFilter<"IdealCandidate">
-  preferredCertifications?: Prisma.EnumPreferredCertificationNullableListFilter<"IdealCandidate">
-  nonNegotiableSkills?: Prisma.EnumNonNegotiableSkillNullableListFilter<"IdealCandidate">
+  nonNegotiableSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterValues?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterHobbies?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterPassions?: Prisma.StringNullableListFilter<"IdealCandidate">
   createdAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"IdealCandidate"> | Date | string
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
@@ -285,8 +297,10 @@ export type IdealCandidateOrderByWithAggregationInput = {
   maximumExperienceYears?: Prisma.SortOrder
   coreSkills?: Prisma.SortOrder
   desiredPersonalityTraits?: Prisma.SortOrder
-  preferredCertifications?: Prisma.SortOrder
   nonNegotiableSkills?: Prisma.SortOrder
+  recruiterValues?: Prisma.SortOrder
+  recruiterHobbies?: Prisma.SortOrder
+  recruiterPassions?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.IdealCandidateCountOrderByAggregateInput
@@ -306,8 +320,10 @@ export type IdealCandidateScalarWhereWithAggregatesInput = {
   maximumExperienceYears?: Prisma.IntWithAggregatesFilter<"IdealCandidate"> | number
   coreSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
   desiredPersonalityTraits?: Prisma.EnumDesiredPersonalityTraitNullableListFilter<"IdealCandidate">
-  preferredCertifications?: Prisma.EnumPreferredCertificationNullableListFilter<"IdealCandidate">
-  nonNegotiableSkills?: Prisma.EnumNonNegotiableSkillNullableListFilter<"IdealCandidate">
+  nonNegotiableSkills?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterValues?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterHobbies?: Prisma.StringNullableListFilter<"IdealCandidate">
+  recruiterPassions?: Prisma.StringNullableListFilter<"IdealCandidate">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"IdealCandidate"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"IdealCandidate"> | Date | string
 }
@@ -318,8 +334,10 @@ export type IdealCandidateCreateInput = {
   maximumExperienceYears: number
   coreSkills?: Prisma.IdealCandidateCreatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateCreatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateCreatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateCreaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateCreaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateCreaterecruiterPassionsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutIdealCandidatesInput
@@ -332,8 +350,10 @@ export type IdealCandidateUncheckedCreateInput = {
   maximumExperienceYears: number
   coreSkills?: Prisma.IdealCandidateCreatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateCreatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateCreatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateCreaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateCreaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateCreaterecruiterPassionsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -344,8 +364,10 @@ export type IdealCandidateUpdateInput = {
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateUpdaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateUpdaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateUpdaterecruiterPassionsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutIdealCandidatesNestedInput
@@ -358,8 +380,10 @@ export type IdealCandidateUncheckedUpdateInput = {
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateUpdaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateUpdaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateUpdaterecruiterPassionsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -371,8 +395,10 @@ export type IdealCandidateCreateManyInput = {
   maximumExperienceYears: number
   coreSkills?: Prisma.IdealCandidateCreatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateCreatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateCreatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateCreaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateCreaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateCreaterecruiterPassionsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -383,8 +409,10 @@ export type IdealCandidateUpdateManyMutationInput = {
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateUpdaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateUpdaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateUpdaterecruiterPassionsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -396,8 +424,10 @@ export type IdealCandidateUncheckedUpdateManyInput = {
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateUpdaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateUpdaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateUpdaterecruiterPassionsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -418,22 +448,6 @@ export type EnumDesiredPersonalityTraitNullableListFilter<$PrismaModel = never> 
   isEmpty?: boolean
 }
 
-export type EnumPreferredCertificationNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.PreferredCertification[] | Prisma.ListEnumPreferredCertificationFieldRefInput<$PrismaModel> | null
-  has?: $Enums.PreferredCertification | Prisma.EnumPreferredCertificationFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.PreferredCertification[] | Prisma.ListEnumPreferredCertificationFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.PreferredCertification[] | Prisma.ListEnumPreferredCertificationFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
-export type EnumNonNegotiableSkillNullableListFilter<$PrismaModel = never> = {
-  equals?: $Enums.NonNegotiableSkill[] | Prisma.ListEnumNonNegotiableSkillFieldRefInput<$PrismaModel> | null
-  has?: $Enums.NonNegotiableSkill | Prisma.EnumNonNegotiableSkillFieldRefInput<$PrismaModel> | null
-  hasEvery?: $Enums.NonNegotiableSkill[] | Prisma.ListEnumNonNegotiableSkillFieldRefInput<$PrismaModel>
-  hasSome?: $Enums.NonNegotiableSkill[] | Prisma.ListEnumNonNegotiableSkillFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
-}
-
 export type IdealCandidateCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   jobId?: Prisma.SortOrder
@@ -441,8 +455,10 @@ export type IdealCandidateCountOrderByAggregateInput = {
   maximumExperienceYears?: Prisma.SortOrder
   coreSkills?: Prisma.SortOrder
   desiredPersonalityTraits?: Prisma.SortOrder
-  preferredCertifications?: Prisma.SortOrder
   nonNegotiableSkills?: Prisma.SortOrder
+  recruiterValues?: Prisma.SortOrder
+  recruiterHobbies?: Prisma.SortOrder
+  recruiterPassions?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -488,12 +504,20 @@ export type IdealCandidateCreatedesiredPersonalityTraitsInput = {
   set: $Enums.DesiredPersonalityTrait[]
 }
 
-export type IdealCandidateCreatepreferredCertificationsInput = {
-  set: $Enums.PreferredCertification[]
+export type IdealCandidateCreatenonNegotiableSkillsInput = {
+  set: string[]
 }
 
-export type IdealCandidateCreatenonNegotiableSkillsInput = {
-  set: $Enums.NonNegotiableSkill[]
+export type IdealCandidateCreaterecruiterValuesInput = {
+  set: string[]
+}
+
+export type IdealCandidateCreaterecruiterHobbiesInput = {
+  set: string[]
+}
+
+export type IdealCandidateCreaterecruiterPassionsInput = {
+  set: string[]
 }
 
 export type IdealCandidateUpdatecoreSkillsInput = {
@@ -506,14 +530,24 @@ export type IdealCandidateUpdatedesiredPersonalityTraitsInput = {
   push?: $Enums.DesiredPersonalityTrait | $Enums.DesiredPersonalityTrait[]
 }
 
-export type IdealCandidateUpdatepreferredCertificationsInput = {
-  set?: $Enums.PreferredCertification[]
-  push?: $Enums.PreferredCertification | $Enums.PreferredCertification[]
+export type IdealCandidateUpdatenonNegotiableSkillsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
-export type IdealCandidateUpdatenonNegotiableSkillsInput = {
-  set?: $Enums.NonNegotiableSkill[]
-  push?: $Enums.NonNegotiableSkill | $Enums.NonNegotiableSkill[]
+export type IdealCandidateUpdaterecruiterValuesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type IdealCandidateUpdaterecruiterHobbiesInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type IdealCandidateUpdaterecruiterPassionsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type IdealCandidateCreateNestedOneWithoutJobInput = {
@@ -554,8 +588,10 @@ export type IdealCandidateCreateWithoutJobInput = {
   maximumExperienceYears: number
   coreSkills?: Prisma.IdealCandidateCreatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateCreatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateCreatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateCreaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateCreaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateCreaterecruiterPassionsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -566,8 +602,10 @@ export type IdealCandidateUncheckedCreateWithoutJobInput = {
   maximumExperienceYears: number
   coreSkills?: Prisma.IdealCandidateCreatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateCreatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateCreatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateCreatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateCreaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateCreaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateCreaterecruiterPassionsInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -594,8 +632,10 @@ export type IdealCandidateUpdateWithoutJobInput = {
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateUpdaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateUpdaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateUpdaterecruiterPassionsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -606,8 +646,10 @@ export type IdealCandidateUncheckedUpdateWithoutJobInput = {
   maximumExperienceYears?: Prisma.IntFieldUpdateOperationsInput | number
   coreSkills?: Prisma.IdealCandidateUpdatecoreSkillsInput | string[]
   desiredPersonalityTraits?: Prisma.IdealCandidateUpdatedesiredPersonalityTraitsInput | $Enums.DesiredPersonalityTrait[]
-  preferredCertifications?: Prisma.IdealCandidateUpdatepreferredCertificationsInput | $Enums.PreferredCertification[]
-  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | $Enums.NonNegotiableSkill[]
+  nonNegotiableSkills?: Prisma.IdealCandidateUpdatenonNegotiableSkillsInput | string[]
+  recruiterValues?: Prisma.IdealCandidateUpdaterecruiterValuesInput | string[]
+  recruiterHobbies?: Prisma.IdealCandidateUpdaterecruiterHobbiesInput | string[]
+  recruiterPassions?: Prisma.IdealCandidateUpdaterecruiterPassionsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -621,8 +663,10 @@ export type IdealCandidateSelect<ExtArgs extends runtime.Types.Extensions.Intern
   maximumExperienceYears?: boolean
   coreSkills?: boolean
   desiredPersonalityTraits?: boolean
-  preferredCertifications?: boolean
   nonNegotiableSkills?: boolean
+  recruiterValues?: boolean
+  recruiterHobbies?: boolean
+  recruiterPassions?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -635,8 +679,10 @@ export type IdealCandidateSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   maximumExperienceYears?: boolean
   coreSkills?: boolean
   desiredPersonalityTraits?: boolean
-  preferredCertifications?: boolean
   nonNegotiableSkills?: boolean
+  recruiterValues?: boolean
+  recruiterHobbies?: boolean
+  recruiterPassions?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -649,8 +695,10 @@ export type IdealCandidateSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   maximumExperienceYears?: boolean
   coreSkills?: boolean
   desiredPersonalityTraits?: boolean
-  preferredCertifications?: boolean
   nonNegotiableSkills?: boolean
+  recruiterValues?: boolean
+  recruiterHobbies?: boolean
+  recruiterPassions?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
@@ -663,13 +711,15 @@ export type IdealCandidateSelectScalar = {
   maximumExperienceYears?: boolean
   coreSkills?: boolean
   desiredPersonalityTraits?: boolean
-  preferredCertifications?: boolean
   nonNegotiableSkills?: boolean
+  recruiterValues?: boolean
+  recruiterHobbies?: boolean
+  recruiterPassions?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type IdealCandidateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobId" | "minimumExperienceYears" | "maximumExperienceYears" | "coreSkills" | "desiredPersonalityTraits" | "preferredCertifications" | "nonNegotiableSkills" | "createdAt" | "updatedAt", ExtArgs["result"]["idealCandidate"]>
+export type IdealCandidateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobId" | "minimumExperienceYears" | "maximumExperienceYears" | "coreSkills" | "desiredPersonalityTraits" | "nonNegotiableSkills" | "recruiterValues" | "recruiterHobbies" | "recruiterPassions" | "createdAt" | "updatedAt", ExtArgs["result"]["idealCandidate"]>
 export type IdealCandidateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
 }
@@ -692,8 +742,10 @@ export type $IdealCandidatePayload<ExtArgs extends runtime.Types.Extensions.Inte
     maximumExperienceYears: number
     coreSkills: string[]
     desiredPersonalityTraits: $Enums.DesiredPersonalityTrait[]
-    preferredCertifications: $Enums.PreferredCertification[]
-    nonNegotiableSkills: $Enums.NonNegotiableSkill[]
+    nonNegotiableSkills: string[]
+    recruiterValues: string[]
+    recruiterHobbies: string[]
+    recruiterPassions: string[]
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["idealCandidate"]>
@@ -1126,8 +1178,10 @@ export interface IdealCandidateFieldRefs {
   readonly maximumExperienceYears: Prisma.FieldRef<"IdealCandidate", 'Int'>
   readonly coreSkills: Prisma.FieldRef<"IdealCandidate", 'String[]'>
   readonly desiredPersonalityTraits: Prisma.FieldRef<"IdealCandidate", 'DesiredPersonalityTrait[]'>
-  readonly preferredCertifications: Prisma.FieldRef<"IdealCandidate", 'PreferredCertification[]'>
-  readonly nonNegotiableSkills: Prisma.FieldRef<"IdealCandidate", 'NonNegotiableSkill[]'>
+  readonly nonNegotiableSkills: Prisma.FieldRef<"IdealCandidate", 'String[]'>
+  readonly recruiterValues: Prisma.FieldRef<"IdealCandidate", 'String[]'>
+  readonly recruiterHobbies: Prisma.FieldRef<"IdealCandidate", 'String[]'>
+  readonly recruiterPassions: Prisma.FieldRef<"IdealCandidate", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"IdealCandidate", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"IdealCandidate", 'DateTime'>
 }
