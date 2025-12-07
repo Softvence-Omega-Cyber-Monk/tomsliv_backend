@@ -5,21 +5,89 @@ import {
 } from '@/common/utils/response.util';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
+import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
+import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { CreateCvBodyDto } from '@/main/cv/dto/create-cv.dto';
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { OtpType, UserRole, UserStatus } from '@prisma';
 import {
   AppliedJobSortOptionEnum,
   GetAppliedJobsDto,
 } from '../dto/get-applied-jobs.dto';
+import { PublicApplyDto } from '../dto/public-apply.dto';
 
 @Injectable()
 export class JobApplicationsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly applicationAITrigger: ApplicationAITriggerService,
+    private readonly authUtils: AuthUtilsService,
+    private readonly authMail: AuthMailService,
   ) {}
+
+  @HandleError('Failed to apply (Public)', 'JobApplication')
+  async applyPublic(
+    jobId: string,
+    dto: PublicApplyDto,
+  ): Promise<TResponse<any>> {
+    const email = dto.coreInfo.email;
+    let userId: string;
+    let isNewUser = false;
+    let tempPassword = '';
+
+    // 1. Check if user exists
+    const existingUser = await this.prisma.client.user.findUnique({
+      where: { email },
+    });
+
+    if (existingUser) {
+      userId = existingUser.id;
+    } else {
+      // 2. Create new user
+      isNewUser = true;
+      // Generate random password
+      tempPassword = Math.random().toString(36).slice(-10); // 10 chars
+      const hashedPassword = await this.authUtils.hash(tempPassword);
+
+      const newUser = await this.prisma.client.user.create({
+        data: {
+          email,
+          name: `${dto.coreInfo.firstName} ${dto.coreInfo.lastName}`,
+          role: UserRole.USER,
+          password: hashedPassword,
+          status: UserStatus.ACTIVE,
+          isVerified: true,
+          notificationSettings: {
+            create: {},
+          },
+        },
+      });
+      userId = newUser.id;
+    }
+
+    // 3. Apply
+    await this.applyWithNewCv(userId, dto, jobId);
+
+    // 4. Send Email
+    if (isNewUser) {
+      // Generate standard OTP for password reset/setup
+      const otp = await this.authUtils.generateOTPAndSave(
+        userId,
+        OtpType.RESET,
+      );
+      await this.authMail.sendWelcomeGuestEmail(email, otp.toString());
+    } else {
+      // Optional: Send "Application Received" email for existing users
+      // await this.authMail.sendApplicationReceivedEmail(...)
+    }
+
+    return successResponse(
+      { userId, isNewUser },
+      'Application submitted successfully',
+    );
+  }
 
   @HandleError('Failed to apply with saved CV', 'JobApplication')
   async applyWithSavedCv(

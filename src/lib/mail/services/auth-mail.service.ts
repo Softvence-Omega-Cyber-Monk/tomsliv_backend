@@ -102,4 +102,31 @@ export class AuthMailService {
       message,
     );
   }
+  async sendWelcomeGuestEmail(
+    to: string,
+    code: string,
+    options: EmailOptions = {},
+  ): Promise<nodemailer.SentMessageInfo> {
+    const message = this.sanitize(
+      options.message || 'Welcome to TomsLiv! Your account has been created.',
+    );
+    const safeCode = this.sanitize(code);
+    const subject = options.subject || 'Welcome to TomsLiv';
+
+    const resetLink = `${this.frontendUrl}/reset-password?code=${code}&type=${OtpType.RESET}&email=${to}`;
+
+    return this.sendEmail(
+      to,
+      subject,
+      resetPasswordLinkTemplate({
+        title: '🎉 Welcome to TomsLiv!',
+        message,
+        code: safeCode,
+        footer:
+          'To access your account and track your application, please set your password using the link above.',
+        link: resetLink,
+      }),
+      `${message}\nSet your password using this link: ${resetLink}`,
+    );
+  }
 }
