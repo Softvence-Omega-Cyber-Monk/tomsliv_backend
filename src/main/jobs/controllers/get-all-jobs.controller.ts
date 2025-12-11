@@ -19,10 +19,10 @@ export class GetAllJobsController {
     return this.getAllJobsStatsService.getJobTypesWithCounts();
   }
 
-  @ApiOperation({ summary: 'Get salary buckets' })
-  @Get('salary-buckets')
-  async getSalaryBuckets() {
-    return this.getAllJobsStatsService.getSalaryBuckets();
+  @ApiOperation({ summary: 'Get remuneration buckets' })
+  @Get('remuneration-buckets')
+  async getRemunerationBuckets() {
+    return this.getAllJobsStatsService.getRemunerationBuckets();
   }
 
   @ApiOperation({ summary: 'Get job roles with counts' })

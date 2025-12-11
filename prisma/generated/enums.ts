@@ -74,6 +74,7 @@ export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof Applicat
 
 
 export const JobType = {
+  FIXED_TERM: 'FIXED_TERM',
   FULL_TIME: 'FULL_TIME',
   PART_TIME: 'PART_TIME',
   CONTRACT: 'CONTRACT',
@@ -93,6 +94,35 @@ export const JobStatus = {
 } as const
 
 export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
+
+
+export const PrimaryLocation = {
+  SINGLE_FARM: 'SINGLE_FARM',
+  MULTI_FARM: 'MULTI_FARM',
+  CORPORATE_FARM: 'CORPORATE_FARM'
+} as const
+
+export type PrimaryLocation = (typeof PrimaryLocation)[keyof typeof PrimaryLocation]
+
+
+export const SalaryType = {
+  HOURLY: 'HOURLY',
+  DAILY: 'DAILY',
+  WEEKLY: 'WEEKLY',
+  MONTHLY: 'MONTHLY',
+  YEARLY: 'YEARLY'
+} as const
+
+export type SalaryType = (typeof SalaryType)[keyof typeof SalaryType]
+
+
+export const HourType = {
+  week: 'week',
+  season: 'season',
+  negotiable: 'negotiable'
+} as const
+
+export type HourType = (typeof HourType)[keyof typeof HourType]
 
 
 export const UserRole = {

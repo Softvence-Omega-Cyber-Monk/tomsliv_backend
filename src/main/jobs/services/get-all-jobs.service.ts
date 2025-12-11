@@ -19,7 +19,7 @@ export class GetAllJobsService {
       jobTypes,
       roles,
       locations,
-      salaryRange,
+      remunerationRange,
       search,
       status,
       sortOption,
@@ -34,11 +34,11 @@ export class GetAllJobsService {
     if (roles?.length) where.title = { in: roles };
     if (locations?.length) where.location = { in: locations };
 
-    if (salaryRange?.length) {
-      // OR multiple salary ranges
-      where.OR = salaryRange.map((r) => ({
-        salaryStart: { gte: r.min },
-        salaryEnd: { lte: r.max },
+    if (remunerationRange?.length) {
+      // OR multiple remuneration ranges
+      where.OR = remunerationRange.map((r) => ({
+        remunerationStart: { gte: r.min },
+        remunerationEnd: { lte: r.max },
       }));
     }
 
@@ -58,11 +58,11 @@ export class GetAllJobsService {
         case JobSortOptionEnum.MOST_RECENT:
           orderBy = { createdAt: 'desc' };
           break;
-        case JobSortOptionEnum.SALARY_HIGH_TO_LOW:
-          orderBy = { salaryStart: 'desc' };
+        case JobSortOptionEnum.REMUNERATION_HIGH_TO_LOW:
+          orderBy = { remunerationStart: 'desc' };
           break;
-        case JobSortOptionEnum.SALARY_LOW_TO_HIGH:
-          orderBy = { salaryStart: 'asc' };
+        case JobSortOptionEnum.REMUNERATION_LOW_TO_HIGH:
+          orderBy = { remunerationStart: 'asc' };
           break;
         case JobSortOptionEnum.DEADLINE_SOON:
           orderBy = { applicationDeadline: 'asc' };

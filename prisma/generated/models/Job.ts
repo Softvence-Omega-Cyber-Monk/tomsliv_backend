@@ -27,17 +27,31 @@ export type AggregateJob = {
 }
 
 export type JobAvgAggregateOutputType = {
+  farmSize: number | null
+  herdSize: number | null
+  onFarmStaff: number | null
   numberOfPositions: number | null
   requiredExperience: number | null
-  salaryStart: number | null
-  salaryEnd: number | null
+  hoursPerWeek: number | null
+  remunerationStart: number | null
+  remunerationEnd: number | null
+  totalPackageValue: number | null
+  perKgMSDollarValue: number | null
+  percentageOfMilkCheque: number | null
 }
 
 export type JobSumAggregateOutputType = {
+  farmSize: number | null
+  herdSize: number | null
+  onFarmStaff: number | null
   numberOfPositions: number | null
   requiredExperience: number | null
-  salaryStart: number | null
-  salaryEnd: number | null
+  hoursPerWeek: number | null
+  remunerationStart: number | null
+  remunerationEnd: number | null
+  totalPackageValue: number | null
+  perKgMSDollarValue: number | null
+  percentageOfMilkCheque: number | null
 }
 
 export type JobMinAggregateOutputType = {
@@ -45,13 +59,26 @@ export type JobMinAggregateOutputType = {
   title: string | null
   description: string | null
   benefits: string | null
+  farmSize: number | null
+  herdSize: number | null
+  onFarmStaff: number | null
   location: string | null
   jobType: $Enums.JobType | null
+  role: string | null
   numberOfPositions: number | null
   requiredExperience: number | null
   applicationDeadline: Date | null
-  salaryStart: number | null
-  salaryEnd: number | null
+  positionStartDate: Date | null
+  hourType: $Enums.HourType | null
+  hoursPerWeek: number | null
+  roster: string | null
+  remunerationPaidBy: string | null
+  remunerationType: $Enums.SalaryType | null
+  remunerationStart: number | null
+  remunerationEnd: number | null
+  totalPackageValue: number | null
+  perKgMSDollarValue: number | null
+  percentageOfMilkCheque: number | null
   farmId: string | null
   status: $Enums.JobStatus | null
   createdAt: Date | null
@@ -63,13 +90,26 @@ export type JobMaxAggregateOutputType = {
   title: string | null
   description: string | null
   benefits: string | null
+  farmSize: number | null
+  herdSize: number | null
+  onFarmStaff: number | null
   location: string | null
   jobType: $Enums.JobType | null
+  role: string | null
   numberOfPositions: number | null
   requiredExperience: number | null
   applicationDeadline: Date | null
-  salaryStart: number | null
-  salaryEnd: number | null
+  positionStartDate: Date | null
+  hourType: $Enums.HourType | null
+  hoursPerWeek: number | null
+  roster: string | null
+  remunerationPaidBy: string | null
+  remunerationType: $Enums.SalaryType | null
+  remunerationStart: number | null
+  remunerationEnd: number | null
+  totalPackageValue: number | null
+  perKgMSDollarValue: number | null
+  percentageOfMilkCheque: number | null
   farmId: string | null
   status: $Enums.JobStatus | null
   createdAt: Date | null
@@ -81,16 +121,26 @@ export type JobCountAggregateOutputType = {
   title: number
   description: number
   benefits: number
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
   location: number
   jobType: number
+  role: number
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: number
-  salaryStart: number
-  salaryEnd: number
-  requiredSkills: number
-  certifications: number
-  machineryExperience: number
+  positionStartDate: number
+  hourType: number
+  hoursPerWeek: number
+  roster: number
+  remunerationPaidBy: number
+  remunerationType: number
+  remunerationStart: number
+  remunerationEnd: number
+  totalPackageValue: number
+  perKgMSDollarValue: number
+  percentageOfMilkCheque: number
   farmId: number
   status: number
   createdAt: number
@@ -100,17 +150,31 @@ export type JobCountAggregateOutputType = {
 
 
 export type JobAvgAggregateInputType = {
+  farmSize?: true
+  herdSize?: true
+  onFarmStaff?: true
   numberOfPositions?: true
   requiredExperience?: true
-  salaryStart?: true
-  salaryEnd?: true
+  hoursPerWeek?: true
+  remunerationStart?: true
+  remunerationEnd?: true
+  totalPackageValue?: true
+  perKgMSDollarValue?: true
+  percentageOfMilkCheque?: true
 }
 
 export type JobSumAggregateInputType = {
+  farmSize?: true
+  herdSize?: true
+  onFarmStaff?: true
   numberOfPositions?: true
   requiredExperience?: true
-  salaryStart?: true
-  salaryEnd?: true
+  hoursPerWeek?: true
+  remunerationStart?: true
+  remunerationEnd?: true
+  totalPackageValue?: true
+  perKgMSDollarValue?: true
+  percentageOfMilkCheque?: true
 }
 
 export type JobMinAggregateInputType = {
@@ -118,13 +182,26 @@ export type JobMinAggregateInputType = {
   title?: true
   description?: true
   benefits?: true
+  farmSize?: true
+  herdSize?: true
+  onFarmStaff?: true
   location?: true
   jobType?: true
+  role?: true
   numberOfPositions?: true
   requiredExperience?: true
   applicationDeadline?: true
-  salaryStart?: true
-  salaryEnd?: true
+  positionStartDate?: true
+  hourType?: true
+  hoursPerWeek?: true
+  roster?: true
+  remunerationPaidBy?: true
+  remunerationType?: true
+  remunerationStart?: true
+  remunerationEnd?: true
+  totalPackageValue?: true
+  perKgMSDollarValue?: true
+  percentageOfMilkCheque?: true
   farmId?: true
   status?: true
   createdAt?: true
@@ -136,13 +213,26 @@ export type JobMaxAggregateInputType = {
   title?: true
   description?: true
   benefits?: true
+  farmSize?: true
+  herdSize?: true
+  onFarmStaff?: true
   location?: true
   jobType?: true
+  role?: true
   numberOfPositions?: true
   requiredExperience?: true
   applicationDeadline?: true
-  salaryStart?: true
-  salaryEnd?: true
+  positionStartDate?: true
+  hourType?: true
+  hoursPerWeek?: true
+  roster?: true
+  remunerationPaidBy?: true
+  remunerationType?: true
+  remunerationStart?: true
+  remunerationEnd?: true
+  totalPackageValue?: true
+  perKgMSDollarValue?: true
+  percentageOfMilkCheque?: true
   farmId?: true
   status?: true
   createdAt?: true
@@ -154,16 +244,26 @@ export type JobCountAggregateInputType = {
   title?: true
   description?: true
   benefits?: true
+  farmSize?: true
+  herdSize?: true
+  onFarmStaff?: true
   location?: true
   jobType?: true
+  role?: true
   numberOfPositions?: true
   requiredExperience?: true
   applicationDeadline?: true
-  salaryStart?: true
-  salaryEnd?: true
-  requiredSkills?: true
-  certifications?: true
-  machineryExperience?: true
+  positionStartDate?: true
+  hourType?: true
+  hoursPerWeek?: true
+  roster?: true
+  remunerationPaidBy?: true
+  remunerationType?: true
+  remunerationStart?: true
+  remunerationEnd?: true
+  totalPackageValue?: true
+  perKgMSDollarValue?: true
+  percentageOfMilkCheque?: true
   farmId?: true
   status?: true
   createdAt?: true
@@ -260,18 +360,28 @@ export type JobGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type JobGroupByOutputType = {
   id: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description: string | null
+  benefits: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date
-  salaryStart: number | null
-  salaryEnd: number | null
-  requiredSkills: string[]
-  certifications: string[]
-  machineryExperience: string[]
+  positionStartDate: Date
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart: number | null
+  remunerationEnd: number | null
+  totalPackageValue: number | null
+  perKgMSDollarValue: number | null
+  percentageOfMilkCheque: number | null
   farmId: string
   status: $Enums.JobStatus
   createdAt: Date
@@ -304,18 +414,28 @@ export type JobWhereInput = {
   NOT?: Prisma.JobWhereInput | Prisma.JobWhereInput[]
   id?: Prisma.StringFilter<"Job"> | string
   title?: Prisma.StringFilter<"Job"> | string
-  description?: Prisma.StringFilter<"Job"> | string
-  benefits?: Prisma.StringFilter<"Job"> | string
-  location?: Prisma.StringFilter<"Job"> | string
+  description?: Prisma.StringNullableFilter<"Job"> | string | null
+  benefits?: Prisma.StringNullableFilter<"Job"> | string | null
+  farmSize?: Prisma.IntFilter<"Job"> | number
+  herdSize?: Prisma.IntFilter<"Job"> | number
+  onFarmStaff?: Prisma.IntFilter<"Job"> | number
+  location?: Prisma.StringNullableFilter<"Job"> | string | null
   jobType?: Prisma.EnumJobTypeFilter<"Job"> | $Enums.JobType
+  role?: Prisma.StringFilter<"Job"> | string
   numberOfPositions?: Prisma.IntFilter<"Job"> | number
   requiredExperience?: Prisma.IntFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeFilter<"Job"> | Date | string
-  salaryStart?: Prisma.FloatNullableFilter<"Job"> | number | null
-  salaryEnd?: Prisma.FloatNullableFilter<"Job"> | number | null
-  requiredSkills?: Prisma.StringNullableListFilter<"Job">
-  certifications?: Prisma.StringNullableListFilter<"Job">
-  machineryExperience?: Prisma.StringNullableListFilter<"Job">
+  positionStartDate?: Prisma.DateTimeFilter<"Job"> | Date | string
+  hourType?: Prisma.EnumHourTypeFilter<"Job"> | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFilter<"Job"> | number
+  roster?: Prisma.StringFilter<"Job"> | string
+  remunerationPaidBy?: Prisma.StringFilter<"Job"> | string
+  remunerationType?: Prisma.EnumSalaryTypeFilter<"Job"> | $Enums.SalaryType
+  remunerationStart?: Prisma.FloatNullableFilter<"Job"> | number | null
+  remunerationEnd?: Prisma.FloatNullableFilter<"Job"> | number | null
+  totalPackageValue?: Prisma.FloatNullableFilter<"Job"> | number | null
+  perKgMSDollarValue?: Prisma.FloatNullableFilter<"Job"> | number | null
+  percentageOfMilkCheque?: Prisma.FloatNullableFilter<"Job"> | number | null
   farmId?: Prisma.StringFilter<"Job"> | string
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -329,18 +449,28 @@ export type JobWhereInput = {
 export type JobOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  benefits?: Prisma.SortOrder
-  location?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  benefits?: Prisma.SortOrderInput | Prisma.SortOrder
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
   jobType?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrderInput | Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrderInput | Prisma.SortOrder
-  requiredSkills?: Prisma.SortOrder
-  certifications?: Prisma.SortOrder
-  machineryExperience?: Prisma.SortOrder
+  positionStartDate?: Prisma.SortOrder
+  hourType?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  roster?: Prisma.SortOrder
+  remunerationPaidBy?: Prisma.SortOrder
+  remunerationType?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrderInput | Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrderInput | Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -357,18 +487,28 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.JobWhereInput[]
   NOT?: Prisma.JobWhereInput | Prisma.JobWhereInput[]
   title?: Prisma.StringFilter<"Job"> | string
-  description?: Prisma.StringFilter<"Job"> | string
-  benefits?: Prisma.StringFilter<"Job"> | string
-  location?: Prisma.StringFilter<"Job"> | string
+  description?: Prisma.StringNullableFilter<"Job"> | string | null
+  benefits?: Prisma.StringNullableFilter<"Job"> | string | null
+  farmSize?: Prisma.IntFilter<"Job"> | number
+  herdSize?: Prisma.IntFilter<"Job"> | number
+  onFarmStaff?: Prisma.IntFilter<"Job"> | number
+  location?: Prisma.StringNullableFilter<"Job"> | string | null
   jobType?: Prisma.EnumJobTypeFilter<"Job"> | $Enums.JobType
+  role?: Prisma.StringFilter<"Job"> | string
   numberOfPositions?: Prisma.IntFilter<"Job"> | number
   requiredExperience?: Prisma.IntFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeFilter<"Job"> | Date | string
-  salaryStart?: Prisma.FloatNullableFilter<"Job"> | number | null
-  salaryEnd?: Prisma.FloatNullableFilter<"Job"> | number | null
-  requiredSkills?: Prisma.StringNullableListFilter<"Job">
-  certifications?: Prisma.StringNullableListFilter<"Job">
-  machineryExperience?: Prisma.StringNullableListFilter<"Job">
+  positionStartDate?: Prisma.DateTimeFilter<"Job"> | Date | string
+  hourType?: Prisma.EnumHourTypeFilter<"Job"> | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFilter<"Job"> | number
+  roster?: Prisma.StringFilter<"Job"> | string
+  remunerationPaidBy?: Prisma.StringFilter<"Job"> | string
+  remunerationType?: Prisma.EnumSalaryTypeFilter<"Job"> | $Enums.SalaryType
+  remunerationStart?: Prisma.FloatNullableFilter<"Job"> | number | null
+  remunerationEnd?: Prisma.FloatNullableFilter<"Job"> | number | null
+  totalPackageValue?: Prisma.FloatNullableFilter<"Job"> | number | null
+  perKgMSDollarValue?: Prisma.FloatNullableFilter<"Job"> | number | null
+  percentageOfMilkCheque?: Prisma.FloatNullableFilter<"Job"> | number | null
   farmId?: Prisma.StringFilter<"Job"> | string
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -382,18 +522,28 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
 export type JobOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
-  description?: Prisma.SortOrder
-  benefits?: Prisma.SortOrder
-  location?: Prisma.SortOrder
+  description?: Prisma.SortOrderInput | Prisma.SortOrder
+  benefits?: Prisma.SortOrderInput | Prisma.SortOrder
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
+  location?: Prisma.SortOrderInput | Prisma.SortOrder
   jobType?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrderInput | Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrderInput | Prisma.SortOrder
-  requiredSkills?: Prisma.SortOrder
-  certifications?: Prisma.SortOrder
-  machineryExperience?: Prisma.SortOrder
+  positionStartDate?: Prisma.SortOrder
+  hourType?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  roster?: Prisma.SortOrder
+  remunerationPaidBy?: Prisma.SortOrder
+  remunerationType?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrderInput | Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrderInput | Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrderInput | Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrderInput | Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -411,18 +561,28 @@ export type JobScalarWhereWithAggregatesInput = {
   NOT?: Prisma.JobScalarWhereWithAggregatesInput | Prisma.JobScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Job"> | string
   title?: Prisma.StringWithAggregatesFilter<"Job"> | string
-  description?: Prisma.StringWithAggregatesFilter<"Job"> | string
-  benefits?: Prisma.StringWithAggregatesFilter<"Job"> | string
-  location?: Prisma.StringWithAggregatesFilter<"Job"> | string
+  description?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
+  benefits?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
+  farmSize?: Prisma.IntWithAggregatesFilter<"Job"> | number
+  herdSize?: Prisma.IntWithAggregatesFilter<"Job"> | number
+  onFarmStaff?: Prisma.IntWithAggregatesFilter<"Job"> | number
+  location?: Prisma.StringNullableWithAggregatesFilter<"Job"> | string | null
   jobType?: Prisma.EnumJobTypeWithAggregatesFilter<"Job"> | $Enums.JobType
+  role?: Prisma.StringWithAggregatesFilter<"Job"> | string
   numberOfPositions?: Prisma.IntWithAggregatesFilter<"Job"> | number
   requiredExperience?: Prisma.IntWithAggregatesFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
-  salaryStart?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
-  salaryEnd?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
-  requiredSkills?: Prisma.StringNullableListFilter<"Job">
-  certifications?: Prisma.StringNullableListFilter<"Job">
-  machineryExperience?: Prisma.StringNullableListFilter<"Job">
+  positionStartDate?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
+  hourType?: Prisma.EnumHourTypeWithAggregatesFilter<"Job"> | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatWithAggregatesFilter<"Job"> | number
+  roster?: Prisma.StringWithAggregatesFilter<"Job"> | string
+  remunerationPaidBy?: Prisma.StringWithAggregatesFilter<"Job"> | string
+  remunerationType?: Prisma.EnumSalaryTypeWithAggregatesFilter<"Job"> | $Enums.SalaryType
+  remunerationStart?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
+  remunerationEnd?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
+  totalPackageValue?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
+  perKgMSDollarValue?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
+  percentageOfMilkCheque?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
   farmId?: Prisma.StringWithAggregatesFilter<"Job"> | string
   status?: Prisma.EnumJobStatusWithAggregatesFilter<"Job"> | $Enums.JobStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
@@ -432,18 +592,28 @@ export type JobScalarWhereWithAggregatesInput = {
 export type JobCreateInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -456,18 +626,28 @@ export type JobCreateInput = {
 export type JobUncheckedCreateInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
   createdAt?: Date | string
@@ -480,18 +660,28 @@ export type JobUncheckedCreateInput = {
 export type JobUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -504,18 +694,28 @@ export type JobUpdateInput = {
 export type JobUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,18 +728,28 @@ export type JobUncheckedUpdateInput = {
 export type JobCreateManyInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
   createdAt?: Date | string
@@ -549,18 +759,28 @@ export type JobCreateManyInput = {
 export type JobUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -569,18 +789,28 @@ export type JobUpdateManyMutationInput = {
 export type JobUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -597,16 +827,26 @@ export type JobCountOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   benefits?: Prisma.SortOrder
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
   location?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrder
-  requiredSkills?: Prisma.SortOrder
-  certifications?: Prisma.SortOrder
-  machineryExperience?: Prisma.SortOrder
+  positionStartDate?: Prisma.SortOrder
+  hourType?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  roster?: Prisma.SortOrder
+  remunerationPaidBy?: Prisma.SortOrder
+  remunerationType?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -614,10 +854,17 @@ export type JobCountOrderByAggregateInput = {
 }
 
 export type JobAvgOrderByAggregateInput = {
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrder
 }
 
 export type JobMaxOrderByAggregateInput = {
@@ -625,13 +872,26 @@ export type JobMaxOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   benefits?: Prisma.SortOrder
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
   location?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrder
+  positionStartDate?: Prisma.SortOrder
+  hourType?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  roster?: Prisma.SortOrder
+  remunerationPaidBy?: Prisma.SortOrder
+  remunerationType?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -643,13 +903,26 @@ export type JobMinOrderByAggregateInput = {
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   benefits?: Prisma.SortOrder
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
   location?: Prisma.SortOrder
   jobType?: Prisma.SortOrder
+  role?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrder
+  positionStartDate?: Prisma.SortOrder
+  hourType?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  roster?: Prisma.SortOrder
+  remunerationPaidBy?: Prisma.SortOrder
+  remunerationType?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -657,10 +930,17 @@ export type JobMinOrderByAggregateInput = {
 }
 
 export type JobSumOrderByAggregateInput = {
+  farmSize?: Prisma.SortOrder
+  herdSize?: Prisma.SortOrder
+  onFarmStaff?: Prisma.SortOrder
   numberOfPositions?: Prisma.SortOrder
   requiredExperience?: Prisma.SortOrder
-  salaryStart?: Prisma.SortOrder
-  salaryEnd?: Prisma.SortOrder
+  hoursPerWeek?: Prisma.SortOrder
+  remunerationStart?: Prisma.SortOrder
+  remunerationEnd?: Prisma.SortOrder
+  totalPackageValue?: Prisma.SortOrder
+  perKgMSDollarValue?: Prisma.SortOrder
+  percentageOfMilkCheque?: Prisma.SortOrder
 }
 
 export type JobListRelationFilter = {
@@ -715,16 +995,12 @@ export type JobUpdateOneRequiredWithoutSavedJobsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.JobUpdateToOneWithWhereWithoutSavedJobsInput, Prisma.JobUpdateWithoutSavedJobsInput>, Prisma.JobUncheckedUpdateWithoutSavedJobsInput>
 }
 
-export type JobCreaterequiredSkillsInput = {
-  set: string[]
+export type EnumHourTypeFieldUpdateOperationsInput = {
+  set?: $Enums.HourType
 }
 
-export type JobCreatecertificationsInput = {
-  set: string[]
-}
-
-export type JobCreatemachineryExperienceInput = {
-  set: string[]
+export type EnumSalaryTypeFieldUpdateOperationsInput = {
+  set?: $Enums.SalaryType
 }
 
 export type NullableFloatFieldUpdateOperationsInput = {
@@ -733,21 +1009,6 @@ export type NullableFloatFieldUpdateOperationsInput = {
   decrement?: number
   multiply?: number
   divide?: number
-}
-
-export type JobUpdaterequiredSkillsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type JobUpdatecertificationsInput = {
-  set?: string[]
-  push?: string | string[]
-}
-
-export type JobUpdatemachineryExperienceInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type EnumJobStatusFieldUpdateOperationsInput = {
@@ -799,18 +1060,28 @@ export type JobUncheckedUpdateManyWithoutFarmNestedInput = {
 export type JobCreateWithoutIdealCandidatesInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -822,18 +1093,28 @@ export type JobCreateWithoutIdealCandidatesInput = {
 export type JobUncheckedCreateWithoutIdealCandidatesInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
   createdAt?: Date | string
@@ -861,18 +1142,28 @@ export type JobUpdateToOneWithWhereWithoutIdealCandidatesInput = {
 export type JobUpdateWithoutIdealCandidatesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -884,18 +1175,28 @@ export type JobUpdateWithoutIdealCandidatesInput = {
 export type JobUncheckedUpdateWithoutIdealCandidatesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -907,18 +1208,28 @@ export type JobUncheckedUpdateWithoutIdealCandidatesInput = {
 export type JobCreateWithoutJobApplicationsInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -930,18 +1241,28 @@ export type JobCreateWithoutJobApplicationsInput = {
 export type JobUncheckedCreateWithoutJobApplicationsInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
   createdAt?: Date | string
@@ -969,18 +1290,28 @@ export type JobUpdateToOneWithWhereWithoutJobApplicationsInput = {
 export type JobUpdateWithoutJobApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -992,18 +1323,28 @@ export type JobUpdateWithoutJobApplicationsInput = {
 export type JobUncheckedUpdateWithoutJobApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1015,18 +1356,28 @@ export type JobUncheckedUpdateWithoutJobApplicationsInput = {
 export type JobCreateWithoutSavedJobsInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1038,18 +1389,28 @@ export type JobCreateWithoutSavedJobsInput = {
 export type JobUncheckedCreateWithoutSavedJobsInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
   createdAt?: Date | string
@@ -1077,18 +1438,28 @@ export type JobUpdateToOneWithWhereWithoutSavedJobsInput = {
 export type JobUpdateWithoutSavedJobsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1100,18 +1471,28 @@ export type JobUpdateWithoutSavedJobsInput = {
 export type JobUncheckedUpdateWithoutSavedJobsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1123,18 +1504,28 @@ export type JobUncheckedUpdateWithoutSavedJobsInput = {
 export type JobCreateWithoutFarmInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1146,18 +1537,28 @@ export type JobCreateWithoutFarmInput = {
 export type JobUncheckedCreateWithoutFarmInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1198,18 +1599,28 @@ export type JobScalarWhereInput = {
   NOT?: Prisma.JobScalarWhereInput | Prisma.JobScalarWhereInput[]
   id?: Prisma.StringFilter<"Job"> | string
   title?: Prisma.StringFilter<"Job"> | string
-  description?: Prisma.StringFilter<"Job"> | string
-  benefits?: Prisma.StringFilter<"Job"> | string
-  location?: Prisma.StringFilter<"Job"> | string
+  description?: Prisma.StringNullableFilter<"Job"> | string | null
+  benefits?: Prisma.StringNullableFilter<"Job"> | string | null
+  farmSize?: Prisma.IntFilter<"Job"> | number
+  herdSize?: Prisma.IntFilter<"Job"> | number
+  onFarmStaff?: Prisma.IntFilter<"Job"> | number
+  location?: Prisma.StringNullableFilter<"Job"> | string | null
   jobType?: Prisma.EnumJobTypeFilter<"Job"> | $Enums.JobType
+  role?: Prisma.StringFilter<"Job"> | string
   numberOfPositions?: Prisma.IntFilter<"Job"> | number
   requiredExperience?: Prisma.IntFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeFilter<"Job"> | Date | string
-  salaryStart?: Prisma.FloatNullableFilter<"Job"> | number | null
-  salaryEnd?: Prisma.FloatNullableFilter<"Job"> | number | null
-  requiredSkills?: Prisma.StringNullableListFilter<"Job">
-  certifications?: Prisma.StringNullableListFilter<"Job">
-  machineryExperience?: Prisma.StringNullableListFilter<"Job">
+  positionStartDate?: Prisma.DateTimeFilter<"Job"> | Date | string
+  hourType?: Prisma.EnumHourTypeFilter<"Job"> | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFilter<"Job"> | number
+  roster?: Prisma.StringFilter<"Job"> | string
+  remunerationPaidBy?: Prisma.StringFilter<"Job"> | string
+  remunerationType?: Prisma.EnumSalaryTypeFilter<"Job"> | $Enums.SalaryType
+  remunerationStart?: Prisma.FloatNullableFilter<"Job"> | number | null
+  remunerationEnd?: Prisma.FloatNullableFilter<"Job"> | number | null
+  totalPackageValue?: Prisma.FloatNullableFilter<"Job"> | number | null
+  perKgMSDollarValue?: Prisma.FloatNullableFilter<"Job"> | number | null
+  percentageOfMilkCheque?: Prisma.FloatNullableFilter<"Job"> | number | null
   farmId?: Prisma.StringFilter<"Job"> | string
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -1219,18 +1630,28 @@ export type JobScalarWhereInput = {
 export type JobCreateManyFarmInput = {
   id?: string
   title: string
-  description: string
-  benefits: string
-  location: string
+  description?: string | null
+  benefits?: string | null
+  farmSize: number
+  herdSize: number
+  onFarmStaff: number
+  location?: string | null
   jobType: $Enums.JobType
+  role: string
   numberOfPositions: number
   requiredExperience: number
   applicationDeadline: Date | string
-  salaryStart?: number | null
-  salaryEnd?: number | null
-  requiredSkills?: Prisma.JobCreaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobCreatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobCreatemachineryExperienceInput | string[]
+  positionStartDate: Date | string
+  hourType: $Enums.HourType
+  hoursPerWeek: number
+  roster: string
+  remunerationPaidBy: string
+  remunerationType: $Enums.SalaryType
+  remunerationStart?: number | null
+  remunerationEnd?: number | null
+  totalPackageValue?: number | null
+  perKgMSDollarValue?: number | null
+  percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1239,18 +1660,28 @@ export type JobCreateManyFarmInput = {
 export type JobUpdateWithoutFarmInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1262,18 +1693,28 @@ export type JobUpdateWithoutFarmInput = {
 export type JobUncheckedUpdateWithoutFarmInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1285,18 +1726,28 @@ export type JobUncheckedUpdateWithoutFarmInput = {
 export type JobUncheckedUpdateManyWithoutFarmInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
-  description?: Prisma.StringFieldUpdateOperationsInput | string
-  benefits?: Prisma.StringFieldUpdateOperationsInput | string
-  location?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  benefits?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  farmSize?: Prisma.IntFieldUpdateOperationsInput | number
+  herdSize?: Prisma.IntFieldUpdateOperationsInput | number
+  onFarmStaff?: Prisma.IntFieldUpdateOperationsInput | number
+  location?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  role?: Prisma.StringFieldUpdateOperationsInput | string
   numberOfPositions?: Prisma.IntFieldUpdateOperationsInput | number
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  salaryStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  salaryEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
-  requiredSkills?: Prisma.JobUpdaterequiredSkillsInput | string[]
-  certifications?: Prisma.JobUpdatecertificationsInput | string[]
-  machineryExperience?: Prisma.JobUpdatemachineryExperienceInput | string[]
+  positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
+  hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
+  roster?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
+  remunerationType?: Prisma.EnumSalaryTypeFieldUpdateOperationsInput | $Enums.SalaryType
+  remunerationStart?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  remunerationEnd?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  totalPackageValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1347,16 +1798,26 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   title?: boolean
   description?: boolean
   benefits?: boolean
+  farmSize?: boolean
+  herdSize?: boolean
+  onFarmStaff?: boolean
   location?: boolean
   jobType?: boolean
+  role?: boolean
   numberOfPositions?: boolean
   requiredExperience?: boolean
   applicationDeadline?: boolean
-  salaryStart?: boolean
-  salaryEnd?: boolean
-  requiredSkills?: boolean
-  certifications?: boolean
-  machineryExperience?: boolean
+  positionStartDate?: boolean
+  hourType?: boolean
+  hoursPerWeek?: boolean
+  roster?: boolean
+  remunerationPaidBy?: boolean
+  remunerationType?: boolean
+  remunerationStart?: boolean
+  remunerationEnd?: boolean
+  totalPackageValue?: boolean
+  perKgMSDollarValue?: boolean
+  percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1373,16 +1834,26 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   title?: boolean
   description?: boolean
   benefits?: boolean
+  farmSize?: boolean
+  herdSize?: boolean
+  onFarmStaff?: boolean
   location?: boolean
   jobType?: boolean
+  role?: boolean
   numberOfPositions?: boolean
   requiredExperience?: boolean
   applicationDeadline?: boolean
-  salaryStart?: boolean
-  salaryEnd?: boolean
-  requiredSkills?: boolean
-  certifications?: boolean
-  machineryExperience?: boolean
+  positionStartDate?: boolean
+  hourType?: boolean
+  hoursPerWeek?: boolean
+  roster?: boolean
+  remunerationPaidBy?: boolean
+  remunerationType?: boolean
+  remunerationStart?: boolean
+  remunerationEnd?: boolean
+  totalPackageValue?: boolean
+  perKgMSDollarValue?: boolean
+  percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1395,16 +1866,26 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   title?: boolean
   description?: boolean
   benefits?: boolean
+  farmSize?: boolean
+  herdSize?: boolean
+  onFarmStaff?: boolean
   location?: boolean
   jobType?: boolean
+  role?: boolean
   numberOfPositions?: boolean
   requiredExperience?: boolean
   applicationDeadline?: boolean
-  salaryStart?: boolean
-  salaryEnd?: boolean
-  requiredSkills?: boolean
-  certifications?: boolean
-  machineryExperience?: boolean
+  positionStartDate?: boolean
+  hourType?: boolean
+  hoursPerWeek?: boolean
+  roster?: boolean
+  remunerationPaidBy?: boolean
+  remunerationType?: boolean
+  remunerationStart?: boolean
+  remunerationEnd?: boolean
+  totalPackageValue?: boolean
+  perKgMSDollarValue?: boolean
+  percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
   createdAt?: boolean
@@ -1417,23 +1898,33 @@ export type JobSelectScalar = {
   title?: boolean
   description?: boolean
   benefits?: boolean
+  farmSize?: boolean
+  herdSize?: boolean
+  onFarmStaff?: boolean
   location?: boolean
   jobType?: boolean
+  role?: boolean
   numberOfPositions?: boolean
   requiredExperience?: boolean
   applicationDeadline?: boolean
-  salaryStart?: boolean
-  salaryEnd?: boolean
-  requiredSkills?: boolean
-  certifications?: boolean
-  machineryExperience?: boolean
+  positionStartDate?: boolean
+  hourType?: boolean
+  hoursPerWeek?: boolean
+  roster?: boolean
+  remunerationPaidBy?: boolean
+  remunerationType?: boolean
+  remunerationStart?: boolean
+  remunerationEnd?: boolean
+  totalPackageValue?: boolean
+  perKgMSDollarValue?: boolean
+  percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "benefits" | "location" | "jobType" | "numberOfPositions" | "requiredExperience" | "applicationDeadline" | "salaryStart" | "salaryEnd" | "requiredSkills" | "certifications" | "machineryExperience" | "farmId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "benefits" | "farmSize" | "herdSize" | "onFarmStaff" | "location" | "jobType" | "role" | "numberOfPositions" | "requiredExperience" | "applicationDeadline" | "positionStartDate" | "hourType" | "hoursPerWeek" | "roster" | "remunerationPaidBy" | "remunerationType" | "remunerationStart" | "remunerationEnd" | "totalPackageValue" | "perKgMSDollarValue" | "percentageOfMilkCheque" | "farmId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   farm?: boolean | Prisma.FarmDefaultArgs<ExtArgs>
   idealCandidates?: boolean | Prisma.Job$idealCandidatesArgs<ExtArgs>
@@ -1459,18 +1950,28 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
-    description: string
-    benefits: string
-    location: string
+    description: string | null
+    benefits: string | null
+    farmSize: number
+    herdSize: number
+    onFarmStaff: number
+    location: string | null
     jobType: $Enums.JobType
+    role: string
     numberOfPositions: number
     requiredExperience: number
     applicationDeadline: Date
-    salaryStart: number | null
-    salaryEnd: number | null
-    requiredSkills: string[]
-    certifications: string[]
-    machineryExperience: string[]
+    positionStartDate: Date
+    hourType: $Enums.HourType
+    hoursPerWeek: number
+    roster: string
+    remunerationPaidBy: string
+    remunerationType: $Enums.SalaryType
+    remunerationStart: number | null
+    remunerationEnd: number | null
+    totalPackageValue: number | null
+    perKgMSDollarValue: number | null
+    percentageOfMilkCheque: number | null
     farmId: string
     status: $Enums.JobStatus
     createdAt: Date
@@ -1906,16 +2407,26 @@ export interface JobFieldRefs {
   readonly title: Prisma.FieldRef<"Job", 'String'>
   readonly description: Prisma.FieldRef<"Job", 'String'>
   readonly benefits: Prisma.FieldRef<"Job", 'String'>
+  readonly farmSize: Prisma.FieldRef<"Job", 'Int'>
+  readonly herdSize: Prisma.FieldRef<"Job", 'Int'>
+  readonly onFarmStaff: Prisma.FieldRef<"Job", 'Int'>
   readonly location: Prisma.FieldRef<"Job", 'String'>
   readonly jobType: Prisma.FieldRef<"Job", 'JobType'>
+  readonly role: Prisma.FieldRef<"Job", 'String'>
   readonly numberOfPositions: Prisma.FieldRef<"Job", 'Int'>
   readonly requiredExperience: Prisma.FieldRef<"Job", 'Int'>
   readonly applicationDeadline: Prisma.FieldRef<"Job", 'DateTime'>
-  readonly salaryStart: Prisma.FieldRef<"Job", 'Float'>
-  readonly salaryEnd: Prisma.FieldRef<"Job", 'Float'>
-  readonly requiredSkills: Prisma.FieldRef<"Job", 'String[]'>
-  readonly certifications: Prisma.FieldRef<"Job", 'String[]'>
-  readonly machineryExperience: Prisma.FieldRef<"Job", 'String[]'>
+  readonly positionStartDate: Prisma.FieldRef<"Job", 'DateTime'>
+  readonly hourType: Prisma.FieldRef<"Job", 'HourType'>
+  readonly hoursPerWeek: Prisma.FieldRef<"Job", 'Float'>
+  readonly roster: Prisma.FieldRef<"Job", 'String'>
+  readonly remunerationPaidBy: Prisma.FieldRef<"Job", 'String'>
+  readonly remunerationType: Prisma.FieldRef<"Job", 'SalaryType'>
+  readonly remunerationStart: Prisma.FieldRef<"Job", 'Float'>
+  readonly remunerationEnd: Prisma.FieldRef<"Job", 'Float'>
+  readonly totalPackageValue: Prisma.FieldRef<"Job", 'Float'>
+  readonly perKgMSDollarValue: Prisma.FieldRef<"Job", 'Float'>
+  readonly percentageOfMilkCheque: Prisma.FieldRef<"Job", 'Float'>
   readonly farmId: Prisma.FieldRef<"Job", 'String'>
   readonly status: Prisma.FieldRef<"Job", 'JobStatus'>
   readonly createdAt: Prisma.FieldRef<"Job", 'DateTime'>
