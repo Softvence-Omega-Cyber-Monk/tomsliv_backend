@@ -40,23 +40,25 @@ export class GetAllJobsStatsService {
     );
   }
 
-  // ---------------- Salary Buckets ----------------
-  @HandleError('Failed to get salary buckets', 'Jobs')
-  async getSalaryBuckets(): Promise<TResponse<any>> {
+  // ---------------- Remuneration Buckets ----------------
+  @HandleError('Failed to get remuneration buckets', 'Jobs')
+  async getRemunerationBuckets(): Promise<TResponse<any>> {
     const jobs = await this.prisma.client.job.findMany({
-      select: { salaryStart: true },
-      where: { salaryStart: { not: null } },
+      select: { remunerationStart: true },
+      where: { remunerationStart: { not: null } },
     });
 
-    const buckets = this.salaryBuckets.map((bucket) => {
+    const buckets = this.remunerationBuckets.map((bucket) => {
       const count = jobs.filter(
-        (j) => j.salaryStart! >= bucket.min && j.salaryStart! <= bucket.max,
+        (j) =>
+          j.remunerationStart! >= bucket.min &&
+          j.remunerationStart! <= bucket.max,
       ).length;
 
       const rangeLabel =
         bucket.max === Infinity
-          ? `${this.formatSalary(bucket.min)}+`
-          : `${this.formatSalary(bucket.min)} - ${this.formatSalary(bucket.max)}`;
+          ? `${this.formatRemuneration(bucket.min)}+`
+          : `${this.formatRemuneration(bucket.min)} - ${this.formatRemuneration(bucket.max)}`;
 
       return {
         range:
@@ -68,7 +70,10 @@ export class GetAllJobsStatsService {
       };
     });
 
-    return successResponse(buckets, 'Fetched jobs salary buckets successfully');
+    return successResponse(
+      buckets,
+      'Fetched jobs remuneration buckets successfully',
+    );
   }
 
   // ---------------- Job Roles ----------------
@@ -79,14 +84,14 @@ export class GetAllJobsStatsService {
     const skip = (page - 1) * limit;
 
     const counts = await this.prisma.client.job.groupBy({
-      by: ['title'],
-      _count: { title: true },
+      by: ['role'],
+      _count: { role: true },
     });
 
     const roles = counts.map((c) => ({
-      role: c.title,
-      count: c._count.title,
-      label: `${c.title} (${c._count.title})`,
+      role: c.role,
+      count: c._count.role,
+      label: `${c.role} (${c._count.role})`,
     }));
 
     const paginatedRoles = roles.slice(skip, skip + limit);
@@ -135,6 +140,7 @@ export class GetAllJobsStatsService {
 
   // ---------------- Helpers ----------------
   private readonly jobTypeLabels: Record<JobType, string> = {
+    FIXED_TERM: 'Fixed Term',
     FULL_TIME: 'Full Time',
     PART_TIME: 'Part Time',
     CONTRACT: 'Contract',
@@ -143,7 +149,7 @@ export class GetAllJobsStatsService {
     INTERN: 'Intern',
   };
 
-  private readonly salaryBuckets: { min: number; max: number }[] = [
+  private readonly remunerationBuckets: { min: number; max: number }[] = [
     { min: 0, max: 5000 },
     { min: 5001, max: 15000 },
     { min: 15001, max: 25000 },
@@ -155,7 +161,7 @@ export class GetAllJobsStatsService {
     { min: 100001, max: Infinity },
   ];
 
-  private readonly formatSalary = (value: number): string => {
+  private readonly formatRemuneration = (value: number): string => {
     return `${Math.floor(value / 1000)}K`;
   };
 }

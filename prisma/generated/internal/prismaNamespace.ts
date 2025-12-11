@@ -1891,16 +1891,26 @@ export const JobScalarFieldEnum = {
   title: 'title',
   description: 'description',
   benefits: 'benefits',
+  farmSize: 'farmSize',
+  herdSize: 'herdSize',
+  onFarmStaff: 'onFarmStaff',
   location: 'location',
   jobType: 'jobType',
+  role: 'role',
   numberOfPositions: 'numberOfPositions',
   requiredExperience: 'requiredExperience',
   applicationDeadline: 'applicationDeadline',
-  salaryStart: 'salaryStart',
-  salaryEnd: 'salaryEnd',
-  requiredSkills: 'requiredSkills',
-  certifications: 'certifications',
-  machineryExperience: 'machineryExperience',
+  positionStartDate: 'positionStartDate',
+  hourType: 'hourType',
+  hoursPerWeek: 'hoursPerWeek',
+  roster: 'roster',
+  remunerationPaidBy: 'remunerationPaidBy',
+  remunerationType: 'remunerationType',
+  remunerationStart: 'remunerationStart',
+  remunerationEnd: 'remunerationEnd',
+  totalPackageValue: 'totalPackageValue',
+  perKgMSDollarValue: 'perKgMSDollarValue',
+  percentageOfMilkCheque: 'percentageOfMilkCheque',
   farmId: 'farmId',
   status: 'status',
   createdAt: 'createdAt',
@@ -2177,6 +2187,34 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'HourType'
+ */
+export type EnumHourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HourType'>
+    
+
+
+/**
+ * Reference to a field of type 'HourType[]'
+ */
+export type ListEnumHourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HourType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'SalaryType'
+ */
+export type EnumSalaryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalaryType'>
+    
+
+
+/**
+ * Reference to a field of type 'SalaryType[]'
+ */
+export type ListEnumSalaryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SalaryType[]'>
     
 
 

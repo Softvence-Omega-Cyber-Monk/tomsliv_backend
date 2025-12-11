@@ -28,19 +28,19 @@ export class GetFarmOwnerJobsDto extends PaginationDto {
 // ---------------- Sort Enums ----------------
 export enum JobSortOptionEnum {
   MOST_RECENT = 'mostRecent',
-  SALARY_HIGH_TO_LOW = 'salaryHighToLow',
-  SALARY_LOW_TO_HIGH = 'salaryLowToHigh',
+  REMUNERATION_HIGH_TO_LOW = 'remunerationHighToLow',
+  REMUNERATION_LOW_TO_HIGH = 'remunerationLowToHigh',
   DEADLINE_SOON = 'deadlineSoon',
 }
 
-// ---------------- Salary Range DTO ----------------
-export class SalaryRangeDto {
-  @ApiPropertyOptional({ description: 'Minimum salary', example: 10000 })
+// ---------------- Remuneration Range DTO ----------------
+export class RemunerationRangeDto {
+  @ApiPropertyOptional({ description: 'Minimum remuneration', example: 10000 })
   @Type(() => Number)
   @IsNumber()
   min: number;
 
-  @ApiPropertyOptional({ description: 'Maximum salary', example: 50000 })
+  @ApiPropertyOptional({ description: 'Maximum remuneration', example: 50000 })
   @Type(() => Number)
   @IsNumber()
   max: number;
@@ -96,17 +96,17 @@ export class GetAllJobsDto extends PaginationDto {
   locations?: string[];
 
   @ApiPropertyOptional({
-    description: 'Filter by salary range: [{min: number, max: number}]',
-    type: [SalaryRangeDto],
+    description: 'Filter by remuneration range: [{min: number, max: number}]',
+    type: [RemunerationRangeDto],
     example: [{ min: 10000, max: 50000 }],
   })
   @IsOptional()
   @Transform(({ value }) =>
     value ? (Array.isArray(value) ? value : [value]) : undefined,
   )
-  @Type(() => SalaryRangeDto)
+  @Type(() => RemunerationRangeDto)
   @IsArray()
-  salaryRange?: SalaryRangeDto[];
+  remunerationRange?: RemunerationRangeDto[];
 
   @ApiPropertyOptional({
     description: 'Search text (job title or description)',

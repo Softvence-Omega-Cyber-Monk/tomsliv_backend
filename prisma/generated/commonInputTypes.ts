@@ -287,6 +287,20 @@ export type FloatWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
 }
 
+export type EnumHourTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.HourType | Prisma.EnumHourTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHourTypeFilter<$PrismaModel> | $Enums.HourType
+}
+
+export type EnumSalaryTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryType | Prisma.EnumSalaryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryTypeFilter<$PrismaModel> | $Enums.SalaryType
+}
+
 export type FloatNullableFilter<$PrismaModel = never> = {
   equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
@@ -303,6 +317,26 @@ export type EnumJobStatusFilter<$PrismaModel = never> = {
   in?: $Enums.JobStatus[] | Prisma.ListEnumJobStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.JobStatus[] | Prisma.ListEnumJobStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
+}
+
+export type EnumHourTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HourType | Prisma.EnumHourTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHourTypeWithAggregatesFilter<$PrismaModel> | $Enums.HourType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHourTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHourTypeFilter<$PrismaModel>
+}
+
+export type EnumSalaryTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryType | Prisma.EnumSalaryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel> | $Enums.SalaryType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSalaryTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSalaryTypeFilter<$PrismaModel>
 }
 
 export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -718,6 +752,20 @@ export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedFloatFilter<$PrismaModel>
 }
 
+export type NestedEnumHourTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.HourType | Prisma.EnumHourTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHourTypeFilter<$PrismaModel> | $Enums.HourType
+}
+
+export type NestedEnumSalaryTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryType | Prisma.EnumSalaryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryTypeFilter<$PrismaModel> | $Enums.SalaryType
+}
+
 export type NestedFloatNullableFilter<$PrismaModel = never> = {
   equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
@@ -734,6 +782,26 @@ export type NestedEnumJobStatusFilter<$PrismaModel = never> = {
   in?: $Enums.JobStatus[] | Prisma.ListEnumJobStatusFieldRefInput<$PrismaModel>
   notIn?: $Enums.JobStatus[] | Prisma.ListEnumJobStatusFieldRefInput<$PrismaModel>
   not?: Prisma.NestedEnumJobStatusFilter<$PrismaModel> | $Enums.JobStatus
+}
+
+export type NestedEnumHourTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.HourType | Prisma.EnumHourTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.HourType[] | Prisma.ListEnumHourTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumHourTypeWithAggregatesFilter<$PrismaModel> | $Enums.HourType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumHourTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumHourTypeFilter<$PrismaModel>
+}
+
+export type NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.SalaryType | Prisma.EnumSalaryTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.SalaryType[] | Prisma.ListEnumSalaryTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumSalaryTypeWithAggregatesFilter<$PrismaModel> | $Enums.SalaryType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumSalaryTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumSalaryTypeFilter<$PrismaModel>
 }
 
 export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {

@@ -1,24 +1,37 @@
 model Job {
   id String @id @default(uuid())
 
-  title       String // Role
-  description String
-  benefits    String
+  title       String
+  description String?
+  benefits    String?
 
-  location String
+  farmSize Int
+  herdSize Int
+  onFarmStaff Int
+
+  location String?
   jobType  JobType
+  role     String
 
   numberOfPositions  Int
   requiredExperience Int
 
   applicationDeadline DateTime
+  positionStartDate   DateTime
 
-  salaryStart Float?
-  salaryEnd   Float?
+  hourType HourType
+  hoursPerWeek Float
 
-  requiredSkills      String[]
-  certifications      String[]
-  machineryExperience String[]
+  roster String
+  remunerationPaidBy String
+
+  remunerationType  SalaryType
+  remunerationStart Float?
+  remunerationEnd   Float?
+
+  totalPackageValue Float?
+  perKgMSDollarValue Float?
+  percentageOfMilkCheque Float?
 
   farm   Farm   @relation(fields: [farmId], references: [id], onDelete: Cascade)
   farmId String
@@ -40,6 +53,7 @@ model Job {
 }
 
 enum JobType {
+  FIXED_TERM
   FULL_TIME
   PART_TIME
   CONTRACT
@@ -53,4 +67,24 @@ enum JobStatus {
   ACTIVE
   PAUSED
   CLOSED
+}
+
+enum PrimaryLocation {
+  SINGLE_FARM
+  MULTI_FARM
+  CORPORATE_FARM
+}
+
+enum SalaryType {
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum HourType {
+  week
+  season
+  negotiable
 }

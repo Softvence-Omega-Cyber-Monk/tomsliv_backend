@@ -87,17 +87,30 @@ export class JobService {
     const updateData: Prisma.JobUpdateInput = {
       title: dto.title ? dto.title.trim() : job.title,
       description: dto.description ? dto.description.trim() : job.description,
-      location: dto.location ? dto.location.trim() : job.location,
       benefits: dto.benefits ? dto.benefits.trim() : job.benefits,
-      jobType: dto.jobType || job.jobType,
-      numberOfPositions: dto.numberOfPositions || job.numberOfPositions,
-      requiredExperience: dto.requiredExperience || job.requiredExperience,
-      applicationDeadline: dto.applicationDeadline || job.applicationDeadline,
-      salaryStart: dto.salaryStart || job.salaryStart,
-      salaryEnd: dto.salaryEnd || job.salaryEnd,
-      requiredSkills: dto.requiredSkills || job.requiredSkills,
-      certifications: dto.certifications || job.certifications,
-      machineryExperience: dto.machineryExperience || job.machineryExperience,
+      farmSize: dto.farmSize ?? job.farmSize,
+      herdSize: dto.herdSize ?? job.herdSize,
+      onFarmStaff: dto.onFarmStaff ?? job.onFarmStaff,
+      location: dto.location ? dto.location.trim() : job.location,
+      jobType: dto.jobType ?? job.jobType,
+      role: dto.role ? dto.role.trim() : job.role,
+      numberOfPositions: dto.numberOfPositions ?? job.numberOfPositions,
+      requiredExperience: dto.requiredExperience ?? job.requiredExperience,
+      applicationDeadline: dto.applicationDeadline ?? job.applicationDeadline,
+      positionStartDate: dto.positionStartDate ?? job.positionStartDate,
+      hourType: dto.hourType ?? job.hourType,
+      hoursPerWeek: dto.hoursPerWeek ?? job.hoursPerWeek,
+      roster: dto.roster ? dto.roster.trim() : job.roster,
+      remunerationPaidBy: dto.remunerationPaidBy
+        ? dto.remunerationPaidBy.trim()
+        : job.remunerationPaidBy,
+      remunerationType: dto.remunerationType ?? job.remunerationType,
+      remunerationStart: dto.remunerationStart ?? job.remunerationStart,
+      remunerationEnd: dto.remunerationEnd ?? job.remunerationEnd,
+      totalPackageValue: dto.totalPackageValue ?? job.totalPackageValue,
+      perKgMSDollarValue: dto.perKgMSDollarValue ?? job.perKgMSDollarValue,
+      percentageOfMilkCheque:
+        dto.percentageOfMilkCheque ?? job.percentageOfMilkCheque,
     };
 
     // Update the job
