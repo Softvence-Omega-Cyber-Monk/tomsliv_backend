@@ -49,7 +49,12 @@ async function bootstrap() {
 
   // * add body parser
   app.use(
-    '/path-to-stripe-webhook',
+    '/subscription/webhook/stripe',
+    bodyParser.raw({ type: 'application/json' }),
+  );
+
+  app.use(
+    '/api/subscription/webhook/stripe',
     bodyParser.raw({ type: 'application/json' }),
   );
 
