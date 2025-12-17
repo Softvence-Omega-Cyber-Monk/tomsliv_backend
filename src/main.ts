@@ -53,11 +53,6 @@ async function bootstrap() {
     bodyParser.raw({ type: 'application/json' }),
   );
 
-  app.use(
-    '/api/subscription/webhook/stripe',
-    bodyParser.raw({ type: 'application/json' }),
-  );
-
   // * set port
   const port = parseInt(configService.get<string>(ENVEnum.PORT) ?? '3000', 10);
   await app.listen(port);
