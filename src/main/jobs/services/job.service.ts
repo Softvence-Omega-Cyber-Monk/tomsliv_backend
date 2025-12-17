@@ -1,3 +1,4 @@
+import { QueueEventsEnum } from '@/common/enum/queue-events.enum';
 import {
   successPaginatedResponse,
   successResponse,
@@ -6,8 +7,10 @@ import {
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { QueuePayload } from '@/lib/queue/interface/queue.payload';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Prisma, UserRole } from '@prisma';
 import { CreateJobDto } from '../dto/create-job.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
@@ -21,6 +24,7 @@ export class JobService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly applicationAITrigger: ApplicationAITriggerService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   @HandleError('Failed to create job', 'Job')
@@ -47,7 +51,50 @@ export class JobService {
       },
     });
 
+    // Notify users interested in new jobs
+    this.notifyNewJob(job.id, job.title, farm.name);
+
     return successResponse(job, 'Job created successfully');
+  }
+
+  private async notifyNewJob(
+    jobId: string,
+    jobTitle: string,
+    farmName: string,
+  ) {
+    const interestedUsers = await this.prisma.client.user.findMany({
+      where: {
+        role: UserRole.USER,
+        notificationSettings: {
+          newRelatedJobsAlert: true,
+        },
+      },
+      select: { id: true },
+    });
+
+    if (interestedUsers.length === 0) return;
+
+    // Use notifyAllUsers logic via generic queue if needed, but for now specific users
+    // Since recipients might be large, we might want to split or just let QueueGateway handle it
+    // QueuePayload recipients is {id: string}[].
+
+    // Check if list is too large? QueueGateway iterates.
+    // If > 1000, maybe chunk? For now assuming simple.
+
+    const payload: QueuePayload = {
+      recipients: interestedUsers,
+      type: QueueEventsEnum.NOTIFICATION,
+      title: 'New Job Posted',
+      message: `A new job "${jobTitle}" at ${farmName} matches your interests.`,
+      createdAt: new Date(),
+      meta: {
+        performedBy: 'system',
+        recordType: 'Job',
+        recordId: jobId,
+      },
+    };
+
+    this.eventEmitter.emit(QueueEventsEnum.NOTIFICATION, payload);
   }
 
   @HandleError('Failed to update job', 'Job')

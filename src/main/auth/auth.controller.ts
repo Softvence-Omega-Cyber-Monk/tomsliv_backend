@@ -1,3 +1,4 @@
+import { PaginationDto } from '@/common/dto/pagination.dto';
 import {
   GetUser,
   ValidateAdmin,
@@ -10,8 +11,10 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Patch,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -207,5 +210,40 @@ export class AuthController {
     @UploadedFile() file?: Express.Multer.File,
   ) {
     return this.authUpdateProfileService.updateFarm(userId, dto, file);
+  }
+
+  @Get('notifications')
+  @ApiOperation({ summary: 'Get all notifications' })
+  @ApiBearerAuth()
+  @ValidateAuth()
+  async getNotifications(
+    @GetUser('sub') userId: string,
+    @Query() dto: PaginationDto,
+  ) {
+    return this.authNotificationService.findAll(userId, dto);
+  }
+
+  @Get('notifications/unread-count')
+  @ApiOperation({ summary: 'Get unread notification count' })
+  @ApiBearerAuth()
+  @ValidateAuth()
+  async getUnreadCount(@GetUser('sub') userId: string) {
+    return this.authNotificationService.getUnreadCount(userId);
+  }
+
+  @Patch('notifications/read-all')
+  @ApiOperation({ summary: 'Mark all notifications as read' })
+  @ApiBearerAuth()
+  @ValidateAuth()
+  async markAllAsRead(@GetUser('sub') userId: string) {
+    return this.authNotificationService.markAllAsRead(userId);
+  }
+
+  @Patch('notifications/:id/read')
+  @ApiOperation({ summary: 'Mark a notification as read' })
+  @ApiBearerAuth()
+  @ValidateAuth()
+  async markAsRead(@GetUser('sub') userId: string, @Param('id') id: string) {
+    return this.authNotificationService.markAsRead(userId, id);
   }
 }
