@@ -1,105 +1,79 @@
-import { HandleError } from '@/common/error/handle-error.decorator';
 import { successResponse, TResponse } from '@/common/utils/response.util';
+import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
-import { Injectable, Logger } from '@nestjs/common';
-import { Prisma } from '@prisma';
+import { Injectable } from '@nestjs/common';
 import { DateTime } from 'luxon';
 
 @Injectable()
 export class SubscriptionService {
-  private readonly logger = new Logger(SubscriptionService.name);
+  constructor(private readonly prisma: PrismaService) {}
 
-  constructor(private readonly prismaService: PrismaService) {}
-
-  @HandleError('Error getting plans for user')
-  async getPlansForUser() {
-    const orderBy = [
-      { updatedAt: Prisma.SortOrder.desc },
-      { createdAt: Prisma.SortOrder.desc },
-    ];
-
-    const [monthlyPlan, biannualPlan, yearlyPlan] =
-      await this.prismaService.client.$transaction([
-        this.prismaService.client.subscriptionPlan.findFirst({
-          where: {
-            billingPeriod: 'MONTHLY',
-            isActive: true,
-          },
-          orderBy,
-        }),
-        this.prismaService.client.subscriptionPlan.findFirst({
-          where: {
-            billingPeriod: 'BIANNUAL',
-            isActive: true,
-          },
-          orderBy,
-        }),
-        this.prismaService.client.subscriptionPlan.findFirst({
-          where: {
-            billingPeriod: 'YEARLY',
-            isActive: true,
-          },
-          orderBy,
-        }),
-      ]);
-
-    this.logger.log('Plans fetched successfully');
+  @HandleError('Error getting subscription plan')
+  async getPlanForUser(): Promise<TResponse<any>> {
+    const plan = await this.prisma.client.subscriptionPlan.findFirst({
+      where: { isActive: true },
+      orderBy: { updatedAt: 'desc' },
+    });
 
     return successResponse(
       {
-        monthlyPlan,
-        biannualPlan,
-        yearlyPlan,
+        plan: plan
+          ? {
+              id: plan.id,
+              title: plan.title,
+              description: plan.description,
+              price: Math.round(plan.priceCents / 100),
+              currency: plan.currency,
+            }
+          : null,
       },
-      'Plans fetched successfully',
+      'Plan fetched successfully',
     );
   }
 
   @HandleError('Error getting subscription status')
   async getCurrentSubscriptionStatus(userId: string): Promise<TResponse<any>> {
-    this.logger.log('Getting subscription status for user');
-    const userSubscription =
-      await this.prismaService.client.userSubscription.findFirst({
-        where: { userId, status: { in: ['ACTIVE', 'PENDING'] } },
-        orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
-        include: { plan: true },
-      });
+    const subscription = await this.prisma.client.userSubscription.findFirst({
+      where: {
+        userId,
+        status: { in: ['ACTIVE', 'PENDING'] },
+      },
+      orderBy: [{ updatedAt: 'desc' }],
+      include: { plan: true },
+    });
 
-    if (!userSubscription) {
+    // No subscription
+    if (!subscription) {
       return successResponse(
         {
           status: 'NONE',
-          message: 'No active subscription found.',
           canSubscribe: true,
-          period: { startedAt: null, endedAt: null, remainingDays: null },
           plan: null,
+          period: {
+            startedAt: null,
+            endedAt: null,
+            remainingDays: null,
+          },
+          message: 'No active subscription found.',
         },
-        'No subscription found',
+        'Subscription status fetched',
       );
     }
 
-    this.logger.log(
-      'Subscription status fetched successfully',
-      userSubscription,
-    );
-
     const now = DateTime.now();
-    const start = userSubscription.planStartedAt
-      ? DateTime.fromJSDate(userSubscription.planStartedAt)
-      : null;
-    const end = userSubscription.planEndedAt
-      ? DateTime.fromJSDate(userSubscription.planEndedAt)
-      : null;
-    const isExpired = end ? end < now : false;
+    const start = DateTime.fromJSDate(subscription.startedAt);
+    const end = DateTime.fromJSDate(subscription.endedAt);
+    const isExpired = end <= now;
 
-    const status =
-      userSubscription.status === 'ACTIVE' && !isExpired
-        ? 'ACTIVE'
-        : userSubscription.status === 'PENDING'
-          ? 'PENDING'
-          : isExpired
-            ? 'EXPIRED'
-            : userSubscription.status;
+    let status: 'ACTIVE' | 'PENDING' | 'EXPIRED';
+
+    if (subscription.status === 'PENDING') {
+      status = 'PENDING';
+    } else if (isExpired) {
+      status = 'EXPIRED';
+    } else {
+      status = 'ACTIVE';
+    }
 
     const canSubscribe = status !== 'ACTIVE' && status !== 'PENDING';
 
@@ -107,29 +81,26 @@ export class SubscriptionService {
       {
         status,
         canSubscribe,
-        plan: userSubscription.plan
-          ? {
-              title: userSubscription.plan.title,
-              price: Math.round(userSubscription.plan.priceCents / 100),
-              currency: userSubscription.plan.currency,
-              billingPeriod: userSubscription.plan.billingPeriod,
-            }
-          : null,
+        plan: {
+          title: subscription.plan.title,
+          price: Math.round(subscription.plan.priceCents / 100),
+          currency: subscription.plan.currency,
+        },
         period: {
-          startedAt: start?.toISODate() || null,
-          endedAt: end?.toISODate() || null,
-          remainingDays: end
-            ? Math.max(end.diff(now, 'days').days, 0).toFixed(0)
-            : null,
+          startedAt: start.toISODate(),
+          endedAt: end.toISODate(),
+          remainingDays: Math.max(Math.ceil(end.diff(now, 'days').days), 0),
         },
         message:
           status === 'ACTIVE'
-            ? `Your ${userSubscription.plan.title} plan is active until ${end?.toFormat('DDD')}.`
-            : status === 'EXPIRED'
-              ? `Your subscription expired on ${end?.toFormat('DDD')}.`
-              : 'No active subscription found.',
+            ? `Your ${subscription.plan.title} is active until ${end.toFormat(
+                'DDD',
+              )}.`
+            : status === 'PENDING'
+              ? 'Your subscription payment is pending.'
+              : `Your subscription expired on ${end.toFormat('DDD')}.`,
       },
-      'Subscription status fetched successfully',
+      'Subscription status fetched',
     );
   }
 }

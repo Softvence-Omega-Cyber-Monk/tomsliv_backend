@@ -1,5 +1,5 @@
-import { AppError } from '@/common/error/handle-error.app';
-import { HandleError } from '@/common/error/handle-error.decorator';
+import { AppError } from '@/core/error/handle-error.app';
+import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { StripePaymentMetadata } from '@/lib/stripe/stripe.types';
@@ -126,7 +126,6 @@ export class HandleWebhookService {
           data: {
             stripeCustomerId: customerId,
             stripeDefaultPaymentMethodId: paymentMethodId,
-            currentPlan: { connect: { id: subscription.planId } },
             subscriptionStatus: 'PENDING',
           },
         });
@@ -275,8 +274,8 @@ export class HandleWebhookService {
         data: {
           status: 'ACTIVE',
           paidAt: now,
-          planStartedAt,
-          planEndedAt,
+          startedAt: planStartedAt,
+          endedAt: planEndedAt,
           stripeSubscriptionId: subscriptionId,
         },
       });
@@ -285,10 +284,7 @@ export class HandleWebhookService {
       await prisma.user.update({
         where: { id: userId },
         data: {
-          memberShip: 'VIP',
-          trialEndsAt: null,
           subscriptionStatus: 'ACTIVE',
-          currentPlan: planId ? { connect: { id: planId } } : undefined,
         },
       });
 

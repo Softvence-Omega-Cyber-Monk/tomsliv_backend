@@ -1,5 +1,4 @@
 import { PrismaService } from '@/lib/prisma/prisma.service';
-import { couponSeedData, planSeedData } from '@/lib/seed/data/stripe.data';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 
@@ -13,124 +12,62 @@ export class SubscriptionPlanService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    // seed plans
-    await this.seedPlans();
-    // wait for 5 seconds before seeding coupons
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    // seed coupons
-    await this.seedCoupons();
+    await this.seedPlan();
   }
 
-  async seedPlans() {
-    for (const plan of planSeedData) {
-      const existingPlan = await this.prisma.client.subscriptionPlan.findFirst({
-        where: { planType: plan.planType },
-      });
+  private async seedPlan() {
+    // Check active plan in DB
+    const existingPlan = await this.prisma.client.subscriptionPlan.findFirst({
+      where: { isActive: true },
+    });
 
-      if (existingPlan) {
-        this.logger.log(
-          `[EXIST] ${plan.title} already exists in DB, skipping DB create...`,
-        );
-        continue;
-      }
-
-      // Check for existing Stripe price
-      const existingPrice = await this.stripe.getActivePriceByPlanType(
-        plan.planType,
+    if (existingPlan) {
+      this.logger.log(
+        '[EXIST] Active subscription plan already exists, skipping...',
       );
+      return;
+    }
 
-      if (existingPrice) {
-        this.logger.log(
-          `[REUSE] Reusing price ${existingPrice.id} for ${plan.planType}`,
-        );
+    // Try to reuse existing Stripe price (by metadata or lookup key)
+    const existingPrice =
+      await this.stripe.getActivePriceByLookupKey('farm_owner_monthly');
 
-        await this.prisma.client.subscriptionPlan.create({
-          data: {
-            ...plan,
-            stripeProductId: existingPrice.product as string,
-            stripePriceId: existingPrice.id,
-          },
-        });
+    let stripeProductId: string;
+    let stripePriceId: string;
 
-        this.logger.log(`[CREATED] DB Plan: ${plan.title}`);
+    if (existingPrice) {
+      stripeProductId = existingPrice.product as string;
+      stripePriceId = existingPrice.id;
 
-        continue;
-      }
-
+      this.logger.log(`[REUSE] Reusing Stripe price ${stripePriceId}`);
+    } else {
       const { stripePrice } = await this.stripe.createProductWithPrice({
-        title: plan.title,
-        description: plan.description,
-        price: plan.price,
-        planType: plan.planType,
+        title: 'Farm Owner Monthly Plan',
+        description: 'Monthly subscription for farm owners',
+        priceCents: 5000,
+        currency: 'usd',
+        lookupKey: 'farm_owner_monthly',
       });
 
-      await this.prisma.client.subscriptionPlan.create({
-        data: {
-          ...plan,
-          stripeProductId: stripePrice.product as string,
-          stripePriceId: stripePrice.id,
-        },
-      });
+      stripeProductId = stripePrice.product as string;
+      stripePriceId = stripePrice.id;
 
-      this.logger.log(`[CREATED] DB Plan: ${plan.title}`);
+      this.logger.log(`[STRIPE] Created product & price ${stripePriceId}`);
     }
-  }
 
-  async seedCoupons() {
-    for (const coupon of couponSeedData) {
-      // 1. Find plan
-      const plan = await this.prisma.client.subscriptionPlan.findFirst({
-        where: { planType: coupon.planType },
-      });
+    // Create DB plan
+    await this.prisma.client.subscriptionPlan.create({
+      data: {
+        title: 'Farm Owner Monthly Plan',
+        description: 'Monthly subscription for farm owners',
+        priceCents: 5000,
+        currency: 'usd',
+        isActive: true,
+        stripeProductId,
+        stripePriceId,
+      },
+    });
 
-      if (!plan) {
-        this.logger.error(
-          `[SKIP] Plan not found for ${coupon.planType}, skipping coupon...`,
-        );
-        continue;
-      }
-
-      // 2. Check DB
-      const existingPromo = await this.prisma.client.promoCode.findFirst({
-        where: { code: coupon.code },
-      });
-
-      if (existingPromo) {
-        this.logger.log(
-          `[EXIST] PromoCode ${coupon.code} already exists in DB, skipping DB create...`,
-        );
-        continue;
-      }
-
-      // 3. Check Stripe
-      let stripeCoupon = await this.stripe.getCouponByPlanType(coupon.planType);
-
-      if (!stripeCoupon) {
-        stripeCoupon = await this.stripe.createStripeCoupon(
-          coupon.discount,
-          coupon.planType,
-        );
-        this.logger.log(
-          `[CREATED] Stripe Coupon ${stripeCoupon.id} (${coupon.code})`,
-        );
-      } else {
-        this.logger.log(
-          `[REUSE] Reusing Stripe Coupon ${stripeCoupon.id} for ${coupon.code}`,
-        );
-      }
-
-      // 4. Create Promo in DB
-      await this.prisma.client.promoCode.create({
-        data: {
-          code: coupon.code,
-          discount: coupon.discount,
-          freeMonths: coupon.freeMonths,
-          planId: plan.id,
-          stripeCouponId: stripeCoupon.id,
-        },
-      });
-
-      this.logger.log(`[CREATED] DB PromoCode: ${coupon.code}`);
-    }
+    this.logger.log('[CREATED] Default subscription plan seeded');
   }
 }

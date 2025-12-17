@@ -46,8 +46,10 @@ model User {
   userSubscriptions UserSubscription[]
   invoices          Invoice[]
 
+  // Subscription
+  stripeCustomerId             String?             @unique
+  stripeDefaultPaymentMethodId String?             @unique
   subscriptionStatus           SubscriptionStatus?
-
 
   @@map("users")
 }

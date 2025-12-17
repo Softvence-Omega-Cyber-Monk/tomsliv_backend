@@ -93,6 +93,21 @@ export type UserNotification = Prisma.UserNotificationModel
  */
 export type NotificationSettings = Prisma.NotificationSettingsModel
 /**
+ * Model SubscriptionPlan
+ * 
+ */
+export type SubscriptionPlan = Prisma.SubscriptionPlanModel
+/**
+ * Model UserSubscription
+ * 
+ */
+export type UserSubscription = Prisma.UserSubscriptionModel
+/**
+ * Model Invoice
+ * 
+ */
+export type Invoice = Prisma.InvoiceModel
+/**
  * Model User
  * 
  */

@@ -17,6 +17,7 @@ export class StripeService {
   }
 
   // Product & Price Management
+  // Product & Price Management
   async createProductWithPrice({
     title,
     description,
@@ -24,6 +25,7 @@ export class StripeService {
     currency = 'usd',
     interval = 'month',
     intervalCount = 1,
+    lookupKey,
   }: {
     title: string;
     description: string;
@@ -31,6 +33,7 @@ export class StripeService {
     currency?: string;
     interval?: 'month' | 'year';
     intervalCount?: number;
+    lookupKey?: string;
   }) {
     const product = await this.stripe.products.create({
       name: title,
@@ -45,10 +48,11 @@ export class StripeService {
         interval,
         interval_count: intervalCount,
       },
+      ...(lookupKey && { lookup_key: lookupKey }),
     });
 
     this.logger.log(
-      `Created Stripe product ${product.id} with price ${stripePrice.id} for interval ${interval} and interval count ${intervalCount}`,
+      `Created Stripe product ${product.id} with price ${stripePrice.id}`,
     );
 
     return { product, stripePrice };
@@ -150,6 +154,28 @@ export class StripeService {
       );
       throw err; // bubble up to caller so your HandleError decorator / logger handles it
     }
+  }
+
+  async getActivePriceByLookupKey(lookupKey: string) {
+    const prices = await this.stripe.prices.list({
+      lookup_keys: [lookupKey],
+      active: true,
+      limit: 1,
+    });
+
+    if (!prices.data.length) {
+      this.logger.log(
+        `No active Stripe price found for lookupKey=${lookupKey}`,
+      );
+      return null;
+    }
+
+    const price = prices.data[0];
+    this.logger.log(
+      `Found Stripe price ${price.id} for lookupKey=${lookupKey}`,
+    );
+
+    return price;
   }
 
   // Customer Management

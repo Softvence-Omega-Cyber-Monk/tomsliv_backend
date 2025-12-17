@@ -1,5 +1,8 @@
 model SubscriptionPlan {
-  id          String  @id @default(uuid())
+  id String @id @default(uuid())
+
+  stripeProductId String @unique
+  stripePriceId   String @unique
 
   title       String
   description String?
@@ -16,12 +19,20 @@ model SubscriptionPlan {
 }
 
 model UserSubscription {
-  id        String             @id @default(uuid())
-  userId    String
-  planId    String
-  status    SubscriptionStatus @default(PENDING)
-  startedAt DateTime           @default(now())
+  id String @id @default(uuid())
+
+  stripeSubscriptionId String? @unique
+  stripeTransactionId  String  @unique
+
+  userId String
+  planId String
+  status SubscriptionStatus @default(PENDING)
+
+  startedAt DateTime @default(now())
   endedAt   DateTime
+
+  paidAt   DateTime?
+  failedAt DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -38,16 +49,19 @@ model UserSubscription {
 model Invoice {
   id String @id @default(uuid())
 
-  userSubscriptionId String
-  userId             String
-  amountCents        Int
-  currency           String        @default("usd")
-  status             InvoiceStatus @default(PENDING)
-  issuedAt           DateTime      @default(now())
-  paidAt             DateTime?
+  stripeInvoiceId String @unique
 
-  subscription UserSubscription @relation(fields: [userSubscriptionId], references: [id], onDelete: Cascade)
-  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount   Int
+  currency String        @default("usd")
+  status   InvoiceStatus @default(PENDING)
+  issuedAt DateTime      @default(now())
+  paidAt   DateTime?
+
+  userSubscriptionId String
+  subscription       UserSubscription @relation(fields: [userSubscriptionId], references: [id], onDelete: Cascade)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("invoices")
 }

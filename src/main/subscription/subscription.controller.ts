@@ -6,7 +6,6 @@ import {
   Headers,
   HttpCode,
   HttpStatus,
-  Param,
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -30,16 +29,13 @@ export class SubscriptionController {
   @ApiOperation({ summary: 'Get plans for user' })
   @Get()
   async getPlansForUser() {
-    return this.subscriptionService.getPlansForUser();
+    return this.subscriptionService.getPlanForUser();
   }
 
   @ApiOperation({ summary: 'Create setup intent' })
-  @Post(':planId/intent')
-  async createSetupIntent(
-    @GetUser('sub') userId: string,
-    @Param('planId') planId: string,
-  ) {
-    return this.createIntentService.createSetupIntent(userId, planId);
+  @Post('intent')
+  async createSetupIntent(@GetUser('sub') userId: string) {
+    return this.createIntentService.createSetupIntent(userId);
   }
 
   @ApiOperation({ summary: 'Handle Stripe webhook events (Public Endpoint)' })
