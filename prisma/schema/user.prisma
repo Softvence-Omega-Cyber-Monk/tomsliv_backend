@@ -77,8 +77,16 @@ model Farm {
   jobs  Job[]
   users User?
 
+  status FarmStatus @default(ACTIVE)
+
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
   @@map("farms")
+}
+
+enum FarmStatus {
+  ACTIVE
+  INACTIVE
+  DELETED
 }

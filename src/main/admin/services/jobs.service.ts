@@ -50,6 +50,11 @@ export class JobsService {
                   email: true,
                 },
               },
+              logo: {
+                select: {
+                  url: true,
+                },
+              },
             },
           },
           _count: {
@@ -69,6 +74,7 @@ export class JobsService {
       status: job.status,
 
       farmName: job.farm?.name ?? null,
+      logUrl: job.farm?.logo?.url ?? null,
       employerName: job.farm?.users?.name ?? null,
       employerEmail: job.farm?.users?.email ?? null,
 
@@ -200,5 +206,26 @@ export class JobsService {
       },
       'Job application history fetched successfully',
     );
+  }
+
+  @HandleError('Failed to toggle job status')
+  async toggleSuspendJob(jobId: string) {
+    const job = await this.prisma.client.job.findUniqueOrThrow({
+      where: { id: jobId },
+    });
+
+    if (job.status === 'SUSPENDED') {
+      await this.prisma.client.job.update({
+        where: { id: jobId },
+        data: { status: 'ACTIVE' },
+      });
+    } else {
+      await this.prisma.client.job.update({
+        where: { id: jobId },
+        data: { status: 'SUSPENDED' },
+      });
+    }
+
+    return successResponse(null, 'Job status updated successfully');
   }
 }

@@ -461,6 +461,13 @@ export type IntNullableFilter<$PrismaModel = never> = {
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
 }
 
+export type EnumFarmStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.FarmStatus | Prisma.EnumFarmStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFarmStatusFilter<$PrismaModel> | $Enums.FarmStatus
+}
+
 export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -475,6 +482,16 @@ export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type EnumFarmStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FarmStatus | Prisma.EnumFarmStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFarmStatusWithAggregatesFilter<$PrismaModel> | $Enums.FarmStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFarmStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFarmStatusFilter<$PrismaModel>
 }
 
 export type NestedStringFilter<$PrismaModel = never> = {
@@ -888,6 +905,13 @@ export type NestedEnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumUserStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumFarmStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.FarmStatus | Prisma.EnumFarmStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFarmStatusFilter<$PrismaModel> | $Enums.FarmStatus
+}
+
 export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
   in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
@@ -902,6 +926,16 @@ export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
   _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumFarmStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.FarmStatus | Prisma.EnumFarmStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.FarmStatus[] | Prisma.ListEnumFarmStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumFarmStatusWithAggregatesFilter<$PrismaModel> | $Enums.FarmStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumFarmStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumFarmStatusFilter<$PrismaModel>
 }
 
 

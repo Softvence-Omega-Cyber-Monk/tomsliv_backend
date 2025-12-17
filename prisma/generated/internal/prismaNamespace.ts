@@ -1991,6 +1991,7 @@ export const FarmScalarFieldEnum = {
   herdSize: 'herdSize',
   farmType: 'farmType',
   logoId: 'logoId',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -2272,6 +2273,20 @@ export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'UserStatus[]'
  */
 export type ListEnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'FarmStatus'
+ */
+export type EnumFarmStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FarmStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'FarmStatus[]'
+ */
+export type ListEnumFarmStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FarmStatus[]'>
     
 
 /**

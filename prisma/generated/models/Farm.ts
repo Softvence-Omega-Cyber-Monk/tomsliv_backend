@@ -43,6 +43,7 @@ export type FarmMinAggregateOutputType = {
   herdSize: number | null
   farmType: string | null
   logoId: string | null
+  status: $Enums.FarmStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +57,7 @@ export type FarmMaxAggregateOutputType = {
   herdSize: number | null
   farmType: string | null
   logoId: string | null
+  status: $Enums.FarmStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -69,6 +71,7 @@ export type FarmCountAggregateOutputType = {
   herdSize: number
   farmType: number
   logoId: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -92,6 +95,7 @@ export type FarmMinAggregateInputType = {
   herdSize?: true
   farmType?: true
   logoId?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -105,6 +109,7 @@ export type FarmMaxAggregateInputType = {
   herdSize?: true
   farmType?: true
   logoId?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -118,6 +123,7 @@ export type FarmCountAggregateInputType = {
   herdSize?: true
   farmType?: true
   logoId?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -218,6 +224,7 @@ export type FarmGroupByOutputType = {
   herdSize: number | null
   farmType: string | null
   logoId: string | null
+  status: $Enums.FarmStatus
   createdAt: Date
   updatedAt: Date
   _count: FarmCountAggregateOutputType | null
@@ -254,6 +261,7 @@ export type FarmWhereInput = {
   herdSize?: Prisma.IntNullableFilter<"Farm"> | number | null
   farmType?: Prisma.StringNullableFilter<"Farm"> | string | null
   logoId?: Prisma.StringNullableFilter<"Farm"> | string | null
+  status?: Prisma.EnumFarmStatusFilter<"Farm"> | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
   logo?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
@@ -270,6 +278,7 @@ export type FarmOrderByWithRelationInput = {
   herdSize?: Prisma.SortOrderInput | Prisma.SortOrder
   farmType?: Prisma.SortOrderInput | Prisma.SortOrder
   logoId?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   logo?: Prisma.FileInstanceOrderByWithRelationInput
@@ -289,6 +298,7 @@ export type FarmWhereUniqueInput = Prisma.AtLeast<{
   website?: Prisma.StringNullableFilter<"Farm"> | string | null
   herdSize?: Prisma.IntNullableFilter<"Farm"> | number | null
   farmType?: Prisma.StringNullableFilter<"Farm"> | string | null
+  status?: Prisma.EnumFarmStatusFilter<"Farm"> | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Farm"> | Date | string
   logo?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
@@ -305,6 +315,7 @@ export type FarmOrderByWithAggregationInput = {
   herdSize?: Prisma.SortOrderInput | Prisma.SortOrder
   farmType?: Prisma.SortOrderInput | Prisma.SortOrder
   logoId?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.FarmCountOrderByAggregateInput
@@ -326,6 +337,7 @@ export type FarmScalarWhereWithAggregatesInput = {
   herdSize?: Prisma.IntNullableWithAggregatesFilter<"Farm"> | number | null
   farmType?: Prisma.StringNullableWithAggregatesFilter<"Farm"> | string | null
   logoId?: Prisma.StringNullableWithAggregatesFilter<"Farm"> | string | null
+  status?: Prisma.EnumFarmStatusWithAggregatesFilter<"Farm"> | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Farm"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Farm"> | Date | string
 }
@@ -338,6 +350,7 @@ export type FarmCreateInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   logo?: Prisma.FileInstanceCreateNestedOneWithoutFarmsInput
@@ -354,6 +367,7 @@ export type FarmUncheckedCreateInput = {
   herdSize?: number | null
   farmType?: string | null
   logoId?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutFarmInput
@@ -368,6 +382,7 @@ export type FarmUpdateInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.FileInstanceUpdateOneWithoutFarmsNestedInput
@@ -384,6 +399,7 @@ export type FarmUncheckedUpdateInput = {
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
@@ -399,6 +415,7 @@ export type FarmCreateManyInput = {
   herdSize?: number | null
   farmType?: string | null
   logoId?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -411,6 +428,7 @@ export type FarmUpdateManyMutationInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -424,6 +442,7 @@ export type FarmUncheckedUpdateManyInput = {
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -447,6 +466,7 @@ export type FarmCountOrderByAggregateInput = {
   herdSize?: Prisma.SortOrder
   farmType?: Prisma.SortOrder
   logoId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -464,6 +484,7 @@ export type FarmMaxOrderByAggregateInput = {
   herdSize?: Prisma.SortOrder
   farmType?: Prisma.SortOrder
   logoId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -477,6 +498,7 @@ export type FarmMinOrderByAggregateInput = {
   herdSize?: Prisma.SortOrder
   farmType?: Prisma.SortOrder
   logoId?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -555,6 +577,10 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type EnumFarmStatusFieldUpdateOperationsInput = {
+  set?: $Enums.FarmStatus
+}
+
 export type FarmCreateWithoutLogoInput = {
   id?: string
   name: string
@@ -563,6 +589,7 @@ export type FarmCreateWithoutLogoInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobCreateNestedManyWithoutFarmInput
@@ -577,6 +604,7 @@ export type FarmUncheckedCreateWithoutLogoInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutFarmInput
@@ -607,6 +635,7 @@ export type FarmUpdateWithoutLogoInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUpdateManyWithoutFarmNestedInput
@@ -621,6 +650,7 @@ export type FarmUncheckedUpdateWithoutLogoInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
@@ -635,6 +665,7 @@ export type FarmCreateWithoutJobsInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   logo?: Prisma.FileInstanceCreateNestedOneWithoutFarmsInput
@@ -650,6 +681,7 @@ export type FarmUncheckedCreateWithoutJobsInput = {
   herdSize?: number | null
   farmType?: string | null
   logoId?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedOneWithoutFarmInput
@@ -679,6 +711,7 @@ export type FarmUpdateWithoutJobsInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.FileInstanceUpdateOneWithoutFarmsNestedInput
@@ -694,6 +727,7 @@ export type FarmUncheckedUpdateWithoutJobsInput = {
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateOneWithoutFarmNestedInput
@@ -707,6 +741,7 @@ export type FarmCreateWithoutUsersInput = {
   website?: string | null
   herdSize?: number | null
   farmType?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   logo?: Prisma.FileInstanceCreateNestedOneWithoutFarmsInput
@@ -722,6 +757,7 @@ export type FarmUncheckedCreateWithoutUsersInput = {
   herdSize?: number | null
   farmType?: string | null
   logoId?: string | null
+  status?: $Enums.FarmStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   jobs?: Prisma.JobUncheckedCreateNestedManyWithoutFarmInput
@@ -751,6 +787,7 @@ export type FarmUpdateWithoutUsersInput = {
   website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   logo?: Prisma.FileInstanceUpdateOneWithoutFarmsNestedInput
@@ -766,6 +803,7 @@ export type FarmUncheckedUpdateWithoutUsersInput = {
   herdSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   farmType?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   logoId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumFarmStatusFieldUpdateOperationsInput | $Enums.FarmStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   jobs?: Prisma.JobUncheckedUpdateManyWithoutFarmNestedInput
@@ -811,6 +849,7 @@ export type FarmSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   herdSize?: boolean
   farmType?: boolean
   logoId?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
@@ -828,6 +867,7 @@ export type FarmSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   herdSize?: boolean
   farmType?: boolean
   logoId?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
@@ -842,6 +882,7 @@ export type FarmSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   herdSize?: boolean
   farmType?: boolean
   logoId?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
@@ -856,11 +897,12 @@ export type FarmSelectScalar = {
   herdSize?: boolean
   farmType?: boolean
   logoId?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type FarmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "location" | "description" | "website" | "herdSize" | "farmType" | "logoId" | "createdAt" | "updatedAt", ExtArgs["result"]["farm"]>
+export type FarmOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "location" | "description" | "website" | "herdSize" | "farmType" | "logoId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["farm"]>
 export type FarmInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   logo?: boolean | Prisma.Farm$logoArgs<ExtArgs>
   jobs?: boolean | Prisma.Farm$jobsArgs<ExtArgs>
@@ -890,6 +932,7 @@ export type $FarmPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     herdSize: number | null
     farmType: string | null
     logoId: string | null
+    status: $Enums.FarmStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["farm"]>
@@ -1326,6 +1369,7 @@ export interface FarmFieldRefs {
   readonly herdSize: Prisma.FieldRef<"Farm", 'Int'>
   readonly farmType: Prisma.FieldRef<"Farm", 'String'>
   readonly logoId: Prisma.FieldRef<"Farm", 'String'>
+  readonly status: Prisma.FieldRef<"Farm", 'FarmStatus'>
   readonly createdAt: Prisma.FieldRef<"Farm", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Farm", 'DateTime'>
 }

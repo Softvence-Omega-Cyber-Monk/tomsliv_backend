@@ -360,6 +360,7 @@ export const FarmScalarFieldEnum = {
   herdSize: 'herdSize',
   farmType: 'farmType',
   logoId: 'logoId',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
