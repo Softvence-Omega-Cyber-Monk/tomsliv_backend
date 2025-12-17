@@ -6,6 +6,7 @@ import * as he from 'he';
 import * as nodemailer from 'nodemailer';
 import { MailService } from '../mail.service';
 import { applicationReceivedTemplate } from '../templates/application-received.template';
+import { notificationTemplate } from '../templates/notification.template';
 import { otpTemplate } from '../templates/otp.template';
 import { passwordResetConfirmationTemplate } from '../templates/reset-password-confirm.template';
 import { resetPasswordLinkTemplate } from '../templates/reset-password-link.template';
@@ -145,6 +146,21 @@ export class AuthMailService {
       subject,
       applicationReceivedTemplate(candidateName, jobTitle, isExistingUser),
       text,
+    );
+  }
+
+  async sendNotificationEmail(
+    to: string,
+    title: string,
+    message: string,
+    link?: string,
+  ): Promise<nodemailer.SentMessageInfo> {
+    const subject = title;
+    return this.sendEmail(
+      to,
+      subject,
+      notificationTemplate(title, message, link),
+      `${title}\n\n${message}\n\n${link ? `Link: ${link}` : ''}`,
     );
   }
 }

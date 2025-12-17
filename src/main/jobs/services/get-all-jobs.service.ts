@@ -78,6 +78,7 @@ export class GetAllJobsService {
     const [jobs, total] = await this.prisma.client.$transaction([
       this.prisma.client.job.findMany({
         where,
+        include: { farm: { include: { logo: true } } },
         orderBy,
         skip,
         take: limit,
