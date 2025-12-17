@@ -38,10 +38,16 @@ model User {
   otps            UserOtp[]
   jobApplications JobApplication[]
   savedJobs       SavedJobs[]
-  cvs             CV[]             @relation("UserCVs")
+  cvs             CV[]               @relation("UserCVs")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  userSubscriptions UserSubscription[]
+  invoices          Invoice[]
+
+  subscriptionStatus           SubscriptionStatus?
+
 
   @@map("users")
 }
