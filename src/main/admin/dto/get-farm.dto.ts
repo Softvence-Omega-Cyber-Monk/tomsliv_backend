@@ -14,3 +14,10 @@ export class GetAllFarmDto extends PaginationDto {
   @IsEnum(FarmStatus)
   status?: string;
 }
+
+export class GetJobSeekersDto extends PaginationDto {
+  @ApiPropertyOptional({ example: 'Farm Manager' })
+  @IsOptional()
+  @IsString()
+  search?: string;
+}

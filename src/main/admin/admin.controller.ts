@@ -1,11 +1,12 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import { ValidateAdmin } from '@/core/jwt/jwt.decorator';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetFarmOwnerJobsDto } from '../jobs/dto/get-jobs.dto';
-import { GetAllFarmDto } from './dto/get-farm.dto';
+import { GetAllFarmDto, GetJobSeekersDto } from './dto/get-farm.dto';
 import { FarmOwnerService } from './services/farm-owner.service';
 import { JobsService } from './services/jobs.service';
+import { UserService } from './services/user.service';
 
 @ApiTags('Admin Endpoints')
 @ApiBearerAuth()
@@ -15,6 +16,7 @@ export class AdminController {
   constructor(
     private readonly jobsService: JobsService,
     private readonly farmOwnerService: FarmOwnerService,
+    private readonly userService: UserService,
   ) {}
 
   @ApiOperation({ summary: 'Get all jobs' })
@@ -30,7 +32,7 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Get job applications' })
-  @Get('jobs/:jobId/applications')
+  @Post('jobs/:jobId/applications')
   async getAdminJobApplications(
     @Param('jobId') jobId: string,
     dt: PaginationDto,
@@ -57,8 +59,26 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Toggle farm owner status' })
-  @Get('farms/:farmId/status')
+  @Post('farms/:farmId/status')
   async toggleFarmOwnerSuspend(@Param('farmId') id: string) {
     return this.farmOwnerService.toggleFarmOwnerSuspend(id);
+  }
+
+  @ApiOperation({ summary: 'Get all job seekers' })
+  @Get('job-seekers')
+  async getAllJobSeekers(dto: GetJobSeekersDto) {
+    return this.userService.getAllUsers(dto);
+  }
+
+  @ApiOperation({ summary: 'Get single job seeker' })
+  @Get('job-seekers/:userId')
+  async getSingleUserWithApplicationHistory(@Param('userId') userId: string) {
+    return this.userService.getSingleUserWithApplicationHistory(userId);
+  }
+
+  @ApiOperation({ summary: 'Toggle job seeker status' })
+  @Post('job-seekers/:userId/status')
+  async toggleSuspension(@Param('userId') userId: string) {
+    return this.userService.toggleSuspension(userId);
   }
 }
