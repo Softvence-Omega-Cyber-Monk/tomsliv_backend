@@ -321,6 +321,7 @@ export const NotificationSettingsScalarFieldEnum = {
   newApplicantAlert: 'newApplicantAlert',
   updatesAndTips: 'updatesAndTips',
   newRelatedJobsAlert: 'newRelatedJobsAlert',
+  newEmployerJoin: 'newEmployerJoin',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

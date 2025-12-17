@@ -87,6 +87,13 @@ export class AuthGetProfileService {
       };
     }
 
+    if (userRole === 'ADMIN' || userRole === 'SUPER_ADMIN') {
+      return {
+        ...common,
+        newEmployerJoin: settings.newEmployerJoin,
+      };
+    }
+
     return common;
   }
 

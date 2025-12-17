@@ -31,6 +31,7 @@ export type NotificationSettingsMinAggregateOutputType = {
   newApplicantAlert: boolean | null
   updatesAndTips: boolean | null
   newRelatedJobsAlert: boolean | null
+  newEmployerJoin: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +43,7 @@ export type NotificationSettingsMaxAggregateOutputType = {
   newApplicantAlert: boolean | null
   updatesAndTips: boolean | null
   newRelatedJobsAlert: boolean | null
+  newEmployerJoin: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,6 +55,7 @@ export type NotificationSettingsCountAggregateOutputType = {
   newApplicantAlert: number
   updatesAndTips: number
   newRelatedJobsAlert: number
+  newEmployerJoin: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -66,6 +69,7 @@ export type NotificationSettingsMinAggregateInputType = {
   newApplicantAlert?: true
   updatesAndTips?: true
   newRelatedJobsAlert?: true
+  newEmployerJoin?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +81,7 @@ export type NotificationSettingsMaxAggregateInputType = {
   newApplicantAlert?: true
   updatesAndTips?: true
   newRelatedJobsAlert?: true
+  newEmployerJoin?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +93,7 @@ export type NotificationSettingsCountAggregateInputType = {
   newApplicantAlert?: true
   updatesAndTips?: true
   newRelatedJobsAlert?: true
+  newEmployerJoin?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -172,6 +178,7 @@ export type NotificationSettingsGroupByOutputType = {
   newApplicantAlert: boolean
   updatesAndTips: boolean
   newRelatedJobsAlert: boolean
+  newEmployerJoin: boolean
   createdAt: Date
   updatedAt: Date
   _count: NotificationSettingsCountAggregateOutputType | null
@@ -204,6 +211,7 @@ export type NotificationSettingsWhereInput = {
   newApplicantAlert?: Prisma.BoolFilter<"NotificationSettings"> | boolean
   updatesAndTips?: Prisma.BoolFilter<"NotificationSettings"> | boolean
   newRelatedJobsAlert?: Prisma.BoolFilter<"NotificationSettings"> | boolean
+  newEmployerJoin?: Prisma.BoolFilter<"NotificationSettings"> | boolean
   createdAt?: Prisma.DateTimeFilter<"NotificationSettings"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"NotificationSettings"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -216,6 +224,7 @@ export type NotificationSettingsOrderByWithRelationInput = {
   newApplicantAlert?: Prisma.SortOrder
   updatesAndTips?: Prisma.SortOrder
   newRelatedJobsAlert?: Prisma.SortOrder
+  newEmployerJoin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -231,6 +240,7 @@ export type NotificationSettingsWhereUniqueInput = Prisma.AtLeast<{
   newApplicantAlert?: Prisma.BoolFilter<"NotificationSettings"> | boolean
   updatesAndTips?: Prisma.BoolFilter<"NotificationSettings"> | boolean
   newRelatedJobsAlert?: Prisma.BoolFilter<"NotificationSettings"> | boolean
+  newEmployerJoin?: Prisma.BoolFilter<"NotificationSettings"> | boolean
   createdAt?: Prisma.DateTimeFilter<"NotificationSettings"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"NotificationSettings"> | Date | string
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
@@ -243,6 +253,7 @@ export type NotificationSettingsOrderByWithAggregationInput = {
   newApplicantAlert?: Prisma.SortOrder
   updatesAndTips?: Prisma.SortOrder
   newRelatedJobsAlert?: Prisma.SortOrder
+  newEmployerJoin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.NotificationSettingsCountOrderByAggregateInput
@@ -260,6 +271,7 @@ export type NotificationSettingsScalarWhereWithAggregatesInput = {
   newApplicantAlert?: Prisma.BoolWithAggregatesFilter<"NotificationSettings"> | boolean
   updatesAndTips?: Prisma.BoolWithAggregatesFilter<"NotificationSettings"> | boolean
   newRelatedJobsAlert?: Prisma.BoolWithAggregatesFilter<"NotificationSettings"> | boolean
+  newEmployerJoin?: Prisma.BoolWithAggregatesFilter<"NotificationSettings"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"NotificationSettings"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"NotificationSettings"> | Date | string
 }
@@ -271,6 +283,7 @@ export type NotificationSettingsCreateInput = {
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserCreateNestedOneWithoutNotificationSettingsInput
@@ -283,6 +296,7 @@ export type NotificationSettingsUncheckedCreateInput = {
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user?: Prisma.UserUncheckedCreateNestedOneWithoutNotificationSettingsInput
@@ -295,6 +309,7 @@ export type NotificationSettingsUpdateInput = {
   newApplicantAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatesAndTips?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newRelatedJobsAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newEmployerJoin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneWithoutNotificationSettingsNestedInput
@@ -307,6 +322,7 @@ export type NotificationSettingsUncheckedUpdateInput = {
   newApplicantAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatesAndTips?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newRelatedJobsAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newEmployerJoin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUncheckedUpdateOneWithoutNotificationSettingsNestedInput
@@ -319,6 +335,7 @@ export type NotificationSettingsCreateManyInput = {
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -330,6 +347,7 @@ export type NotificationSettingsUpdateManyMutationInput = {
   newApplicantAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatesAndTips?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newRelatedJobsAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newEmployerJoin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -341,6 +359,7 @@ export type NotificationSettingsUncheckedUpdateManyInput = {
   newApplicantAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatesAndTips?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newRelatedJobsAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newEmployerJoin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,6 +371,7 @@ export type NotificationSettingsCountOrderByAggregateInput = {
   newApplicantAlert?: Prisma.SortOrder
   updatesAndTips?: Prisma.SortOrder
   newRelatedJobsAlert?: Prisma.SortOrder
+  newEmployerJoin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -363,6 +383,7 @@ export type NotificationSettingsMaxOrderByAggregateInput = {
   newApplicantAlert?: Prisma.SortOrder
   updatesAndTips?: Prisma.SortOrder
   newRelatedJobsAlert?: Prisma.SortOrder
+  newEmployerJoin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -374,6 +395,7 @@ export type NotificationSettingsMinOrderByAggregateInput = {
   newApplicantAlert?: Prisma.SortOrder
   updatesAndTips?: Prisma.SortOrder
   newRelatedJobsAlert?: Prisma.SortOrder
+  newEmployerJoin?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -406,6 +428,7 @@ export type NotificationSettingsCreateWithoutUserInput = {
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -417,6 +440,7 @@ export type NotificationSettingsUncheckedCreateWithoutUserInput = {
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -444,6 +468,7 @@ export type NotificationSettingsUpdateWithoutUserInput = {
   newApplicantAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatesAndTips?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newRelatedJobsAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newEmployerJoin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -455,6 +480,7 @@ export type NotificationSettingsUncheckedUpdateWithoutUserInput = {
   newApplicantAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
   updatesAndTips?: Prisma.BoolFieldUpdateOperationsInput | boolean
   newRelatedJobsAlert?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  newEmployerJoin?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -468,6 +494,7 @@ export type NotificationSettingsSelect<ExtArgs extends runtime.Types.Extensions.
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.NotificationSettings$userArgs<ExtArgs>
@@ -480,6 +507,7 @@ export type NotificationSettingsSelectCreateManyAndReturn<ExtArgs extends runtim
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["notificationSettings"]>
@@ -491,6 +519,7 @@ export type NotificationSettingsSelectUpdateManyAndReturn<ExtArgs extends runtim
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["notificationSettings"]>
@@ -502,11 +531,12 @@ export type NotificationSettingsSelectScalar = {
   newApplicantAlert?: boolean
   updatesAndTips?: boolean
   newRelatedJobsAlert?: boolean
+  newEmployerJoin?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type NotificationSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "emailNotifications" | "weeklyDigest" | "newApplicantAlert" | "updatesAndTips" | "newRelatedJobsAlert" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationSettings"]>
+export type NotificationSettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "emailNotifications" | "weeklyDigest" | "newApplicantAlert" | "updatesAndTips" | "newRelatedJobsAlert" | "newEmployerJoin" | "createdAt" | "updatedAt", ExtArgs["result"]["notificationSettings"]>
 export type NotificationSettingsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.NotificationSettings$userArgs<ExtArgs>
 }
@@ -525,6 +555,7 @@ export type $NotificationSettingsPayload<ExtArgs extends runtime.Types.Extension
     newApplicantAlert: boolean
     updatesAndTips: boolean
     newRelatedJobsAlert: boolean
+    newEmployerJoin: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["notificationSettings"]>
@@ -957,6 +988,7 @@ export interface NotificationSettingsFieldRefs {
   readonly newApplicantAlert: Prisma.FieldRef<"NotificationSettings", 'Boolean'>
   readonly updatesAndTips: Prisma.FieldRef<"NotificationSettings", 'Boolean'>
   readonly newRelatedJobsAlert: Prisma.FieldRef<"NotificationSettings", 'Boolean'>
+  readonly newEmployerJoin: Prisma.FieldRef<"NotificationSettings", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"NotificationSettings", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"NotificationSettings", 'DateTime'>
 }

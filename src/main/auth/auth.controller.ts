@@ -1,5 +1,6 @@
 import {
   GetUser,
+  ValidateAdmin,
   ValidateAuth,
   ValidateFarmOwner,
   ValidateUser,
@@ -25,6 +26,7 @@ import { FileType } from '@prisma';
 import { LoginDto } from './dto/login.dto';
 import { LogoutDto, RefreshTokenDto } from './dto/logout.dto';
 import {
+  AdminNotificationSettingsDto,
   FarmOwnerNotificationSettingsDto,
   UserNotificationSettingsDto,
 } from './dto/notification-setting.dto';
@@ -172,6 +174,20 @@ export class AuthController {
     @Body() dto: UserNotificationSettingsDto,
   ) {
     return this.authNotificationService.updateUserSettings(userId, dto);
+  }
+
+  @ApiOperation({ summary: 'Update Admin Notification Settings' })
+  @ApiBearerAuth()
+  @Patch('notifications/admin')
+  @ValidateAdmin()
+  async updateAdminNotificationSettings(
+    @GetUser('sub') userId: string,
+    @Body() dto: AdminNotificationSettingsDto,
+  ) {
+    return this.authNotificationService.updateAdminNotificationSettings(
+      userId,
+      dto,
+    );
   }
 
   @ApiOperation({ summary: 'Update farm profile' })
