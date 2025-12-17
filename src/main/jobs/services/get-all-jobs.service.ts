@@ -28,7 +28,11 @@ export class GetAllJobsService {
     // ---------------- Filters ----------------
     const where: Prisma.JobWhereInput = {};
 
-    if (status) where.status = status;
+    if (status) {
+      where.status = status;
+    } else {
+      where.status = { not: 'SUSPENDED' };
+    }
 
     if (jobTypes?.length) where.jobType = { in: jobTypes };
     if (roles?.length) where.title = { in: roles };
@@ -74,6 +78,7 @@ export class GetAllJobsService {
     const [jobs, total] = await this.prisma.client.$transaction([
       this.prisma.client.job.findMany({
         where,
+        include: { farm: { include: { logo: true } } },
         orderBy,
         skip,
         take: limit,

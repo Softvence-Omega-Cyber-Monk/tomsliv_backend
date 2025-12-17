@@ -48,6 +48,9 @@ model NotificationSettings {
   // NORMAL USER settings
   newRelatedJobsAlert Boolean @default(true)
 
+  // SUPER ADMIN settings
+  newEmployerJoin Boolean @default(true)
+
   user User?
 
   createdAt DateTime @default(now())

@@ -321,6 +321,7 @@ export const NotificationSettingsScalarFieldEnum = {
   newApplicantAlert: 'newApplicantAlert',
   updatesAndTips: 'updatesAndTips',
   newRelatedJobsAlert: 'newRelatedJobsAlert',
+  newEmployerJoin: 'newEmployerJoin',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -359,6 +360,7 @@ export const FarmScalarFieldEnum = {
   herdSize: 'herdSize',
   farmType: 'farmType',
   logoId: 'logoId',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

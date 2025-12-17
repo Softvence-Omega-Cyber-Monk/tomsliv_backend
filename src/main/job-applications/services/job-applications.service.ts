@@ -1,3 +1,4 @@
+import { QueueEventsEnum } from '@/common/enum/queue-events.enum';
 import {
   successPaginatedResponse,
   successResponse,
@@ -7,10 +8,12 @@ import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { AuthMailService } from '@/lib/mail/services/auth-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { QueuePayload } from '@/lib/queue/interface/queue.payload';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { CreateCvBodyDto } from '@/main/cv/dto/create-cv.dto';
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { OtpType, UserRole, UserStatus } from '@prisma';
 import {
   AppliedJobSortOptionEnum,
@@ -25,7 +28,47 @@ export class JobApplicationsService {
     private readonly applicationAITrigger: ApplicationAITriggerService,
     private readonly authUtils: AuthUtilsService,
     private readonly authMail: AuthMailService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
+
+  private async notifyJobOwner(jobId: string, applicantName: string) {
+    const job = await this.prisma.client.job.findUnique({
+      where: { id: jobId },
+      select: {
+        title: true,
+        farm: {
+          select: {
+            users: {
+              select: {
+                id: true,
+                notificationSettings: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!job || !job.farm?.users) return;
+
+    const owner = job.farm.users;
+    if (owner.notificationSettings?.newApplicantAlert) {
+      const payload: QueuePayload = {
+        recipients: [{ id: owner.id }],
+        type: QueueEventsEnum.NOTIFICATION,
+        title: 'New Job Application',
+        message: `${applicantName} has applied for ${job.title}`,
+        createdAt: new Date(),
+        meta: {
+          performedBy: 'system',
+          recordType: 'JobApplication',
+          recordId: jobId,
+        },
+      };
+
+      await this.eventEmitter.emitAsync(QueueEventsEnum.NOTIFICATION, payload);
+    }
+  }
 
   @HandleError('Failed to apply (Public)', 'JobApplication')
   async applyPublic(
@@ -94,6 +137,12 @@ export class JobApplicationsService {
       );
     }
 
+    // Notify Job Owner
+    await this.notifyJobOwner(
+      jobId,
+      `${dto.coreInfo.firstName} ${dto.coreInfo.lastName}`,
+    );
+
     return successResponse(
       { userId, isNewUser },
       'Application submitted successfully',
@@ -145,6 +194,17 @@ export class JobApplicationsService {
       application.id,
       'new-application',
     );
+
+    // Get user details for notification
+    const applicant = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+      select: { name: true },
+    });
+
+    if (applicant) {
+      // Notify Job Owner
+      await this.notifyJobOwner(jobId, applicant.name);
+    }
 
     return successResponse(application, 'Applied successfully with saved CV');
   }
@@ -251,6 +311,12 @@ export class JobApplicationsService {
     await this.applicationAITrigger.triggerAIAnalysis(
       application.id,
       'new-application',
+    );
+
+    // Notify Job Owner
+    await this.notifyJobOwner(
+      jobId,
+      `${dto.coreInfo.firstName} ${dto.coreInfo.lastName}`,
     );
 
     return successResponse(application, 'Applied successfully with new CV');

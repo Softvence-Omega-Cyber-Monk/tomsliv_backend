@@ -3,6 +3,7 @@ import { BullModule } from '@nestjs/bullmq';
 import { Global, Module } from '@nestjs/common';
 import { ApplicationAIEventsService } from './events/application-ai-events.service';
 import { GenericEventsService } from './events/generic-events.service';
+import { NotificationEventsService } from './events/notification-events.service';
 import { QueueGateway } from './queue.gateway';
 import { ApplicationAITriggerService } from './trigger/application-ai-trigger.service';
 import { GenericTriggerService } from './trigger/generic-trigger.service';
@@ -26,6 +27,7 @@ import { GenericWorkerService } from './worker/generic-worker.service';
     ApplicationAITriggerService,
     ApplicationAIEventsService,
     ApplicationAIWorkerService,
+    NotificationEventsService,
   ],
   exports: [BullModule, ApplicationAITriggerService],
 })

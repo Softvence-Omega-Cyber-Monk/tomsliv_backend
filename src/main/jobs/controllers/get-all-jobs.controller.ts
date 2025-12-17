@@ -37,7 +37,7 @@ export class GetAllJobsController {
     return this.getAllJobsStatsService.getJobLocationsWithCounts(pg);
   }
 
-  @ApiOperation({ summary: 'Get job types with counts' })
+  @ApiOperation({ summary: 'Get all jobs' })
   @Get('all-jobs')
   async getAllJobs(@Query() query: GetAllJobsDto) {
     return this.getAllJobsService.getAllJobs(query);

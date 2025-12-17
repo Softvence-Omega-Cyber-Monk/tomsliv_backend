@@ -90,7 +90,8 @@ export const JobStatus = {
   DRAFT: 'DRAFT',
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',
-  CLOSED: 'CLOSED'
+  CLOSED: 'CLOSED',
+  SUSPENDED: 'SUSPENDED'
 } as const
 
 export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]
@@ -142,3 +143,12 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const FarmStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  DELETED: 'DELETED'
+} as const
+
+export type FarmStatus = (typeof FarmStatus)[keyof typeof FarmStatus]
