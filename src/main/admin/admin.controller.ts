@@ -3,6 +3,7 @@ import { ValidateAdmin } from '@/core/jwt/jwt.decorator';
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetFarmOwnerJobsDto } from '../jobs/dto/get-jobs.dto';
+import { GetAllFarmDto } from './dto/get-farm.dto';
 import { FarmOwnerService } from './services/farm-owner.service';
 import { JobsService } from './services/jobs.service';
 
@@ -43,9 +44,9 @@ export class AdminController {
     return this.jobsService.toggleSuspendJob(jobId);
   }
 
-  @ApiOperation({ summary: 'Get all farm owner jobs' })
+  @ApiOperation({ summary: 'Get all farm owner' })
   @Get('farms')
-  async getAllFarmOwner(@Query() dto: GetFarmOwnerJobsDto) {
+  async getAllFarmOwner(@Query() dto: GetAllFarmDto) {
     return this.farmOwnerService.getAllFarmOwner(dto);
   }
 

@@ -36,6 +36,10 @@ export class JobService {
       throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
     }
 
+    if (farm.status === 'INACTIVE') {
+      throw new AppError(HttpStatus.BAD_REQUEST, 'Farm is inactive');
+    }
+
     const job = await this.prisma.client.job.create({
       data: {
         ...dto,

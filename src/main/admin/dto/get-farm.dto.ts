@@ -1,8 +1,9 @@
+import { PaginationDto } from '@/common/dto/pagination.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { FarmStatus } from '@prisma';
-import { IsOptional, IsString } from 'class-validator';
+import { IsEnum, IsOptional, IsString } from 'class-validator';
 
-export class GetAllFarmDto {
+export class GetAllFarmDto extends PaginationDto {
   @ApiPropertyOptional({ example: 'Farm Manager' })
   @IsOptional()
   @IsString()
@@ -10,6 +11,6 @@ export class GetAllFarmDto {
 
   @ApiPropertyOptional({ example: FarmStatus.ACTIVE, enum: FarmStatus })
   @IsOptional()
-  @IsString()
+  @IsEnum(FarmStatus)
   status?: string;
 }
