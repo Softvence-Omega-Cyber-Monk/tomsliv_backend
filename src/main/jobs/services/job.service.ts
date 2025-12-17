@@ -193,7 +193,7 @@ export class JobService {
       throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
     }
 
-    const where: any = { farmId: farm.id };
+    const where: Prisma.JobWhereInput = { farmId: farm.id };
 
     if (dto.status) {
       where.status = dto.status;
@@ -235,6 +235,11 @@ export class JobService {
       include: {
         farm: true,
         idealCandidates: true,
+        _count: {
+          select: {
+            jobApplications: true,
+          },
+        },
       },
     });
 

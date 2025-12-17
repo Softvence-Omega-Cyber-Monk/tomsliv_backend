@@ -28,7 +28,11 @@ export class GetAllJobsService {
     // ---------------- Filters ----------------
     const where: Prisma.JobWhereInput = {};
 
-    if (status) where.status = status;
+    if (status) {
+      where.status = status;
+    } else {
+      where.status = { not: 'SUSPENDED' };
+    }
 
     if (jobTypes?.length) where.jobType = { in: jobTypes };
     if (roles?.length) where.title = { in: roles };
