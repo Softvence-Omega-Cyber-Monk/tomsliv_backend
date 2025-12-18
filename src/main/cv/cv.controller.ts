@@ -7,6 +7,7 @@ import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CompareCvDto } from './dto/compare-cv.dto';
 import { CreateCvBodyDto } from './dto/create-cv.dto';
+import { CvComparisonService } from './services/cv-compare.service';
 import { CvService } from './services/cv.service';
 
 @ApiTags('CV')
@@ -14,7 +15,10 @@ import { CvService } from './services/cv.service';
 @ValidateAuth()
 @Controller('cv')
 export class CvController {
-  constructor(private readonly cvService: CvService) {}
+  constructor(
+    private readonly cvService: CvService,
+    private readonly cvComparisonService: CvComparisonService,
+  ) {}
 
   @ApiOperation({ summary: 'Get current user saved CV' })
   @Get()
@@ -35,7 +39,6 @@ export class CvController {
   }
 
   // Farm Owner Endpoints
-
   @ApiOperation({ summary: 'Get recent CVs from applications (Farm Owner)' })
   @ValidateFarmOwner()
   @Get('farm-owner/recent')
@@ -47,7 +50,7 @@ export class CvController {
   @ValidateFarmOwner()
   @Post('farm-owner/compare')
   async compareCVs(@Body() data: CompareCvDto) {
-    return this.cvService.compareCVs(data);
+    return this.cvComparisonService.compareCVs(data);
   }
 
   @ApiOperation({ summary: 'Get details of a specific CV (Farm Owner)' })

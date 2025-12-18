@@ -5,6 +5,7 @@ export enum ENVEnum {
   PORT = 'PORT',
   BASE_URL = 'BASE_URL',
   FRONTEND_URL = 'FRONTEND_URL',
+  AI_URL = 'AI_URL',
 
   JWT_SECRET = 'JWT_SECRET',
   JWT_EXPIRES_IN = 'JWT_EXPIRES_IN',

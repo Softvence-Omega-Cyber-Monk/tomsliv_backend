@@ -13,7 +13,10 @@ export async function enqueueJobHelper(
     .createHash('sha1')
     .update(`${event}:${uniqueKey}:${Date.now()}`)
     .digest('hex');
-  logger?.log?.(`Enqueuing ${event} for jobId: ${jobId}`);
+
+  logger?.log?.(
+    `Enqueuing ${event} for application: ${uniqueKey}, jobId: ${jobId}`,
+  );
 
   try {
     await queue.add(event, payload, {
@@ -24,10 +27,12 @@ export async function enqueueJobHelper(
       jobId,
     });
 
-    logger?.log?.(`Successfully enqueued ${event} for jobId: ${jobId}`);
+    logger?.log?.(
+      `Successfully enqueued ${event} for application: ${uniqueKey}, jobId: ${jobId}`,
+    );
   } catch (error) {
     logger?.error?.(
-      `Failed to enqueue ${event} for jobId: ${jobId}, error: ${error.message}`,
+      `Failed to enqueue ${event} for application: ${uniqueKey}, jobId: ${jobId}, error: ${error.message}`,
       error.stack,
       error,
     );
