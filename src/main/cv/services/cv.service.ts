@@ -1,7 +1,6 @@
 import { successResponse, TResponse } from '@/common/utils/response.util';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
-import { S3Service } from '@/lib/file/services/s3.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
 import { HttpStatus, Injectable } from '@nestjs/common';
@@ -13,7 +12,6 @@ import { CreateCvBodyDto } from '../dto/create-cv.dto';
 export class CvService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly s3: S3Service,
     private readonly applicationAITrigger: ApplicationAITriggerService,
   ) {}
 
@@ -186,8 +184,6 @@ export class CvService {
     limit: number = 10,
   ): Promise<TResponse<any>> {
     // 1. Get the farm ID for the user
-    // Depending on schema, it seems User holds farmId, or Farm is linked to User.
-    // Based on user.prisma: user has farmId, unique.
     const user = await this.prisma.client.user.findUnique({
       where: { id: userId },
       select: { farmId: true },
