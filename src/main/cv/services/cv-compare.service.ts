@@ -10,20 +10,21 @@ import { CompareCvDto } from '../dto/compare-cv.dto';
 
 @Injectable()
 export class CvComparisonService {
-  private readonly AI_URL;
+  private readonly AI_URL: string;
   private readonly logger = new Logger(CvComparisonService.name);
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService,
   ) {
-    this.AI_URL = this.configService.getOrThrow(ENVEnum.AI_URL);
+    this.AI_URL = this.configService.getOrThrow<string>(ENVEnum.AI_URL);
   }
 
   @HandleError('Failed to compare CVs', 'CV')
   async compareCVs(dto: CompareCvDto): Promise<TResponse<any>> {
     const { cvId1, cvId2 } = dto;
 
+    // Fetch CVs
     const [cv1, cv2] = await this.prisma.client.$transaction([
       this.prisma.client.cV.findUnique({
         where: { id: cvId1 },
@@ -47,16 +48,101 @@ export class CvComparisonService {
       throw new AppError(HttpStatus.NOT_FOUND, 'One or both CVs not found');
     }
 
-    const payload = {
+    // Transform CVs for AI
+    const aiPayload = {
       cv_a: this.transformCvToAiFormat(cv1),
       cv_b: this.transformCvToAiFormat(cv2),
     };
 
-    const aiResult = await this.callAiCompareEndpoint(payload);
+    // Call AI
+    const aiResult = await this.callAiCompareEndpoint(aiPayload);
 
-    return successResponse(aiResult, 'CVs compared successfully');
+    // Generate your own comparison summary
+    const comparison = this.generateComparisonData(cv1, cv2);
+
+    // Merge AI result + your comparison
+    const result = {
+      cv1: comparison.cv1,
+      cv2: comparison.cv2,
+      aiResult,
+    };
+
+    return successResponse(result, 'CVs compared successfully');
   }
 
+  // ---------------- Helpers ----------------
+
+  /** Flatten and generate comparative strengths */
+  private generateComparisonData(cvA: any, cvB: any) {
+    const processedCvA = this.processCvProfile(cvA);
+    const processedCvB = this.processCvProfile(cvB);
+
+    // Extract strengths
+    const strengthsA = this.extractStrengths(cvA);
+    const strengthsB = this.extractStrengths(cvB);
+
+    // Unique skills
+    const uniqueSkillsA = this.extractUniqueSkills(cvA);
+    const uniqueSkillsB = this.extractUniqueSkills(cvB);
+
+    // Simple comparative fit score based on experience count
+    const fitComparisonScore =
+      (cvA.experiences.length /
+        (cvA.experiences.length + cvB.experiences.length)) *
+      100;
+
+    return {
+      cv1: {
+        ...processedCvA,
+        strengths: strengthsA,
+        uniqueSkills: uniqueSkillsA,
+      },
+      cv2: {
+        ...processedCvB,
+        strengths: strengthsB,
+        uniqueSkills: uniqueSkillsB,
+      },
+      fitComparisonScore: Math.round(fitComparisonScore),
+    };
+  }
+
+  private extractStrengths(cv: any): string[] {
+    const strengths: string[] = [];
+
+    if (cv.experiences.length) {
+      strengths.push(`${cv.experiences.length} years of experience`);
+    }
+
+    if (cv.educations.length) {
+      strengths.push(`${cv.educations.length} education qualifications`);
+    }
+
+    if (cv.summary) {
+      strengths.push(cv.summary);
+    }
+
+    return strengths;
+  }
+
+  private extractUniqueSkills(cv: any): string[] {
+    const skills = this.extractSkills(cv);
+    return Array.from(new Set(skills));
+  }
+
+  /** Flatten CV user data */
+  private processCvProfile(cv: any) {
+    const user = cv.user;
+    const flatUser = {
+      name: user?.name,
+      email: user?.email,
+      profileUrl: user?.profilePicture?.url || null,
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { user: _, ...rest } = cv;
+    return { ...rest, user: flatUser };
+  }
+
+  /** Convert CV to AI schema */
   private transformCvToAiFormat(cv: any) {
     return {
       name: `${cv.firstName} ${cv.lastName}`,
@@ -80,6 +166,7 @@ export class CvComparisonService {
       cv.summary,
       ...cv.experiences.map((e: any) => e.summary),
     ].filter((s): s is string => typeof s === 'string');
+
     return [
       ...new Set(
         sources
@@ -116,7 +203,7 @@ export class CvComparisonService {
     try {
       const { data } = await axios.post(`${this.AI_URL}/compare-cvs`, payload, {
         headers: { 'Content-Type': 'application/json' },
-        timeout: 30_000, // 30 seconds
+        timeout: 30_000,
       });
       return data;
     } catch (err: unknown) {
