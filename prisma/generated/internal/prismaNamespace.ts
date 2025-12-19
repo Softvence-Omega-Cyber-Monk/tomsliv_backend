@@ -2138,6 +2138,7 @@ export const JobScalarFieldEnum = {
   percentageOfMilkCheque: 'percentageOfMilkCheque',
   farmId: 'farmId',
   status: 'status',
+  viewCount: 'viewCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
