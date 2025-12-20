@@ -1,10 +1,11 @@
 import { PaginationDto } from '@/common/dto/pagination.dto';
 import { ValidateAdmin } from '@/core/jwt/jwt.decorator';
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetFarmOwnerJobsDto } from '../jobs/dto/get-jobs.dto';
 import { GetAllFarmDto, GetJobSeekersDto } from './dto/get-farm.dto';
 import { AdminStatsService } from './services/admin-stats.service';
+import { AdminSubscriptionService } from './services/admin-subscription.service';
 import { FarmOwnerService } from './services/farm-owner.service';
 import { JobsService } from './services/jobs.service';
 import { UserService } from './services/user.service';
@@ -19,6 +20,7 @@ export class AdminController {
     private readonly farmOwnerService: FarmOwnerService,
     private readonly userService: UserService,
     private readonly adminStatsService: AdminStatsService,
+    private readonly adminPaymentService: AdminSubscriptionService,
   ) {}
 
   @ApiOperation({ summary: 'Get system admin statistics' })
@@ -55,7 +57,7 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Toggle job status' })
-  @Get('jobs/:jobId/status')
+  @Patch('jobs/:jobId/status')
   async toggleSuspendJob(@Param('jobId') jobId: string) {
     return this.jobsService.toggleSuspendJob(jobId);
   }
@@ -94,5 +96,29 @@ export class AdminController {
   @Post('job-seekers/:userId/status')
   async toggleSuspension(@Param('userId') userId: string) {
     return this.userService.toggleSuspension(userId);
+  }
+
+  @ApiOperation({ summary: 'Get all payment history' })
+  @Get('subscriptions/payment-history')
+  async getPaymentHistory(@Query() dto: PaginationDto) {
+    return this.adminPaymentService.getPaymentHistory(dto);
+  }
+
+  @ApiOperation({ summary: 'Get all subscriptions stats' })
+  @Get('subscriptions/stats')
+  async getStats() {
+    return this.adminPaymentService.getStats();
+  }
+
+  @ApiOperation({ summary: 'Get last 7 days revenue' })
+  @Get('subscriptions/revenue')
+  async getRevenueLast7Days() {
+    return this.adminPaymentService.getRevenueLast7Days();
+  }
+
+  @ApiOperation({ summary: 'Get last 6 months revenue' })
+  @Get('subscriptions/revenue/last-6-months')
+  async getRevenueLast6Months() {
+    return this.adminPaymentService.getRevenueLast6Months();
   }
 }

@@ -1,5 +1,4 @@
 import { successResponse, TResponse } from '@/common/utils/response.util';
-import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { StripeService } from '@/lib/stripe/stripe.service';
@@ -26,36 +25,54 @@ export class CancelSubscriptionService {
       orderBy: [{ updatedAt: 'desc' }],
     });
 
-    if (!subscription || !subscription.stripeSubscriptionId) {
-      throw new AppError(400, 'No active subscription found');
+    if (!subscription) {
+      this.logger.warn(`No active subscription found for user ${userId}`);
+      // Even if no subscription exists, ensure user subscriptionStatus is updated
+      await this.prisma.client.user.update({
+        where: { id: userId },
+        data: { subscriptionStatus: 'CANCELED' },
+      });
+      return successResponse(
+        null,
+        'Subscription cancelled successfully (no active subscription)',
+      );
     }
 
-    // Cancel immediately on Stripe
-    await this.stripe.cancelSubscription({
-      subscriptionId: subscription.stripeSubscriptionId,
-      atPeriodEnd: false,
+    // Cancel on Stripe if subscription exists
+    if (subscription.stripeSubscriptionId) {
+      try {
+        await this.stripe.cancelSubscription({
+          subscriptionId: subscription.stripeSubscriptionId,
+          atPeriodEnd: false,
+        });
+        this.logger.log(
+          `Stripe subscription ${subscription.stripeSubscriptionId} cancelled for user ${userId}`,
+        );
+      } catch (err) {
+        this.logger.error(
+          `Failed to cancel Stripe subscription: ${err.message}`,
+        );
+      }
+    }
+
+    // Update subscription and user records in DB
+    await this.prisma.client.userSubscription.update({
+      where: { id: subscription.id },
+      data: {
+        status: 'CANCELED',
+        endedAt: new Date(),
+      },
     });
 
-    // Sync DB
-    await this.prisma.client.$transaction([
-      this.prisma.client.userSubscription.update({
-        where: { id: subscription.id },
-        data: {
-          status: 'CANCELED',
-          endedAt: new Date(),
-        },
-      }),
-
-      this.prisma.client.user.update({
-        where: { id: userId },
-        data: {
-          subscriptionStatus: 'CANCELED',
-        },
-      }),
-    ]);
+    await this.prisma.client.user.update({
+      where: { id: userId },
+      data: {
+        subscriptionStatus: 'CANCELED',
+      },
+    });
 
     this.logger.log(
-      `Subscription ${subscription.stripeSubscriptionId} cancelled immediately for user ${userId}`,
+      `Subscription ${subscription.stripeSubscriptionId ?? subscription.id} cancelled immediately for user ${userId}`,
     );
 
     return successResponse(null, 'Subscription cancelled successfully');

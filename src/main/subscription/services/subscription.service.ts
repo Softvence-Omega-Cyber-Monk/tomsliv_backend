@@ -36,14 +36,14 @@ export class SubscriptionService {
     const subscription = await this.prisma.client.userSubscription.findFirst({
       where: {
         userId,
-        status: { in: ['ACTIVE', 'PENDING'] },
+        status: { in: ['ACTIVE', 'PENDING', 'CANCELED'] },
       },
       orderBy: [{ updatedAt: 'desc' }],
       include: { plan: true },
     });
 
-    // No subscription
-    if (!subscription) {
+    // No subscription or canceled subscription
+    if (!subscription || subscription.status === 'CANCELED') {
       return successResponse(
         {
           status: 'NONE',
@@ -61,9 +61,14 @@ export class SubscriptionService {
     }
 
     const now = DateTime.now();
-    const start = DateTime.fromJSDate(subscription.startedAt);
-    const end = DateTime.fromJSDate(subscription.endedAt);
-    const isExpired = end <= now;
+    const start = subscription.startedAt
+      ? DateTime.fromJSDate(subscription.startedAt)
+      : null;
+    const end = subscription.endedAt
+      ? DateTime.fromJSDate(subscription.endedAt)
+      : null;
+
+    const isExpired = end ? end <= now : false;
 
     let status: 'ACTIVE' | 'PENDING' | 'EXPIRED';
 
@@ -81,24 +86,26 @@ export class SubscriptionService {
       {
         status,
         canSubscribe,
-        plan: {
-          title: subscription.plan.title,
-          price: Math.round(subscription.plan.priceCents / 100),
-          currency: subscription.plan.currency,
-        },
+        plan: subscription.plan
+          ? {
+              title: subscription.plan.title,
+              price: Math.round(subscription.plan.priceCents / 100),
+              currency: subscription.plan.currency,
+            }
+          : null,
         period: {
-          startedAt: start.toISODate(),
-          endedAt: end.toISODate(),
-          remainingDays: Math.max(Math.ceil(end.diff(now, 'days').days), 0),
+          startedAt: start?.toISODate() || null,
+          endedAt: end?.toISODate() || null,
+          remainingDays: end
+            ? Math.max(Math.ceil(end.diff(now, 'days').days), 0)
+            : null,
         },
         message:
           status === 'ACTIVE'
-            ? `Your ${subscription.plan.title} is active until ${end.toFormat(
-                'DDD',
-              )}.`
+            ? `Your ${subscription.plan?.title} is active until ${end?.toFormat('DDD')}.`
             : status === 'PENDING'
               ? 'Your subscription payment is pending.'
-              : `Your subscription expired on ${end.toFormat('DDD')}.`,
+              : `Your subscription expired on ${end?.toFormat('DDD')}.`,
       },
       'Subscription status fetched',
     );
