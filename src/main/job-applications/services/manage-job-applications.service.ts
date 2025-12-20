@@ -28,6 +28,9 @@ export class ManageJobApplicationsService {
           cv: {
             include: {
               customCV: true,
+              educations: true,
+              experiences: true,
+              jobApplications: true,
             },
           },
           user: {
