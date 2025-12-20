@@ -48,10 +48,10 @@ export class AdminController {
   }
 
   @ApiOperation({ summary: 'Get job applications' })
-  @Post('jobs/:jobId/applications')
+  @Get('jobs/:jobId/applications')
   async getAdminJobApplications(
     @Param('jobId') jobId: string,
-    dt: PaginationDto,
+    @Query() dt: PaginationDto,
   ) {
     return this.jobsService.getAdminJobApplications(jobId, dt);
   }
@@ -82,7 +82,7 @@ export class AdminController {
 
   @ApiOperation({ summary: 'Get all job seekers' })
   @Get('job-seekers')
-  async getAllJobSeekers(dto: GetJobSeekersDto) {
+  async getAllJobSeekers(@Query() dto: GetJobSeekersDto) {
     return this.userService.getAllUsers(dto);
   }
 
