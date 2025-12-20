@@ -62,15 +62,12 @@ export class AdminSubscriptionService {
   @HandleError('Error getting revenue last 7 days')
   async getRevenueLast7Days() {
     const today = DateTime.now().startOf('day');
-    const dates = Array.from({ length: 7 }).map((_, i) =>
-      today.minus({ days: i }),
-    );
+    const revenueData: { label: string; value: number; date: string }[] = [];
 
-    const revenueData = [];
-
-    for (const date of dates.reverse()) {
-      const start = date.startOf('day').toJSDate();
-      const end = date.endOf('day').toJSDate();
+    for (let i = 6; i >= 0; i--) {
+      const day = today.minus({ days: i });
+      const start = day.startOf('day').toJSDate();
+      const end = day.endOf('day').toJSDate();
 
       const sumResult = await this.prisma.client.invoice.aggregate({
         _sum: { amount: true },
@@ -78,24 +75,22 @@ export class AdminSubscriptionService {
       });
 
       revenueData.push({
-        date: date.toISODate(),
-        revenue: sumResult._sum.amount ?? 0,
+        label: day.toFormat('ccc dd'), // e.g., "Mon 15"
+        value: sumResult._sum.amount ?? 0,
+        date: day.toISODate(),
       });
     }
 
-    return successResponse(revenueData, 'Revenue data fetched successfully');
+    return successResponse(revenueData, 'Revenue last 7 days fetched');
   }
 
   @HandleError('Error getting revenue last 6 months')
   async getRevenueLast6Months() {
     const now = DateTime.now();
-    const months = Array.from({ length: 6 }).map((_, i) =>
-      now.minus({ months: i }),
-    );
+    const revenueData: { label: string; value: number; month: string }[] = [];
 
-    const revenueData = [];
-
-    for (const month of months.reverse()) {
+    for (let i = 5; i >= 0; i--) {
+      const month = now.minus({ months: i });
       const start = month.startOf('month').toJSDate();
       const end = month.endOf('month').toJSDate();
 
@@ -105,12 +100,13 @@ export class AdminSubscriptionService {
       });
 
       revenueData.push({
-        month: month.toFormat('LLLL yyyy'), // e.g., "December 2025"
-        revenue: sumResult._sum.amount ?? 0,
+        label: month.toFormat('LLL yyyy'), // e.g., "Dec 2025"
+        value: sumResult._sum.amount ?? 0,
+        month: month.toISODate(),
       });
     }
 
-    return successResponse(revenueData, 'Revenue data fetched successfully');
+    return successResponse(revenueData, 'Revenue last 6 months fetched');
   }
 
   @HandleError('Error getting payment history')
