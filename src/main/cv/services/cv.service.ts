@@ -189,50 +189,51 @@ export class CvService {
       select: { farmId: true },
     });
 
-    if (!user || !user.farmId) {
+    if (!user?.farmId) {
       return successResponse([], 'No farm found for this user');
     }
 
-    // 2. Find latest applications to jobs of this farm
-    const applications = await this.prisma.client.jobApplication.findMany({
-      where: {
-        job: {
-          farmId: user.farmId,
-        },
-      },
-      orderBy: { appliedAt: 'desc' },
-      take: limit,
-      include: {
-        cv: {
-          include: {
-            experiences: true,
-            educations: true,
-            customCV: true,
-          },
-        },
-        job: {
-          select: { title: true, id: true },
-        },
-        user: {
-          select: {
-            email: true,
-            name: true,
-            profilePicture: true,
-          },
-        },
-      },
-    });
+    const uniqueCVs = new Map<string, any>();
+    let skip = 0;
+    const batchSize = limit * 3; // fetch more per batch to avoid duplicates
 
-    // Extract CVs with application context
-    const recentCVs = applications.map((app) => ({
-      ...app.cv,
-      appliedJob: app.job,
-      applicant: app.user,
-      appliedAt: app.appliedAt,
-      applicationId: app.id,
-    }));
+    while (uniqueCVs.size < limit) {
+      const applications = await this.prisma.client.jobApplication.findMany({
+        where: { job: { farmId: user.farmId } },
+        orderBy: { appliedAt: 'desc' },
+        skip,
+        take: batchSize,
+        include: {
+          cv: {
+            include: { experiences: true, educations: true, customCV: true },
+          },
+          job: { select: { title: true, id: true } },
+          user: { select: { email: true, name: true, profilePicture: true } },
+        },
+      });
 
-    return successResponse(recentCVs, 'Recent CVs fetched successfully');
+      if (!applications.length) break; // no more applications
+
+      for (const app of applications) {
+        if (!uniqueCVs.has(app.cv.id)) {
+          uniqueCVs.set(app.cv.id, {
+            ...app.cv,
+            appliedJob: app.job,
+            applicant: app.user,
+            appliedAt: app.appliedAt,
+            applicationId: app.id,
+          });
+        }
+        if (uniqueCVs.size === limit) break; // stop if limit reached
+      }
+
+      skip += batchSize;
+    }
+
+    return successResponse(
+      Array.from(uniqueCVs.values()),
+      'Recent CVs fetched successfully',
+    );
   }
 
   @HandleError('Failed to get CV', 'CV')
