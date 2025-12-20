@@ -4,6 +4,7 @@ import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetFarmOwnerJobsDto } from '../jobs/dto/get-jobs.dto';
 import { GetAllFarmDto, GetJobSeekersDto } from './dto/get-farm.dto';
+import { AdminStatsService } from './services/admin-stats.service';
 import { FarmOwnerService } from './services/farm-owner.service';
 import { JobsService } from './services/jobs.service';
 import { UserService } from './services/user.service';
@@ -17,7 +18,20 @@ export class AdminController {
     private readonly jobsService: JobsService,
     private readonly farmOwnerService: FarmOwnerService,
     private readonly userService: UserService,
+    private readonly adminStatsService: AdminStatsService,
   ) {}
+
+  @ApiOperation({ summary: 'Get system admin statistics' })
+  @Get('stats')
+  async getAdminStats() {
+    return this.adminStatsService.getAdminStats();
+  }
+
+  @ApiOperation({ summary: 'Get user analytics graph data' })
+  @Get('analytics/users')
+  async getUserAnalyticsGraph() {
+    return this.adminStatsService.getUserAnalyticsGraph();
+  }
 
   @ApiOperation({ summary: 'Get all jobs' })
   @Get('jobs')

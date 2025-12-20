@@ -19,6 +19,7 @@ import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
 import { UpsertIdealCandidateDto } from '../dto/ideal-candidate.dto';
 import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
 import { UpdateJobDto } from '../dto/update-job.dto';
+import { FarmOwnerStatsService } from '../services/farm-owner-stats.service';
 import { IdealCandidateService } from '../services/ideal-candidate.service';
 import { JobService } from '../services/job.service';
 
@@ -30,6 +31,7 @@ export class JobsController {
   constructor(
     private readonly jobService: JobService,
     private readonly idealCandidateService: IdealCandidateService,
+    private readonly farmOwnerStatsService: FarmOwnerStatsService,
   ) {}
 
   @ApiOperation({ summary: 'Create a new job by farm owner' })
@@ -56,6 +58,12 @@ export class JobsController {
     @Query() dto: ManageJobStatusDto,
   ) {
     return this.jobService.manageStatus(userId, jobId, dto);
+  }
+
+  @ApiOperation({ summary: 'Get farm owner statistics (Farm Owner)' })
+  @Get('stats/farm-owner')
+  async getFarmOwnerStats(@GetUser('sub') userId: string) {
+    return this.farmOwnerStatsService.getFarmOwnerStats(userId);
   }
 
   @ApiOperation({ summary: 'Get farm owner jobs by farm owner' })

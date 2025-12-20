@@ -265,11 +265,58 @@ export class JobService {
         skip,
         take: limit,
         orderBy: { createdAt: 'desc' },
+        include: {
+          _count: {
+            select: {
+              jobApplications: true,
+            },
+          },
+          jobApplications: {
+            select: {
+              status: true,
+              applicationAIResults: {
+                select: {
+                  jobFitScore: true,
+                },
+              },
+            },
+          },
+        },
       }),
     ]);
 
+    const jobsWithStats = jobs.map((job) => {
+      const applicants = job._count.jobApplications;
+      const shortlisted = job.jobApplications.filter(
+        (app) => app.status === 'SHORTLISTED',
+      ).length;
+
+      const scores = job.jobApplications
+        .map((app) => app.applicationAIResults?.jobFitScore)
+        .filter(
+          (score): score is number => score !== undefined && score !== null,
+        );
+
+      const averageScore =
+        scores.length > 0
+          ? scores.reduce((a, b) => a + b, 0) / scores.length
+          : 0;
+
+      // Remove jobApplications from the response object to keep it clean
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { jobApplications, ...jobData } = job;
+
+      return {
+        ...jobData,
+        views: job.viewCount,
+        applicants,
+        shortlisted,
+        averageScore: parseFloat(averageScore.toFixed(2)),
+      };
+    });
+
     return successPaginatedResponse(
-      jobs,
+      jobsWithStats,
       {
         page,
         limit,
@@ -281,11 +328,26 @@ export class JobService {
 
   @HandleError('Failed to get job details', 'Job')
   async getSingleJob(jobId: string): Promise<TResponse<any>> {
-    const job = await this.prisma.client.job.findUniqueOrThrow({
+    const job = await this.prisma.client.job.update({
       where: { id: jobId },
+      data: {
+        viewCount: {
+          increment: 1,
+        },
+      },
       include: {
         farm: true,
         idealCandidates: true,
+        jobApplications: {
+          select: {
+            status: true,
+            applicationAIResults: {
+              select: {
+                jobFitScore: true,
+              },
+            },
+          },
+        },
         _count: {
           select: {
             jobApplications: true,
@@ -294,6 +356,35 @@ export class JobService {
       },
     });
 
-    return successResponse(job, 'Job details fetched successfully');
+    const applicants = job._count.jobApplications;
+    const shortlisted = job.jobApplications.filter(
+      (app) => app.status === 'SHORTLISTED',
+    ).length;
+
+    const scores = job.jobApplications
+      .map((app) => app.applicationAIResults?.jobFitScore)
+      .filter(
+        (score): score is number => score !== undefined && score !== null,
+      );
+
+    const averageScore =
+      scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0;
+
+    // Remove jobApplications from the response object to keep it clean
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { jobApplications, ...jobData } = job;
+
+    const jobWithStats = {
+      ...jobData,
+      views: job.viewCount,
+      applicants,
+      shortlisted,
+      averageScore: parseFloat(averageScore.toFixed(2)),
+    };
+
+    return successResponse(
+      jobWithStats,
+      'Job details fetched successfully with stats',
+    );
   }
 }
