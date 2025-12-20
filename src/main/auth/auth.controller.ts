@@ -10,6 +10,7 @@ import { MulterService } from '@/lib/file/services/multer.service';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -245,5 +246,13 @@ export class AuthController {
   @ValidateAuth()
   async markAsRead(@GetUser('sub') userId: string, @Param('id') id: string) {
     return this.authNotificationService.markAsRead(userId, id);
+  }
+
+  @Delete('self/delete')
+  @ApiOperation({ summary: 'Delete self account' })
+  @ApiBearerAuth()
+  @ValidateAuth()
+  async deleteNotification(@GetUser('sub') userId: string) {
+    return this.authUpdateProfileService.deleteSelfAccount(userId);
   }
 }

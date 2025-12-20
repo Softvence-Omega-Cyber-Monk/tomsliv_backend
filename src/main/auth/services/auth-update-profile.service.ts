@@ -124,4 +124,14 @@ export class AuthUpdateProfileService {
 
     return successResponse(updatedFarm, 'Farm updated successfully');
   }
+
+  @HandleError('Failed to delete account', 'User')
+  async deleteSelfAccount(userId: string) {
+    await this.prisma.client.user.findFirstOrThrow({
+      where: { id: userId },
+    });
+
+    await this.prisma.client.user.delete({ where: { id: userId } });
+    return successResponse(null, 'Account deleted successfully');
+  }
 }
