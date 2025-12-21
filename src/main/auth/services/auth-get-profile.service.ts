@@ -34,6 +34,7 @@ export class AuthGetProfileService {
           },
         },
         notificationSettings: true,
+        profilePicture: true,
       },
     });
 
