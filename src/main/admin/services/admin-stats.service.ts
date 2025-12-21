@@ -91,7 +91,7 @@ export class AdminStatsService {
     const users = await this.prisma.client.user.findMany({
       where: {
         createdAt: { gte: thirtyDaysAgo.toJSDate() },
-        role: UserRole.USER,
+        role: { in: [UserRole.USER, UserRole.FARM_OWNER] },
       },
       select: { createdAt: true },
     });
