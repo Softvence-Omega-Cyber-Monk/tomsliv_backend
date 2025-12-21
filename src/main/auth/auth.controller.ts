@@ -199,12 +199,7 @@ export class AuthController {
   @Patch('farm')
   @ValidateFarmOwner()
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(
-    FileInterceptor(
-      'image',
-      new MulterService().createMulterOptions('./temp', 'temp', FileType.image),
-    ),
-  )
+  @UseInterceptors(FileInterceptor('image'))
   async updateFarm(
     @GetUser('sub') userId: string,
     @Body() dto: UpdateFarmDto,

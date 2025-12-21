@@ -112,38 +112,49 @@ export class JobsService {
             },
           },
         },
-        _count: {
-          select: {
-            jobApplications: true,
-          },
-        },
+        _count: { select: { jobApplications: true } },
         jobApplications: {
           orderBy: { appliedAt: 'desc' },
-          take: 5,
           include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-              },
-            },
+            user: { select: { id: true, name: true, email: true } },
+            applicationAIResults: { select: { jobFitScore: true } },
           },
         },
       },
     });
+
+    const employer = job.farm?.users ?? null;
+
+    const applicants = job._count.jobApplications;
+    const shortlisted = job.jobApplications.filter(
+      (app) => app.status === 'SHORTLISTED',
+    ).length;
+
+    const scores = job.jobApplications
+      .map((app) => app.applicationAIResults?.jobFitScore)
+      .filter((score): score is number => score != null);
+
+    const averageScore = scores.length
+      ? scores.reduce((a, b) => a + b, 0) / scores.length
+      : 0;
 
     return successResponse(
       {
         ...job,
 
         farmName: job.farm?.name ?? null,
-        employerName: job.farm?.users?.name ?? null,
-        employerEmail: job.farm?.users?.email ?? null,
+        employerId: employer?.id ?? null,
+        employerName: employer?.name ?? null,
+        employerEmail: employer?.email ?? null,
 
-        totalApplications: job._count.jobApplications,
+        // Farm-owner style stats
+        views: job.viewCount,
+        applicants,
+        shortlisted,
+        averageScore: parseFloat(averageScore.toFixed(2)),
 
-        lastApplications: job.jobApplications.map((app) => ({
+        // Last 5 applications
+        lastApplications: job.jobApplications.slice(0, 5).map((app) => ({
           applicationId: app.id,
           applicantId: app.user.id,
           applicantName: app.user.name,
