@@ -87,18 +87,25 @@ export class AdminStatsService {
   @HandleError('Failed to get user analytics graph', 'AdminStats')
   async getUserAnalyticsGraph(): Promise<TResponse<any>> {
     const thirtyDaysAgo = DateTime.now().minus({ days: 30 }).startOf('day');
+    const twoDaysFuture = DateTime.now().plus({ days: 2 }).endOf('day');
 
     const users = await this.prisma.client.user.findMany({
       where: {
-        createdAt: { gte: thirtyDaysAgo.toJSDate() },
+        createdAt: {
+          gte: thirtyDaysAgo.toJSDate(),
+          lte: twoDaysFuture.toJSDate(), // include 2 future days
+        },
         role: { in: [UserRole.USER, UserRole.FARM_OWNER] },
       },
       select: { createdAt: true },
     });
 
-    // Group by day
-    const graphData = Array.from({ length: 30 }).map((_, i) => {
+    // Create a window: last 30 days + 2 future days
+    const totalDays = 30 + 2;
+
+    const graphData = Array.from({ length: totalDays }).map((_, i) => {
       const date = thirtyDaysAgo.plus({ days: i });
+
       const count = users.filter((u) => {
         const userDate = DateTime.fromJSDate(u.createdAt);
         return userDate.hasSame(date, 'day');
