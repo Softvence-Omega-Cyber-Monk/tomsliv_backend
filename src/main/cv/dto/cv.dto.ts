@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { JobType, WorkPermitType } from '@prisma';
+import { Transform } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -34,6 +35,7 @@ export class ExperienceDto {
 
   @ApiPropertyOptional({ example: '2023-09-30T00:00:00.000Z' })
   @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsISO8601()
   endDate?: string;
 
@@ -58,6 +60,7 @@ export class EducationDto {
 
   @ApiPropertyOptional({ example: '2020-12-15T00:00:00.000Z' })
   @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsISO8601()
   endDate?: string;
 
