@@ -74,21 +74,55 @@ export class FarmOwnerService {
     const farm = await this.prisma.client.farm.findUniqueOrThrow({
       where: { id },
       include: {
-        users: {
-          select: { name: true, email: true },
-        },
+        users: { select: { id: true, name: true, email: true } },
         jobs: {
           orderBy: { createdAt: 'desc' },
-          take: 25, // recent jobs
+          take: 25,
+          include: {
+            _count: { select: { jobApplications: true } },
+            jobApplications: {
+              select: {
+                status: true,
+                applicationAIResults: { select: { jobFitScore: true } },
+              },
+            },
+          },
         },
-        _count: {
-          select: { jobs: true },
-        },
+        _count: { select: { jobs: true } },
       },
     });
 
     const recentActiveJobs = farm.jobs.filter((j) => j.status === 'ACTIVE');
     const recentPreviousJobs = farm.jobs.filter((j) => j.status !== 'ACTIVE');
+
+    const mapJobStats = (jobs: typeof farm.jobs) =>
+      jobs.map((job) => {
+        const applicants = job._count.jobApplications;
+        const shortlisted = job.jobApplications.filter(
+          (app) => app.status === 'SHORTLISTED',
+        ).length;
+
+        const scores = job.jobApplications
+          .map((app) => app.applicationAIResults?.jobFitScore)
+          .filter((score): score is number => score != null);
+
+        const averageScore = scores.length
+          ? scores.reduce((a, b) => a + b, 0) / scores.length
+          : 0;
+
+        return {
+          id: job.id,
+          title: job.title,
+          status: job.status,
+          createdAt: job.createdAt,
+          views: job.viewCount,
+          applicants,
+          shortlisted,
+          averageScore: parseFloat(averageScore.toFixed(2)),
+        };
+      });
+
+    const employer = farm.users ?? null;
 
     return successResponse(
       {
@@ -96,23 +130,14 @@ export class FarmOwnerService {
         farmName: farm.name,
         farmLogo: farm.logoId ?? null,
         location: farm.location ?? null,
-        employeeName: farm.users?.name ?? null,
-        employeeEmail: farm.users?.email ?? null,
+        employeeId: employer?.id ?? null,
+        employeeName: employer?.name ?? null,
+        employeeEmail: employer?.email ?? null,
         totalJobs: farm._count.jobs,
         status: farm.status,
         totalActiveJobs: recentActiveJobs.length,
-        recentActiveJobs: recentActiveJobs.map((j) => ({
-          id: j.id,
-          title: j.title,
-          status: j.status,
-          createdAt: j.createdAt,
-        })),
-        recentPreviousJobs: recentPreviousJobs.map((j) => ({
-          id: j.id,
-          title: j.title,
-          status: j.status,
-          createdAt: j.createdAt,
-        })),
+        recentActiveJobs: mapJobStats(recentActiveJobs),
+        recentPreviousJobs: mapJobStats(recentPreviousJobs),
         createdAt: farm.createdAt,
         updatedAt: farm.updatedAt,
       },
