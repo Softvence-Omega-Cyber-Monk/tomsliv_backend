@@ -34,7 +34,7 @@ farmlink.nz {
   encode gzip
 }
 
-http://3.25.5.161 {
+http://16.176.48.236 {
   root * /var/www/html/dist
   try_files {path} /index.html
   file_server
