@@ -17,6 +17,7 @@ import { NotificationPayload } from './interface/queue.payload';
       'http://localhost:5173',
       'http://localhost:5174',
       'https://farmlink02.netlify.app',
+      'http://54.206.137.144:4173',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],

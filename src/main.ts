@@ -22,6 +22,7 @@ async function bootstrap() {
       'http://localhost:5173',
       'http://localhost:5174',
       'https://farmlink02.netlify.app',
+      'http://54.206.137.144:4173',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
