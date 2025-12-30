@@ -80,7 +80,8 @@ export const JobType = {
   CONTRACT: 'CONTRACT',
   SEASONAL: 'SEASONAL',
   TEMPORARY: 'TEMPORARY',
-  INTERN: 'INTERN'
+  INTERN: 'INTERN',
+  CASUAL: 'CASUAL'
 } as const
 
 export type JobType = (typeof JobType)[keyof typeof JobType]

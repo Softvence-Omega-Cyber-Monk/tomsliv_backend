@@ -19,7 +19,7 @@ model Job {
   applicationDeadline DateTime
   positionStartDate   DateTime
 
-  hourType     HourType
+  // hourType     HourType?
   hoursPerWeek Float
 
   roster             String
@@ -62,6 +62,7 @@ enum JobType {
   SEASONAL
   TEMPORARY
   INTERN
+  CASUAL
 }
 
 enum JobStatus {

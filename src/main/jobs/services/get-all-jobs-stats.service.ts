@@ -25,7 +25,16 @@ export class GetAllJobsStatsService {
       counts.map((c) => [c.jobType, c._count.jobType]),
     );
 
-    const jobTypes = Object.values(JobType).map((t) => {
+    // ONLY the required job types
+    const orderedTypes = [
+      JobType.FULL_TIME,
+      JobType.PART_TIME,
+      JobType.SEASONAL,
+      JobType.CONTRACT,
+      JobType.CASUAL,
+    ];
+
+    const jobTypes = orderedTypes.map((t) => {
       const count = map[t] ?? 0;
       return {
         type: t,
@@ -109,44 +118,72 @@ export class GetAllJobsStatsService {
 
   // ---------------- Locations ----------------
   @HandleError('Failed to get job locations with counts', 'Jobs')
-  async getJobLocationsWithCounts(pg: PaginationDto): Promise<TResponse<any>> {
+  async getJobRegionsWithCounts(pg: PaginationDto): Promise<TResponse<any>> {
     const page = pg.page && pg.page > 0 ? pg.page : 1;
-    const limit = pg.limit && pg.limit > 0 ? pg.limit : 10;
+    const limit = pg.limit && pg.limit > 0 ? pg.limit : 20;
     const skip = (page - 1) * limit;
 
-    const counts = await this.prisma.client.job.groupBy({
+    const regionCounts = await this.prisma.client.job.groupBy({
       by: ['location'],
       _count: { location: true },
     });
 
-    const locations = counts.map((c) => ({
-      location: c.location,
-      count: c._count.location,
-      label: `${c.location} (${c._count.location})`,
+    // Normalize NZ regions
+    const regionLookup = this.nzRegions.reduce(
+      (acc, region) => {
+        acc[region.toLowerCase()] = region;
+        return acc;
+      },
+      {} as Record<string, string>,
+    );
+
+    // Build aggregated counts
+    const countMap: Record<string, number> = {};
+
+    for (const item of regionCounts) {
+      if (!item.location) continue;
+
+      const regionLower = item.location.toLowerCase();
+
+      // PARTIAL + CASE-INSENSITIVE MATCH
+      const matched = Object.keys(regionLookup).find((nzRegionLower) =>
+        regionLower.includes(nzRegionLower),
+      );
+
+      if (matched) {
+        const correctName = regionLookup[matched];
+        countMap[correctName] =
+          (countMap[correctName] ?? 0) + item._count.location;
+      }
+    }
+
+    // Final region list
+    const regionList = this.nzRegions.map((region) => ({
+      region,
+      count: countMap[region] ?? 0,
+      label: `${region} (${countMap[region] ?? 0})`,
     }));
 
-    const paginatedLocations = locations.slice(skip, skip + limit);
+    const paginated = regionList.slice(skip, skip + limit);
 
     return successPaginatedResponse(
-      paginatedLocations,
+      paginated,
       {
         page,
         limit,
-        total: locations.length,
+        total: regionList.length,
       },
-      'Fetched job locations with counts successfully',
+      'Fetched job regions with counts successfully',
     );
   }
 
   // ---------------- Helpers ----------------
-  private readonly jobTypeLabels: Record<JobType, string> = {
-    FIXED_TERM: 'Fixed Term',
+  private readonly jobTypeLabels: Partial<Record<JobType, string>> = {
     FULL_TIME: 'Full Time',
     PART_TIME: 'Part Time',
-    CONTRACT: 'Contract',
     SEASONAL: 'Seasonal',
-    TEMPORARY: 'Temporary',
-    INTERN: 'Intern',
+    CONTRACT: 'Contract',
+    CASUAL: 'Casual',
   };
 
   private readonly remunerationBuckets: { min: number; max: number }[] = [
@@ -164,4 +201,23 @@ export class GetAllJobsStatsService {
   private readonly formatRemuneration = (value: number): string => {
     return `${Math.floor(value / 1000)}K`;
   };
+
+  private readonly nzRegions: string[] = [
+    'Northland',
+    'Auckland',
+    'Waikato',
+    'Bay of Plenty',
+    'Gisborne',
+    'Hawke’s Bay',
+    'Taranaki',
+    'Manawatū-Whanganui',
+    'Wellington',
+    'Tasman',
+    'Nelson',
+    'Marlborough',
+    'West Coast',
+    'Canterbury',
+    'Otago',
+    'Southland',
+  ];
 }

@@ -71,7 +71,6 @@ export type JobMinAggregateOutputType = {
   requiredExperience: number | null
   applicationDeadline: Date | null
   positionStartDate: Date | null
-  hourType: $Enums.HourType | null
   hoursPerWeek: number | null
   roster: string | null
   remunerationPaidBy: string | null
@@ -103,7 +102,6 @@ export type JobMaxAggregateOutputType = {
   requiredExperience: number | null
   applicationDeadline: Date | null
   positionStartDate: Date | null
-  hourType: $Enums.HourType | null
   hoursPerWeek: number | null
   roster: string | null
   remunerationPaidBy: string | null
@@ -135,7 +133,6 @@ export type JobCountAggregateOutputType = {
   requiredExperience: number
   applicationDeadline: number
   positionStartDate: number
-  hourType: number
   hoursPerWeek: number
   roster: number
   remunerationPaidBy: number
@@ -199,7 +196,6 @@ export type JobMinAggregateInputType = {
   requiredExperience?: true
   applicationDeadline?: true
   positionStartDate?: true
-  hourType?: true
   hoursPerWeek?: true
   roster?: true
   remunerationPaidBy?: true
@@ -231,7 +227,6 @@ export type JobMaxAggregateInputType = {
   requiredExperience?: true
   applicationDeadline?: true
   positionStartDate?: true
-  hourType?: true
   hoursPerWeek?: true
   roster?: true
   remunerationPaidBy?: true
@@ -263,7 +258,6 @@ export type JobCountAggregateInputType = {
   requiredExperience?: true
   applicationDeadline?: true
   positionStartDate?: true
-  hourType?: true
   hoursPerWeek?: true
   roster?: true
   remunerationPaidBy?: true
@@ -382,7 +376,6 @@ export type JobGroupByOutputType = {
   requiredExperience: number
   applicationDeadline: Date
   positionStartDate: Date
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -437,7 +430,6 @@ export type JobWhereInput = {
   requiredExperience?: Prisma.IntFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeFilter<"Job"> | Date | string
   positionStartDate?: Prisma.DateTimeFilter<"Job"> | Date | string
-  hourType?: Prisma.EnumHourTypeFilter<"Job"> | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFilter<"Job"> | number
   roster?: Prisma.StringFilter<"Job"> | string
   remunerationPaidBy?: Prisma.StringFilter<"Job"> | string
@@ -473,7 +465,6 @@ export type JobOrderByWithRelationInput = {
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
   positionStartDate?: Prisma.SortOrder
-  hourType?: Prisma.SortOrder
   hoursPerWeek?: Prisma.SortOrder
   roster?: Prisma.SortOrder
   remunerationPaidBy?: Prisma.SortOrder
@@ -512,7 +503,6 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   requiredExperience?: Prisma.IntFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeFilter<"Job"> | Date | string
   positionStartDate?: Prisma.DateTimeFilter<"Job"> | Date | string
-  hourType?: Prisma.EnumHourTypeFilter<"Job"> | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFilter<"Job"> | number
   roster?: Prisma.StringFilter<"Job"> | string
   remunerationPaidBy?: Prisma.StringFilter<"Job"> | string
@@ -548,7 +538,6 @@ export type JobOrderByWithAggregationInput = {
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
   positionStartDate?: Prisma.SortOrder
-  hourType?: Prisma.SortOrder
   hoursPerWeek?: Prisma.SortOrder
   roster?: Prisma.SortOrder
   remunerationPaidBy?: Prisma.SortOrder
@@ -588,7 +577,6 @@ export type JobScalarWhereWithAggregatesInput = {
   requiredExperience?: Prisma.IntWithAggregatesFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
   positionStartDate?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
-  hourType?: Prisma.EnumHourTypeWithAggregatesFilter<"Job"> | $Enums.HourType
   hoursPerWeek?: Prisma.FloatWithAggregatesFilter<"Job"> | number
   roster?: Prisma.StringWithAggregatesFilter<"Job"> | string
   remunerationPaidBy?: Prisma.StringWithAggregatesFilter<"Job"> | string
@@ -620,7 +608,6 @@ export type JobCreateInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -655,7 +642,6 @@ export type JobUncheckedCreateInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -690,7 +676,6 @@ export type JobUpdateInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -725,7 +710,6 @@ export type JobUncheckedUpdateInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -760,7 +744,6 @@ export type JobCreateManyInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -792,7 +775,6 @@ export type JobUpdateManyMutationInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -823,7 +805,6 @@ export type JobUncheckedUpdateManyInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -860,7 +841,6 @@ export type JobCountOrderByAggregateInput = {
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
   positionStartDate?: Prisma.SortOrder
-  hourType?: Prisma.SortOrder
   hoursPerWeek?: Prisma.SortOrder
   roster?: Prisma.SortOrder
   remunerationPaidBy?: Prisma.SortOrder
@@ -907,7 +887,6 @@ export type JobMaxOrderByAggregateInput = {
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
   positionStartDate?: Prisma.SortOrder
-  hourType?: Prisma.SortOrder
   hoursPerWeek?: Prisma.SortOrder
   roster?: Prisma.SortOrder
   remunerationPaidBy?: Prisma.SortOrder
@@ -939,7 +918,6 @@ export type JobMinOrderByAggregateInput = {
   requiredExperience?: Prisma.SortOrder
   applicationDeadline?: Prisma.SortOrder
   positionStartDate?: Prisma.SortOrder
-  hourType?: Prisma.SortOrder
   hoursPerWeek?: Prisma.SortOrder
   roster?: Prisma.SortOrder
   remunerationPaidBy?: Prisma.SortOrder
@@ -1023,10 +1001,6 @@ export type JobUpdateOneRequiredWithoutSavedJobsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.JobUpdateToOneWithWhereWithoutSavedJobsInput, Prisma.JobUpdateWithoutSavedJobsInput>, Prisma.JobUncheckedUpdateWithoutSavedJobsInput>
 }
 
-export type EnumHourTypeFieldUpdateOperationsInput = {
-  set?: $Enums.HourType
-}
-
 export type EnumSalaryTypeFieldUpdateOperationsInput = {
   set?: $Enums.SalaryType
 }
@@ -1100,7 +1074,6 @@ export type JobCreateWithoutIdealCandidatesInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1134,7 +1107,6 @@ export type JobUncheckedCreateWithoutIdealCandidatesInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1184,7 +1156,6 @@ export type JobUpdateWithoutIdealCandidatesInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1218,7 +1189,6 @@ export type JobUncheckedUpdateWithoutIdealCandidatesInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1252,7 +1222,6 @@ export type JobCreateWithoutJobApplicationsInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1286,7 +1255,6 @@ export type JobUncheckedCreateWithoutJobApplicationsInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1336,7 +1304,6 @@ export type JobUpdateWithoutJobApplicationsInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1370,7 +1337,6 @@ export type JobUncheckedUpdateWithoutJobApplicationsInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1404,7 +1370,6 @@ export type JobCreateWithoutSavedJobsInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1438,7 +1403,6 @@ export type JobUncheckedCreateWithoutSavedJobsInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1488,7 +1452,6 @@ export type JobUpdateWithoutSavedJobsInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1522,7 +1485,6 @@ export type JobUncheckedUpdateWithoutSavedJobsInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1556,7 +1518,6 @@ export type JobCreateWithoutFarmInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1590,7 +1551,6 @@ export type JobUncheckedCreateWithoutFarmInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1653,7 +1613,6 @@ export type JobScalarWhereInput = {
   requiredExperience?: Prisma.IntFilter<"Job"> | number
   applicationDeadline?: Prisma.DateTimeFilter<"Job"> | Date | string
   positionStartDate?: Prisma.DateTimeFilter<"Job"> | Date | string
-  hourType?: Prisma.EnumHourTypeFilter<"Job"> | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFilter<"Job"> | number
   roster?: Prisma.StringFilter<"Job"> | string
   remunerationPaidBy?: Prisma.StringFilter<"Job"> | string
@@ -1685,7 +1644,6 @@ export type JobCreateManyFarmInput = {
   requiredExperience: number
   applicationDeadline: Date | string
   positionStartDate: Date | string
-  hourType: $Enums.HourType
   hoursPerWeek: number
   roster: string
   remunerationPaidBy: string
@@ -1716,7 +1674,6 @@ export type JobUpdateWithoutFarmInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1750,7 +1707,6 @@ export type JobUncheckedUpdateWithoutFarmInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1784,7 +1740,6 @@ export type JobUncheckedUpdateManyWithoutFarmInput = {
   requiredExperience?: Prisma.IntFieldUpdateOperationsInput | number
   applicationDeadline?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   positionStartDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  hourType?: Prisma.EnumHourTypeFieldUpdateOperationsInput | $Enums.HourType
   hoursPerWeek?: Prisma.FloatFieldUpdateOperationsInput | number
   roster?: Prisma.StringFieldUpdateOperationsInput | string
   remunerationPaidBy?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1855,7 +1810,6 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   requiredExperience?: boolean
   applicationDeadline?: boolean
   positionStartDate?: boolean
-  hourType?: boolean
   hoursPerWeek?: boolean
   roster?: boolean
   remunerationPaidBy?: boolean
@@ -1892,7 +1846,6 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   requiredExperience?: boolean
   applicationDeadline?: boolean
   positionStartDate?: boolean
-  hourType?: boolean
   hoursPerWeek?: boolean
   roster?: boolean
   remunerationPaidBy?: boolean
@@ -1925,7 +1878,6 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   requiredExperience?: boolean
   applicationDeadline?: boolean
   positionStartDate?: boolean
-  hourType?: boolean
   hoursPerWeek?: boolean
   roster?: boolean
   remunerationPaidBy?: boolean
@@ -1958,7 +1910,6 @@ export type JobSelectScalar = {
   requiredExperience?: boolean
   applicationDeadline?: boolean
   positionStartDate?: boolean
-  hourType?: boolean
   hoursPerWeek?: boolean
   roster?: boolean
   remunerationPaidBy?: boolean
@@ -1975,7 +1926,7 @@ export type JobSelectScalar = {
   updatedAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "benefits" | "farmSize" | "herdSize" | "onFarmStaff" | "location" | "jobType" | "role" | "numberOfPositions" | "requiredExperience" | "applicationDeadline" | "positionStartDate" | "hourType" | "hoursPerWeek" | "roster" | "remunerationPaidBy" | "remunerationType" | "remunerationStart" | "remunerationEnd" | "totalPackageValue" | "perKgMSDollarValue" | "percentageOfMilkCheque" | "farmId" | "status" | "viewCount" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "benefits" | "farmSize" | "herdSize" | "onFarmStaff" | "location" | "jobType" | "role" | "numberOfPositions" | "requiredExperience" | "applicationDeadline" | "positionStartDate" | "hoursPerWeek" | "roster" | "remunerationPaidBy" | "remunerationType" | "remunerationStart" | "remunerationEnd" | "totalPackageValue" | "perKgMSDollarValue" | "percentageOfMilkCheque" | "farmId" | "status" | "viewCount" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   farm?: boolean | Prisma.FarmDefaultArgs<ExtArgs>
   idealCandidates?: boolean | Prisma.Job$idealCandidatesArgs<ExtArgs>
@@ -2013,7 +1964,6 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     requiredExperience: number
     applicationDeadline: Date
     positionStartDate: Date
-    hourType: $Enums.HourType
     hoursPerWeek: number
     roster: string
     remunerationPaidBy: string
@@ -2469,7 +2419,6 @@ export interface JobFieldRefs {
   readonly requiredExperience: Prisma.FieldRef<"Job", 'Int'>
   readonly applicationDeadline: Prisma.FieldRef<"Job", 'DateTime'>
   readonly positionStartDate: Prisma.FieldRef<"Job", 'DateTime'>
-  readonly hourType: Prisma.FieldRef<"Job", 'HourType'>
   readonly hoursPerWeek: Prisma.FieldRef<"Job", 'Float'>
   readonly roster: Prisma.FieldRef<"Job", 'String'>
   readonly remunerationPaidBy: Prisma.FieldRef<"Job", 'String'>

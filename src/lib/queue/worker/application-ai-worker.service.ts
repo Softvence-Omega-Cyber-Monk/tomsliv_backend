@@ -81,7 +81,7 @@ export class ApplicationAIWorkerService extends WorkerHost {
 
       const idealCandidatePayload = idealCandidate
         ? {
-            experience: `${idealCandidate.minimumExperienceYears}-${idealCandidate.maximumExperienceYears} years`,
+            experience: `${idealCandidate.minimumExperienceYears} years`,
             skills: idealCandidate.coreSkills,
             nonNegotiableSkills: idealCandidate.nonNegotiableSkills,
             personalityTraits: idealCandidate.desiredPersonalityTraits,

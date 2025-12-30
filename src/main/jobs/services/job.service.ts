@@ -149,7 +149,7 @@ export class JobService {
       requiredExperience: dto.requiredExperience ?? job.requiredExperience,
       applicationDeadline: dto.applicationDeadline ?? job.applicationDeadline,
       positionStartDate: dto.positionStartDate ?? job.positionStartDate,
-      hourType: dto.hourType ?? job.hourType,
+      // hourType: dto.hourType ?? job.hourType,
       hoursPerWeek: dto.hoursPerWeek ?? job.hoursPerWeek,
       roster: dto.roster ? dto.roster.trim() : job.roster,
       remunerationPaidBy: dto.remunerationPaidBy
