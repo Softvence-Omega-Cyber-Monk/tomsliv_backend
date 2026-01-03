@@ -21,7 +21,10 @@ model CV {
   workPermitType WorkPermitType @default(OTHER)
 
   customCVId String?       @unique
-  customCV   FileInstance? @relation(fields: [customCVId], references: [id], onDelete: SetNull)
+  customCV   FileInstance? @relation("CVFile", fields: [customCVId], references: [id], onDelete: SetNull)
+
+  customCoverLetterId String?       @unique
+  customCoverLetter   FileInstance? @relation("CoverLetterFile", fields: [customCoverLetterId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

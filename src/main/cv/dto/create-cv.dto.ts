@@ -5,12 +5,22 @@ import { CoreCvDto, EducationDto, ExperienceDto } from './cv.dto';
 
 export class CreateCvBodyDto {
   @ApiPropertyOptional({
-    description: 'ID of the uploaded file',
+    description: 'ID of the uploaded CV file',
     example: 'file_123abc',
   })
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsOptional()
   @IsString()
   fileId?: string;
+
+  @ApiPropertyOptional({
+    description: 'ID of the uploaded cover letter file',
+    example: 'file_456def',
+  })
+  @Transform(({ value }) => (value === '' ? undefined : value))
+  @IsOptional()
+  @IsString()
+  coverLetterFileId?: string;
 
   @ApiPropertyOptional({ type: CoreCvDto })
   @Type(() => CoreCvDto)

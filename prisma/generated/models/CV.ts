@@ -40,6 +40,7 @@ export type CVMinAggregateOutputType = {
   eligibleToWorkInNZ: boolean | null
   workPermitType: $Enums.WorkPermitType | null
   customCVId: string | null
+  customCoverLetterId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -61,6 +62,7 @@ export type CVMaxAggregateOutputType = {
   eligibleToWorkInNZ: boolean | null
   workPermitType: $Enums.WorkPermitType | null
   customCVId: string | null
+  customCoverLetterId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   userId: string | null
@@ -82,6 +84,7 @@ export type CVCountAggregateOutputType = {
   eligibleToWorkInNZ: number
   workPermitType: number
   customCVId: number
+  customCoverLetterId: number
   createdAt: number
   updatedAt: number
   userId: number
@@ -105,6 +108,7 @@ export type CVMinAggregateInputType = {
   eligibleToWorkInNZ?: true
   workPermitType?: true
   customCVId?: true
+  customCoverLetterId?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -126,6 +130,7 @@ export type CVMaxAggregateInputType = {
   eligibleToWorkInNZ?: true
   workPermitType?: true
   customCVId?: true
+  customCoverLetterId?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -147,6 +152,7 @@ export type CVCountAggregateInputType = {
   eligibleToWorkInNZ?: true
   workPermitType?: true
   customCVId?: true
+  customCoverLetterId?: true
   createdAt?: true
   updatedAt?: true
   userId?: true
@@ -241,6 +247,7 @@ export type CVGroupByOutputType = {
   eligibleToWorkInNZ: boolean
   workPermitType: $Enums.WorkPermitType
   customCVId: string | null
+  customCoverLetterId: string | null
   createdAt: Date
   updatedAt: Date
   userId: string | null
@@ -283,10 +290,12 @@ export type CVWhereInput = {
   eligibleToWorkInNZ?: Prisma.BoolFilter<"CV"> | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFilter<"CV"> | $Enums.WorkPermitType
   customCVId?: Prisma.StringNullableFilter<"CV"> | string | null
+  customCoverLetterId?: Prisma.StringNullableFilter<"CV"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CV"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CV"> | Date | string
   userId?: Prisma.StringNullableFilter<"CV"> | string | null
   customCV?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
+  customCoverLetter?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   savedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   experiences?: Prisma.ExperienceListRelationFilter
@@ -310,10 +319,12 @@ export type CVOrderByWithRelationInput = {
   eligibleToWorkInNZ?: Prisma.SortOrder
   workPermitType?: Prisma.SortOrder
   customCVId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customCoverLetterId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
   customCV?: Prisma.FileInstanceOrderByWithRelationInput
+  customCoverLetter?: Prisma.FileInstanceOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
   savedBy?: Prisma.UserOrderByWithRelationInput
   experiences?: Prisma.ExperienceOrderByRelationAggregateInput
@@ -324,6 +335,7 @@ export type CVOrderByWithRelationInput = {
 export type CVWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   customCVId?: string
+  customCoverLetterId?: string
   AND?: Prisma.CVWhereInput | Prisma.CVWhereInput[]
   OR?: Prisma.CVWhereInput[]
   NOT?: Prisma.CVWhereInput | Prisma.CVWhereInput[]
@@ -344,12 +356,13 @@ export type CVWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"CV"> | Date | string
   userId?: Prisma.StringNullableFilter<"CV"> | string | null
   customCV?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
+  customCoverLetter?: Prisma.XOR<Prisma.FileInstanceNullableScalarRelationFilter, Prisma.FileInstanceWhereInput> | null
   user?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   savedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
   experiences?: Prisma.ExperienceListRelationFilter
   educations?: Prisma.EducationListRelationFilter
   jobApplications?: Prisma.JobApplicationListRelationFilter
-}, "id" | "customCVId">
+}, "id" | "customCVId" | "customCoverLetterId">
 
 export type CVOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -367,6 +380,7 @@ export type CVOrderByWithAggregationInput = {
   eligibleToWorkInNZ?: Prisma.SortOrder
   workPermitType?: Prisma.SortOrder
   customCVId?: Prisma.SortOrderInput | Prisma.SortOrder
+  customCoverLetterId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -394,6 +408,7 @@ export type CVScalarWhereWithAggregatesInput = {
   eligibleToWorkInNZ?: Prisma.BoolWithAggregatesFilter<"CV"> | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeWithAggregatesFilter<"CV"> | $Enums.WorkPermitType
   customCVId?: Prisma.StringNullableWithAggregatesFilter<"CV"> | string | null
+  customCoverLetterId?: Prisma.StringNullableWithAggregatesFilter<"CV"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CV"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CV"> | Date | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"CV"> | string | null
@@ -417,6 +432,7 @@ export type CVCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   user?: Prisma.UserCreateNestedOneWithoutCvsInput
   savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
   experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
@@ -440,6 +456,7 @@ export type CVUncheckedCreateInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -467,6 +484,7 @@ export type CVUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   user?: Prisma.UserUpdateOneWithoutCvsNestedInput
   savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
   experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
@@ -490,6 +508,7 @@ export type CVUncheckedUpdateInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -515,6 +534,7 @@ export type CVCreateManyInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -555,6 +575,7 @@ export type CVUncheckedUpdateManyInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -576,6 +597,7 @@ export type CVCountOrderByAggregateInput = {
   eligibleToWorkInNZ?: Prisma.SortOrder
   workPermitType?: Prisma.SortOrder
   customCVId?: Prisma.SortOrder
+  customCoverLetterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -597,6 +619,7 @@ export type CVMaxOrderByAggregateInput = {
   eligibleToWorkInNZ?: Prisma.SortOrder
   workPermitType?: Prisma.SortOrder
   customCVId?: Prisma.SortOrder
+  customCoverLetterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -618,6 +641,7 @@ export type CVMinOrderByAggregateInput = {
   eligibleToWorkInNZ?: Prisma.SortOrder
   workPermitType?: Prisma.SortOrder
   customCVId?: Prisma.SortOrder
+  customCoverLetterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrder
@@ -697,9 +721,21 @@ export type CVCreateNestedOneWithoutCustomCVInput = {
   connect?: Prisma.CVWhereUniqueInput
 }
 
+export type CVCreateNestedOneWithoutCustomCoverLetterInput = {
+  create?: Prisma.XOR<Prisma.CVCreateWithoutCustomCoverLetterInput, Prisma.CVUncheckedCreateWithoutCustomCoverLetterInput>
+  connectOrCreate?: Prisma.CVCreateOrConnectWithoutCustomCoverLetterInput
+  connect?: Prisma.CVWhereUniqueInput
+}
+
 export type CVUncheckedCreateNestedOneWithoutCustomCVInput = {
   create?: Prisma.XOR<Prisma.CVCreateWithoutCustomCVInput, Prisma.CVUncheckedCreateWithoutCustomCVInput>
   connectOrCreate?: Prisma.CVCreateOrConnectWithoutCustomCVInput
+  connect?: Prisma.CVWhereUniqueInput
+}
+
+export type CVUncheckedCreateNestedOneWithoutCustomCoverLetterInput = {
+  create?: Prisma.XOR<Prisma.CVCreateWithoutCustomCoverLetterInput, Prisma.CVUncheckedCreateWithoutCustomCoverLetterInput>
+  connectOrCreate?: Prisma.CVCreateOrConnectWithoutCustomCoverLetterInput
   connect?: Prisma.CVWhereUniqueInput
 }
 
@@ -713,6 +749,16 @@ export type CVUpdateOneWithoutCustomCVNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CVUpdateToOneWithWhereWithoutCustomCVInput, Prisma.CVUpdateWithoutCustomCVInput>, Prisma.CVUncheckedUpdateWithoutCustomCVInput>
 }
 
+export type CVUpdateOneWithoutCustomCoverLetterNestedInput = {
+  create?: Prisma.XOR<Prisma.CVCreateWithoutCustomCoverLetterInput, Prisma.CVUncheckedCreateWithoutCustomCoverLetterInput>
+  connectOrCreate?: Prisma.CVCreateOrConnectWithoutCustomCoverLetterInput
+  upsert?: Prisma.CVUpsertWithoutCustomCoverLetterInput
+  disconnect?: Prisma.CVWhereInput | boolean
+  delete?: Prisma.CVWhereInput | boolean
+  connect?: Prisma.CVWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CVUpdateToOneWithWhereWithoutCustomCoverLetterInput, Prisma.CVUpdateWithoutCustomCoverLetterInput>, Prisma.CVUncheckedUpdateWithoutCustomCoverLetterInput>
+}
+
 export type CVUncheckedUpdateOneWithoutCustomCVNestedInput = {
   create?: Prisma.XOR<Prisma.CVCreateWithoutCustomCVInput, Prisma.CVUncheckedCreateWithoutCustomCVInput>
   connectOrCreate?: Prisma.CVCreateOrConnectWithoutCustomCVInput
@@ -721,6 +767,16 @@ export type CVUncheckedUpdateOneWithoutCustomCVNestedInput = {
   delete?: Prisma.CVWhereInput | boolean
   connect?: Prisma.CVWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CVUpdateToOneWithWhereWithoutCustomCVInput, Prisma.CVUpdateWithoutCustomCVInput>, Prisma.CVUncheckedUpdateWithoutCustomCVInput>
+}
+
+export type CVUncheckedUpdateOneWithoutCustomCoverLetterNestedInput = {
+  create?: Prisma.XOR<Prisma.CVCreateWithoutCustomCoverLetterInput, Prisma.CVUncheckedCreateWithoutCustomCoverLetterInput>
+  connectOrCreate?: Prisma.CVCreateOrConnectWithoutCustomCoverLetterInput
+  upsert?: Prisma.CVUpsertWithoutCustomCoverLetterInput
+  disconnect?: Prisma.CVWhereInput | boolean
+  delete?: Prisma.CVWhereInput | boolean
+  connect?: Prisma.CVWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CVUpdateToOneWithWhereWithoutCustomCoverLetterInput, Prisma.CVUpdateWithoutCustomCoverLetterInput>, Prisma.CVUncheckedUpdateWithoutCustomCoverLetterInput>
 }
 
 export type CVCreateNestedOneWithoutJobApplicationsInput = {
@@ -813,6 +869,7 @@ export type CVCreateWithoutExperiencesInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   user?: Prisma.UserCreateNestedOneWithoutCvsInput
   savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
   educations?: Prisma.EducationCreateNestedManyWithoutCvInput
@@ -835,6 +892,7 @@ export type CVUncheckedCreateWithoutExperiencesInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -877,6 +935,7 @@ export type CVUpdateWithoutExperiencesInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   user?: Prisma.UserUpdateOneWithoutCvsNestedInput
   savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
   educations?: Prisma.EducationUpdateManyWithoutCvNestedInput
@@ -899,6 +958,7 @@ export type CVUncheckedUpdateWithoutExperiencesInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -925,6 +985,7 @@ export type CVCreateWithoutEducationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   user?: Prisma.UserCreateNestedOneWithoutCvsInput
   savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
   experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
@@ -947,6 +1008,7 @@ export type CVUncheckedCreateWithoutEducationsInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -989,6 +1051,7 @@ export type CVUpdateWithoutEducationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   user?: Prisma.UserUpdateOneWithoutCvsNestedInput
   savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
   experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
@@ -1011,6 +1074,7 @@ export type CVUncheckedUpdateWithoutEducationsInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1036,6 +1100,7 @@ export type CVCreateWithoutCustomCVInput = {
   workPermitType?: $Enums.WorkPermitType
   createdAt?: Date | string
   updatedAt?: Date | string
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   user?: Prisma.UserCreateNestedOneWithoutCvsInput
   savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
   experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
@@ -1058,6 +1123,7 @@ export type CVUncheckedCreateWithoutCustomCVInput = {
   hasDrivingLicense?: boolean
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -1070,6 +1136,61 @@ export type CVUncheckedCreateWithoutCustomCVInput = {
 export type CVCreateOrConnectWithoutCustomCVInput = {
   where: Prisma.CVWhereUniqueInput
   create: Prisma.XOR<Prisma.CVCreateWithoutCustomCVInput, Prisma.CVUncheckedCreateWithoutCustomCVInput>
+}
+
+export type CVCreateWithoutCustomCoverLetterInput = {
+  id?: string
+  isSaved?: boolean
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  location: string
+  summary: string
+  jobTitle: string
+  jobType: $Enums.JobType
+  availability?: Date | string | null
+  hasDrivingLicense?: boolean
+  eligibleToWorkInNZ?: boolean
+  workPermitType?: $Enums.WorkPermitType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  user?: Prisma.UserCreateNestedOneWithoutCvsInput
+  savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
+  experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
+  educations?: Prisma.EducationCreateNestedManyWithoutCvInput
+  jobApplications?: Prisma.JobApplicationCreateNestedManyWithoutCvInput
+}
+
+export type CVUncheckedCreateWithoutCustomCoverLetterInput = {
+  id?: string
+  isSaved?: boolean
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  location: string
+  summary: string
+  jobTitle: string
+  jobType: $Enums.JobType
+  availability?: Date | string | null
+  hasDrivingLicense?: boolean
+  eligibleToWorkInNZ?: boolean
+  workPermitType?: $Enums.WorkPermitType
+  customCVId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userId?: string | null
+  savedBy?: Prisma.UserUncheckedCreateNestedOneWithoutSavedCVInput
+  experiences?: Prisma.ExperienceUncheckedCreateNestedManyWithoutCvInput
+  educations?: Prisma.EducationUncheckedCreateNestedManyWithoutCvInput
+  jobApplications?: Prisma.JobApplicationUncheckedCreateNestedManyWithoutCvInput
+}
+
+export type CVCreateOrConnectWithoutCustomCoverLetterInput = {
+  where: Prisma.CVWhereUniqueInput
+  create: Prisma.XOR<Prisma.CVCreateWithoutCustomCoverLetterInput, Prisma.CVUncheckedCreateWithoutCustomCoverLetterInput>
 }
 
 export type CVUpsertWithoutCustomCVInput = {
@@ -1100,6 +1221,7 @@ export type CVUpdateWithoutCustomCVInput = {
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   user?: Prisma.UserUpdateOneWithoutCvsNestedInput
   savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
   experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
@@ -1122,6 +1244,68 @@ export type CVUncheckedUpdateWithoutCustomCVInput = {
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  savedBy?: Prisma.UserUncheckedUpdateOneWithoutSavedCVNestedInput
+  experiences?: Prisma.ExperienceUncheckedUpdateManyWithoutCvNestedInput
+  educations?: Prisma.EducationUncheckedUpdateManyWithoutCvNestedInput
+  jobApplications?: Prisma.JobApplicationUncheckedUpdateManyWithoutCvNestedInput
+}
+
+export type CVUpsertWithoutCustomCoverLetterInput = {
+  update: Prisma.XOR<Prisma.CVUpdateWithoutCustomCoverLetterInput, Prisma.CVUncheckedUpdateWithoutCustomCoverLetterInput>
+  create: Prisma.XOR<Prisma.CVCreateWithoutCustomCoverLetterInput, Prisma.CVUncheckedCreateWithoutCustomCoverLetterInput>
+  where?: Prisma.CVWhereInput
+}
+
+export type CVUpdateToOneWithWhereWithoutCustomCoverLetterInput = {
+  where?: Prisma.CVWhereInput
+  data: Prisma.XOR<Prisma.CVUpdateWithoutCustomCoverLetterInput, Prisma.CVUncheckedUpdateWithoutCustomCoverLetterInput>
+}
+
+export type CVUpdateWithoutCustomCoverLetterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isSaved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  user?: Prisma.UserUpdateOneWithoutCvsNestedInput
+  savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
+  experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
+  educations?: Prisma.EducationUpdateManyWithoutCvNestedInput
+  jobApplications?: Prisma.JobApplicationUpdateManyWithoutCvNestedInput
+}
+
+export type CVUncheckedUpdateWithoutCustomCoverLetterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  isSaved?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  location?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.StringFieldUpdateOperationsInput | string
+  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
+  customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1149,6 +1333,7 @@ export type CVCreateWithoutJobApplicationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   user?: Prisma.UserCreateNestedOneWithoutCvsInput
   savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
   experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
@@ -1171,6 +1356,7 @@ export type CVUncheckedCreateWithoutJobApplicationsInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -1213,6 +1399,7 @@ export type CVUpdateWithoutJobApplicationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   user?: Prisma.UserUpdateOneWithoutCvsNestedInput
   savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
   experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
@@ -1235,6 +1422,7 @@ export type CVUncheckedUpdateWithoutJobApplicationsInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1261,6 +1449,7 @@ export type CVCreateWithoutSavedByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   user?: Prisma.UserCreateNestedOneWithoutCvsInput
   experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
   educations?: Prisma.EducationCreateNestedManyWithoutCvInput
@@ -1283,6 +1472,7 @@ export type CVUncheckedCreateWithoutSavedByInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -1314,6 +1504,7 @@ export type CVCreateWithoutUserInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customCV?: Prisma.FileInstanceCreateNestedOneWithoutCvsInput
+  customCoverLetter?: Prisma.FileInstanceCreateNestedOneWithoutCoverLettersInput
   savedBy?: Prisma.UserCreateNestedOneWithoutSavedCVInput
   experiences?: Prisma.ExperienceCreateNestedManyWithoutCvInput
   educations?: Prisma.EducationCreateNestedManyWithoutCvInput
@@ -1336,6 +1527,7 @@ export type CVUncheckedCreateWithoutUserInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   savedBy?: Prisma.UserUncheckedCreateNestedOneWithoutSavedCVInput
@@ -1383,6 +1575,7 @@ export type CVUpdateWithoutSavedByInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   user?: Prisma.UserUpdateOneWithoutCvsNestedInput
   experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
   educations?: Prisma.EducationUpdateManyWithoutCvNestedInput
@@ -1405,6 +1598,7 @@ export type CVUncheckedUpdateWithoutSavedByInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1448,6 +1642,7 @@ export type CVScalarWhereInput = {
   eligibleToWorkInNZ?: Prisma.BoolFilter<"CV"> | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFilter<"CV"> | $Enums.WorkPermitType
   customCVId?: Prisma.StringNullableFilter<"CV"> | string | null
+  customCoverLetterId?: Prisma.StringNullableFilter<"CV"> | string | null
   createdAt?: Prisma.DateTimeFilter<"CV"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CV"> | Date | string
   userId?: Prisma.StringNullableFilter<"CV"> | string | null
@@ -1469,6 +1664,7 @@ export type CVCreateManyUserInput = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: $Enums.WorkPermitType
   customCVId?: string | null
+  customCoverLetterId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1491,6 +1687,7 @@ export type CVUpdateWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customCV?: Prisma.FileInstanceUpdateOneWithoutCvsNestedInput
+  customCoverLetter?: Prisma.FileInstanceUpdateOneWithoutCoverLettersNestedInput
   savedBy?: Prisma.UserUpdateOneWithoutSavedCVNestedInput
   experiences?: Prisma.ExperienceUpdateManyWithoutCvNestedInput
   educations?: Prisma.EducationUpdateManyWithoutCvNestedInput
@@ -1513,6 +1710,7 @@ export type CVUncheckedUpdateWithoutUserInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   savedBy?: Prisma.UserUncheckedUpdateOneWithoutSavedCVNestedInput
@@ -1537,6 +1735,7 @@ export type CVUncheckedUpdateManyWithoutUserInput = {
   eligibleToWorkInNZ?: Prisma.BoolFieldUpdateOperationsInput | boolean
   workPermitType?: Prisma.EnumWorkPermitTypeFieldUpdateOperationsInput | $Enums.WorkPermitType
   customCVId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  customCoverLetterId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1606,10 +1805,12 @@ export type CVSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
   eligibleToWorkInNZ?: boolean
   workPermitType?: boolean
   customCVId?: boolean
+  customCoverLetterId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
   customCV?: boolean | Prisma.CV$customCVArgs<ExtArgs>
+  customCoverLetter?: boolean | Prisma.CV$customCoverLetterArgs<ExtArgs>
   user?: boolean | Prisma.CV$userArgs<ExtArgs>
   savedBy?: boolean | Prisma.CV$savedByArgs<ExtArgs>
   experiences?: boolean | Prisma.CV$experiencesArgs<ExtArgs>
@@ -1634,10 +1835,12 @@ export type CVSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions
   eligibleToWorkInNZ?: boolean
   workPermitType?: boolean
   customCVId?: boolean
+  customCoverLetterId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
   customCV?: boolean | Prisma.CV$customCVArgs<ExtArgs>
+  customCoverLetter?: boolean | Prisma.CV$customCoverLetterArgs<ExtArgs>
   user?: boolean | Prisma.CV$userArgs<ExtArgs>
 }, ExtArgs["result"]["cV"]>
 
@@ -1657,10 +1860,12 @@ export type CVSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions
   eligibleToWorkInNZ?: boolean
   workPermitType?: boolean
   customCVId?: boolean
+  customCoverLetterId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
   customCV?: boolean | Prisma.CV$customCVArgs<ExtArgs>
+  customCoverLetter?: boolean | Prisma.CV$customCoverLetterArgs<ExtArgs>
   user?: boolean | Prisma.CV$userArgs<ExtArgs>
 }, ExtArgs["result"]["cV"]>
 
@@ -1680,14 +1885,16 @@ export type CVSelectScalar = {
   eligibleToWorkInNZ?: boolean
   workPermitType?: boolean
   customCVId?: boolean
+  customCoverLetterId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   userId?: boolean
 }
 
-export type CVOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "isSaved" | "firstName" | "lastName" | "email" | "phone" | "location" | "summary" | "jobTitle" | "jobType" | "availability" | "hasDrivingLicense" | "eligibleToWorkInNZ" | "workPermitType" | "customCVId" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["cV"]>
+export type CVOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "isSaved" | "firstName" | "lastName" | "email" | "phone" | "location" | "summary" | "jobTitle" | "jobType" | "availability" | "hasDrivingLicense" | "eligibleToWorkInNZ" | "workPermitType" | "customCVId" | "customCoverLetterId" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["cV"]>
 export type CVInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customCV?: boolean | Prisma.CV$customCVArgs<ExtArgs>
+  customCoverLetter?: boolean | Prisma.CV$customCoverLetterArgs<ExtArgs>
   user?: boolean | Prisma.CV$userArgs<ExtArgs>
   savedBy?: boolean | Prisma.CV$savedByArgs<ExtArgs>
   experiences?: boolean | Prisma.CV$experiencesArgs<ExtArgs>
@@ -1697,10 +1904,12 @@ export type CVInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
 }
 export type CVIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customCV?: boolean | Prisma.CV$customCVArgs<ExtArgs>
+  customCoverLetter?: boolean | Prisma.CV$customCoverLetterArgs<ExtArgs>
   user?: boolean | Prisma.CV$userArgs<ExtArgs>
 }
 export type CVIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customCV?: boolean | Prisma.CV$customCVArgs<ExtArgs>
+  customCoverLetter?: boolean | Prisma.CV$customCoverLetterArgs<ExtArgs>
   user?: boolean | Prisma.CV$userArgs<ExtArgs>
 }
 
@@ -1708,6 +1917,7 @@ export type $CVPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name: "CV"
   objects: {
     customCV: Prisma.$FileInstancePayload<ExtArgs> | null
+    customCoverLetter: Prisma.$FileInstancePayload<ExtArgs> | null
     user: Prisma.$UserPayload<ExtArgs> | null
     savedBy: Prisma.$UserPayload<ExtArgs> | null
     experiences: Prisma.$ExperiencePayload<ExtArgs>[]
@@ -1730,6 +1940,7 @@ export type $CVPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     eligibleToWorkInNZ: boolean
     workPermitType: $Enums.WorkPermitType
     customCVId: string | null
+    customCoverLetterId: string | null
     createdAt: Date
     updatedAt: Date
     userId: string | null
@@ -2128,6 +2339,7 @@ readonly fields: CVFieldRefs;
 export interface Prisma__CVClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customCV<T extends Prisma.CV$customCVArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CV$customCVArgs<ExtArgs>>): Prisma.Prisma__FileInstanceClient<runtime.Types.Result.GetResult<Prisma.$FileInstancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  customCoverLetter<T extends Prisma.CV$customCoverLetterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CV$customCoverLetterArgs<ExtArgs>>): Prisma.Prisma__FileInstanceClient<runtime.Types.Result.GetResult<Prisma.$FileInstancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.CV$userArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CV$userArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   savedBy<T extends Prisma.CV$savedByArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CV$savedByArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   experiences<T extends Prisma.CV$experiencesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CV$experiencesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ExperiencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2177,6 +2389,7 @@ export interface CVFieldRefs {
   readonly eligibleToWorkInNZ: Prisma.FieldRef<"CV", 'Boolean'>
   readonly workPermitType: Prisma.FieldRef<"CV", 'WorkPermitType'>
   readonly customCVId: Prisma.FieldRef<"CV", 'String'>
+  readonly customCoverLetterId: Prisma.FieldRef<"CV", 'String'>
   readonly createdAt: Prisma.FieldRef<"CV", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CV", 'DateTime'>
   readonly userId: Prisma.FieldRef<"CV", 'String'>
@@ -2579,6 +2792,25 @@ export type CVDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
  * CV.customCV
  */
 export type CV$customCVArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FileInstance
+   */
+  select?: Prisma.FileInstanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the FileInstance
+   */
+  omit?: Prisma.FileInstanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FileInstanceInclude<ExtArgs> | null
+  where?: Prisma.FileInstanceWhereInput
+}
+
+/**
+ * CV.customCoverLetter
+ */
+export type CV$customCoverLetterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the FileInstance
    */
