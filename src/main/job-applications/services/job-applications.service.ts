@@ -237,7 +237,18 @@ export class JobApplicationsService {
       });
 
       if (!file) {
-        throw new AppError(HttpStatus.NOT_FOUND, 'File not found');
+        throw new AppError(HttpStatus.NOT_FOUND, 'CV file not found');
+      }
+    }
+
+    // If coverLetterFileId is provided check its existence
+    if (dto.coverLetterFileId) {
+      const file = await this.prisma.client.fileInstance.findUnique({
+        where: { id: dto.coverLetterFileId },
+      });
+
+      if (!file) {
+        throw new AppError(HttpStatus.NOT_FOUND, 'Cover letter file not found');
       }
     }
 
@@ -262,6 +273,11 @@ export class JobApplicationsService {
         ...(dto.fileId && {
           customCV: {
             connect: { id: dto.fileId },
+          },
+        }),
+        ...(dto.coverLetterFileId && {
+          customCoverLetter: {
+            connect: { id: dto.coverLetterFileId },
           },
         }),
         experiences: {
