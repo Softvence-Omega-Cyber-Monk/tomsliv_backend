@@ -6,6 +6,7 @@ import * as he from 'he';
 import * as nodemailer from 'nodemailer';
 import { MailService } from '../mail.service';
 import { applicationReceivedTemplate } from '../templates/application-received.template';
+import { cvUpdatedTemplate } from '../templates/cv-updated.template';
 import { notificationTemplate } from '../templates/notification.template';
 import { otpTemplate } from '../templates/otp.template';
 import { passwordResetConfirmationTemplate } from '../templates/reset-password-confirm.template';
@@ -110,10 +111,10 @@ export class AuthMailService {
     options: EmailOptions = {},
   ): Promise<nodemailer.SentMessageInfo> {
     const message = this.sanitize(
-      options.message || 'Welcome to TomsLiv! Your account has been created.',
+      options.message || 'Welcome to FarmLink! Your account has been created.',
     );
     const safeCode = this.sanitize(code);
-    const subject = options.subject || 'Welcome to TomsLiv';
+    const subject = options.subject || 'Welcome to FarmLink';
 
     const resetLink = `${this.frontendUrl}/reset-password?code=${code}&type=${OtpType.RESET}&email=${to}`;
 
@@ -121,7 +122,7 @@ export class AuthMailService {
       to,
       subject,
       resetPasswordLinkTemplate({
-        title: '🎉 Welcome to TomsLiv!',
+        title: '🎉 Welcome to FarmLink!',
         message,
         code: safeCode,
         footer:
@@ -161,6 +162,21 @@ export class AuthMailService {
       subject,
       notificationTemplate(title, message, link),
       `${title}\n\n${message}\n\n${link ? `Link: ${link}` : ''}`,
+    );
+  }
+
+  async sendCvUpdatedEmail(
+    to: string,
+    candidateName: string,
+  ): Promise<nodemailer.SentMessageInfo> {
+    const subject = 'CV Updated Successfully';
+    const text = `Hi ${candidateName}, your CV has been updated successfully in our system.`;
+
+    return this.sendEmail(
+      to,
+      subject,
+      cvUpdatedTemplate(this.sanitize(candidateName)),
+      text,
     );
   }
 }

@@ -33,7 +33,18 @@ export class CvService {
       });
 
       if (!file) {
-        throw new AppError(HttpStatus.NOT_FOUND, 'File not found');
+        throw new AppError(HttpStatus.NOT_FOUND, 'CV file not found');
+      }
+    }
+
+    // If coverLetterFileId is provided check its existence
+    if (dto.coverLetterFileId) {
+      const file = await this.prisma.client.fileInstance.findUnique({
+        where: { id: dto.coverLetterFileId },
+      });
+
+      if (!file) {
+        throw new AppError(HttpStatus.NOT_FOUND, 'Cover letter file not found');
       }
     }
 
@@ -87,6 +98,11 @@ export class CvService {
               connect: { id: dto.fileId },
             },
           }),
+          ...(dto.coverLetterFileId && {
+            customCoverLetter: {
+              connect: { id: dto.coverLetterFileId },
+            },
+          }),
           experiences: {
             deleteMany: {}, // Clear old
             create: experiencesRel, // Add new
@@ -100,6 +116,7 @@ export class CvService {
           experiences: true,
           educations: true,
           customCV: true,
+          customCoverLetter: true,
         },
       });
     } else {
@@ -113,6 +130,11 @@ export class CvService {
               connect: { id: dto.fileId },
             },
           }),
+          ...(dto.coverLetterFileId && {
+            customCoverLetter: {
+              connect: { id: dto.coverLetterFileId },
+            },
+          }),
           experiences: {
             create: experiencesRel,
           },
@@ -124,6 +146,7 @@ export class CvService {
           experiences: true,
           educations: true,
           customCV: true,
+          customCoverLetter: true,
         },
       });
 
@@ -149,6 +172,7 @@ export class CvService {
             experiences: true,
             educations: true,
             customCV: true,
+            customCoverLetter: true,
           },
         },
       },
@@ -205,7 +229,12 @@ export class CvService {
         take: batchSize,
         include: {
           cv: {
-            include: { experiences: true, educations: true, customCV: true },
+            include: {
+              experiences: true,
+              educations: true,
+              customCV: true,
+              customCoverLetter: true,
+            },
           },
           job: { select: { title: true, id: true } },
           user: { select: { email: true, name: true, profilePicture: true } },
@@ -244,6 +273,7 @@ export class CvService {
         experiences: true,
         educations: true,
         customCV: true,
+        customCoverLetter: true,
         user: {
           select: {
             email: true,
@@ -274,6 +304,7 @@ export class CvService {
           experiences: true,
           educations: true,
           customCV: true,
+          customCoverLetter: true,
           user: {
             select: {
               email: true,
@@ -289,6 +320,7 @@ export class CvService {
           experiences: true,
           educations: true,
           customCV: true,
+          customCoverLetter: true,
           user: {
             select: {
               email: true,

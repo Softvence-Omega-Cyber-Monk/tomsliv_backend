@@ -144,6 +144,7 @@ export const CVScalarFieldEnum = {
   eligibleToWorkInNZ: 'eligibleToWorkInNZ',
   workPermitType: 'workPermitType',
   customCVId: 'customCVId',
+  customCoverLetterId: 'customCoverLetterId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'

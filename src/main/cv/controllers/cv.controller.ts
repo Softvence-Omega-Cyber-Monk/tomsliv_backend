@@ -5,10 +5,10 @@ import {
 } from '@/core/jwt/jwt.decorator';
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { CompareCvDto } from './dto/compare-cv.dto';
-import { CreateCvBodyDto } from './dto/create-cv.dto';
-import { CvComparisonService } from './services/cv-compare.service';
-import { CvService } from './services/cv.service';
+import { CompareCvDto } from '../dto/compare-cv.dto';
+import { CreateCvBodyDto } from '../dto/create-cv.dto';
+import { CvComparisonService } from '../services/cv-compare.service';
+import { CvService } from '../services/cv.service';
 
 @ApiTags('CV')
 @ApiBearerAuth()
