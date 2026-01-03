@@ -123,4 +123,77 @@ export class ManageJobApplicationsService {
 
     return successResponse(updatedApp, 'Application status updated');
   }
+
+  @HandleError('Failed to toggle reject status', 'JobApplication')
+  async toggleReject(
+    userId: string,
+    applicationId: string,
+  ): Promise<TResponse<any>> {
+    const application =
+      await this.prisma.client.jobApplication.findUniqueOrThrow({
+        where: { id: applicationId },
+        include: { job: true },
+      });
+
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+      select: { farmId: true },
+    });
+
+    if (!user?.farmId || application.job.farmId !== user.farmId) {
+      throw new AppError(HttpStatus.FORBIDDEN, "You don't have permission");
+    }
+
+    // Toggle logic
+    const newStatus =
+      application.status === ApplicationStatus.REJECTED
+        ? ApplicationStatus.NEW
+        : ApplicationStatus.REJECTED;
+
+    const updated = await this.prisma.client.jobApplication.update({
+      where: { id: applicationId },
+      data: { status: newStatus },
+    });
+
+    return successResponse(updated, 'Reject status toggled');
+  }
+
+  @HandleError('Failed to toggle shortlist status', 'JobApplication')
+  async toggleShortlist(
+    userId: string,
+    applicationId: string,
+  ): Promise<TResponse<any>> {
+    const application =
+      await this.prisma.client.jobApplication.findUniqueOrThrow({
+        where: { id: applicationId },
+        include: { job: true },
+      });
+
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+      select: { farmId: true },
+    });
+
+    if (!user?.farmId || application.job.farmId !== user.farmId) {
+      throw new AppError(HttpStatus.FORBIDDEN, "You don't have permission");
+    }
+
+    // Toggle logic
+    const newStatus =
+      application.status === ApplicationStatus.SHORTLISTED
+        ? ApplicationStatus.NEW
+        : ApplicationStatus.SHORTLISTED;
+
+    const updated = await this.prisma.client.jobApplication.update({
+      where: { id: applicationId },
+      data: { status: newStatus },
+    });
+
+    // Send email only when switching TO shortlisted
+    if (newStatus === ApplicationStatus.SHORTLISTED) {
+      await this.applicationAITrigger.triggerShortlistEmail(applicationId);
+    }
+
+    return successResponse(updated, 'Shortlist status toggled');
+  }
 }

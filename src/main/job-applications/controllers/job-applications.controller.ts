@@ -90,4 +90,14 @@ export class JobApplicationsController {
   ) {
     return this.manageJobApplicationsService.updateStatus(userId, id, dto);
   }
+
+  @Post('farm-owner/:id/toggle-shortlist')
+  toggleShortlist(@GetUser('sub') userId: string, @Param('id') id: string) {
+    return this.manageJobApplicationsService.toggleShortlist(userId, id);
+  }
+
+  @Post('farm-owner/:id/toggle-reject')
+  toggleReject(@GetUser('sub') userId: string, @Param('id') id: string) {
+    return this.manageJobApplicationsService.toggleReject(userId, id);
+  }
 }

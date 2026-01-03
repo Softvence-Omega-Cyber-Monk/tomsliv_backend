@@ -34,7 +34,7 @@ export class GetAllJobsController {
   @ApiOperation({ summary: 'Get locations with counts' })
   @Get('locations-with-counts')
   async getLocationsWithCounts(@Query() pg: PaginationDto) {
-    return this.getAllJobsStatsService.getJobLocationsWithCounts(pg);
+    return this.getAllJobsStatsService.getJobRegionsWithCounts(pg);
   }
 
   @ApiOperation({ summary: 'Get all jobs' })

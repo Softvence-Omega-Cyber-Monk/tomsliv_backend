@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { HourType, JobType, SalaryType } from '@prisma';
+import { JobType, SalaryType } from '@prisma';
 import { Type } from 'class-transformer';
 import {
   IsEnum,
@@ -92,13 +92,13 @@ export class CreateJobDto {
   @IsISO8601()
   positionStartDate: string;
 
-  @ApiProperty({
-    enum: HourType,
-    description: 'Hour type (week, season, negotiable)',
-    example: HourType.week,
-  })
-  @IsEnum(HourType)
-  hourType: HourType;
+  // @ApiProperty({
+  //   enum: HourType,
+  //   description: 'Hour type (week, season, negotiable)',
+  //   example: HourType.week,
+  // })
+  // @IsEnum(HourType)
+  // hourType: HourType;
 
   @ApiProperty({ description: 'Hours per week', example: 40 })
   @Type(() => Number)

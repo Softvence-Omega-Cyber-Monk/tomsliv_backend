@@ -9,23 +9,19 @@ import {
   IsOptional,
   IsString,
   Min,
-  Validate,
-  ValidationArguments,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
 } from 'class-validator';
 
-@ValidatorConstraint({ name: 'isMaxGreaterThanMin', async: false })
-class IsMaxGreaterThanMin implements ValidatorConstraintInterface {
-  validate(maxExperience: number, args: ValidationArguments) {
-    const object = args.object as UpsertIdealCandidateDto;
-    return maxExperience >= object.minimumExperienceYears;
-  }
+// @ValidatorConstraint({ name: 'isMaxGreaterThanMin', async: false })
+// class IsMaxGreaterThanMin implements ValidatorConstraintInterface {
+//   validate(maxExperience: number, args: ValidationArguments) {
+//     const object = args.object as UpsertIdealCandidateDto;
+//     return maxExperience >= object.minimumExperienceYears;
+//   }
 
-  defaultMessage() {
-    return 'Maximum experience years must be greater than or equal to minimum experience years';
-  }
-}
+//   defaultMessage() {
+//     return 'Maximum experience years must be greater than or equal to minimum experience years';
+//   }
+// }
 
 export class UpsertIdealCandidateDto {
   @ApiProperty({
@@ -39,17 +35,17 @@ export class UpsertIdealCandidateDto {
   @IsNotEmpty()
   minimumExperienceYears: number;
 
-  @ApiProperty({
-    description: 'Maximum years of experience required',
-    example: 5,
-    minimum: 0,
-  })
-  @Type(() => Number)
-  @IsNumber()
-  @Min(0)
-  @IsNotEmpty()
-  @Validate(IsMaxGreaterThanMin)
-  maximumExperienceYears: number;
+  // @ApiProperty({
+  //   description: 'Maximum years of experience required',
+  //   example: 5,
+  //   minimum: 0,
+  // })
+  // @Type(() => Number)
+  // @IsNumber()
+  // @Min(0)
+  // @IsNotEmpty()
+  // @Validate(IsMaxGreaterThanMin)
+  // maximumExperienceYears: number;
 
   @ApiProperty({
     description: 'Core skills required for the job',

@@ -5,7 +5,7 @@ model IdealCandidate {
   jobId String @unique
 
   minimumExperienceYears Int
-  maximumExperienceYears Int
+  // maximumExperienceYears Int    @default(0)
 
   coreSkills String[]
 

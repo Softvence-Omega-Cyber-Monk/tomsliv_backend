@@ -2057,7 +2057,6 @@ export const IdealCandidateScalarFieldEnum = {
   id: 'id',
   jobId: 'jobId',
   minimumExperienceYears: 'minimumExperienceYears',
-  maximumExperienceYears: 'maximumExperienceYears',
   coreSkills: 'coreSkills',
   desiredPersonalityTraits: 'desiredPersonalityTraits',
   nonNegotiableSkills: 'nonNegotiableSkills',
@@ -2126,7 +2125,6 @@ export const JobScalarFieldEnum = {
   requiredExperience: 'requiredExperience',
   applicationDeadline: 'applicationDeadline',
   positionStartDate: 'positionStartDate',
-  hourType: 'hourType',
   hoursPerWeek: 'hoursPerWeek',
   roster: 'roster',
   remunerationPaidBy: 'remunerationPaidBy',
@@ -2467,20 +2465,6 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
-
-
-/**
- * Reference to a field of type 'HourType'
- */
-export type EnumHourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HourType'>
-    
-
-
-/**
- * Reference to a field of type 'HourType[]'
- */
-export type ListEnumHourTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'HourType[]'>
     
 
 
