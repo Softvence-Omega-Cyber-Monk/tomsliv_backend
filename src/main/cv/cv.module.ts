@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { CvController } from './cv.controller';
+import { CvController } from './controllers/cv.controller';
+import { PublicCvController } from './controllers/public-cv.controller';
 import { CvComparisonService } from './services/cv-compare.service';
 import { CvService } from './services/cv.service';
-import { PublicCvController } from './controllers/public-cv.controller';
 import { PublicCvService } from './services/public-cv.service';
 
 @Module({
