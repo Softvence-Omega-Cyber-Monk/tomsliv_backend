@@ -92,7 +92,8 @@ export const JobStatus = {
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',
   CLOSED: 'CLOSED',
-  SUSPENDED: 'SUSPENDED'
+  SUSPENDED: 'SUSPENDED',
+  PENDING_PAYMENT: 'PENDING_PAYMENT'
 } as const
 
 export type JobStatus = (typeof JobStatus)[keyof typeof JobStatus]

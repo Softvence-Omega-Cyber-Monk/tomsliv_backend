@@ -12,6 +12,9 @@ import { FarmRegisterDto, RegisterDto } from '../dto/register.dto';
 
 @Injectable()
 export class AuthRegisterService {
+  // Constants
+  private readonly EARLY_ADOPTER_LIMIT = 10;
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly utils: AuthUtilsService,
@@ -66,26 +69,37 @@ export class AuthRegisterService {
       throw new AppError(400, 'User already exists with this email');
     }
 
-    // Create new user with farm
-    const newUser = await this.prisma.client.user.create({
-      data: {
-        email,
-        name,
-        role: UserRole.FARM_OWNER,
-        password: await this.utils.hash(password),
-        isVerified: true,
-        farm: {
-          create: {
-            name: farmName,
+    // Execute User Creation & Early Adopter Check in Transaction
+    const newUser = await this.prisma.client.$transaction(async (tx) => {
+      // 1. Check for Early Adopter Availability
+      const currentEarlyAdopters = await tx.user.count({
+        where: { isEarlyAdopter: true },
+      });
+
+      const isEarlyAdopter = currentEarlyAdopters < this.EARLY_ADOPTER_LIMIT;
+
+      // 2. Create User
+      return tx.user.create({
+        data: {
+          email,
+          name,
+          role: UserRole.FARM_OWNER,
+          password: await this.utils.hash(password),
+          isVerified: true,
+          isEarlyAdopter, // Set status based on availability
+          farm: {
+            create: {
+              name: farmName,
+            },
+          },
+          notificationSettings: {
+            create: {},
           },
         },
-        notificationSettings: {
-          create: {},
+        include: {
+          farm: true,
         },
-      },
-      include: {
-        farm: true,
-      },
+      });
     });
 
     // Notify Admin & Super Admins
@@ -121,6 +135,7 @@ export class AuthRegisterService {
         email: newUser.email,
         farm: newUser.farm,
         isVerified: newUser.isVerified,
+        isEarlyAdopter: newUser.isEarlyAdopter,
       },
       `Registration successful. Welcome to TomsLiv.`,
     );

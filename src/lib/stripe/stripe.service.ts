@@ -156,6 +156,47 @@ export class StripeService {
     }
   }
 
+  async createPaymentIntent({
+    amount,
+    currency = 'usd',
+    customerId,
+    metadata,
+    paymentMethodId,
+  }: {
+    amount: number;
+    currency?: string;
+    customerId: string;
+    metadata: StripePaymentMetadata;
+    paymentMethodId?: string;
+  }) {
+    try {
+      const paymentIntent = await this.stripe.paymentIntents.create({
+        amount, // in cents
+        currency,
+        customer: customerId,
+        metadata,
+        payment_method: paymentMethodId,
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'never',
+        },
+        // If we want to capture immediately
+        confirm: !!paymentMethodId,
+      });
+
+      this.logger.log(
+        `Created PaymentIntent ${paymentIntent.id} for customer ${customerId}`,
+      );
+      return paymentIntent;
+    } catch (err) {
+      this.logger.error(
+        'createPaymentIntent failed',
+        (err as any)?.message ?? err,
+      );
+      throw err;
+    }
+  }
+
   async getActivePriceByLookupKey(lookupKey: string) {
     const prices = await this.stripe.prices.list({
       lookup_keys: [lookupKey],

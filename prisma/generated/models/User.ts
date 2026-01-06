@@ -20,8 +20,18 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
+}
+
+export type UserAvgAggregateOutputType = {
+  earlyAdopterDiscountUsage: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  earlyAdopterDiscountUsage: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -33,6 +43,8 @@ export type UserMinAggregateOutputType = {
   role: $Enums.UserRole | null
   status: $Enums.UserStatus | null
   isVerified: boolean | null
+  isEarlyAdopter: boolean | null
+  earlyAdopterDiscountUsage: number | null
   lastLoginAt: Date | null
   lastActiveAt: Date | null
   profilePictureId: string | null
@@ -55,6 +67,8 @@ export type UserMaxAggregateOutputType = {
   role: $Enums.UserRole | null
   status: $Enums.UserStatus | null
   isVerified: boolean | null
+  isEarlyAdopter: boolean | null
+  earlyAdopterDiscountUsage: number | null
   lastLoginAt: Date | null
   lastActiveAt: Date | null
   profilePictureId: string | null
@@ -77,6 +91,8 @@ export type UserCountAggregateOutputType = {
   role: number
   status: number
   isVerified: number
+  isEarlyAdopter: number
+  earlyAdopterDiscountUsage: number
   lastLoginAt: number
   lastActiveAt: number
   profilePictureId: number
@@ -92,6 +108,14 @@ export type UserCountAggregateOutputType = {
 }
 
 
+export type UserAvgAggregateInputType = {
+  earlyAdopterDiscountUsage?: true
+}
+
+export type UserSumAggregateInputType = {
+  earlyAdopterDiscountUsage?: true
+}
+
 export type UserMinAggregateInputType = {
   id?: true
   name?: true
@@ -101,6 +125,8 @@ export type UserMinAggregateInputType = {
   role?: true
   status?: true
   isVerified?: true
+  isEarlyAdopter?: true
+  earlyAdopterDiscountUsage?: true
   lastLoginAt?: true
   lastActiveAt?: true
   profilePictureId?: true
@@ -123,6 +149,8 @@ export type UserMaxAggregateInputType = {
   role?: true
   status?: true
   isVerified?: true
+  isEarlyAdopter?: true
+  earlyAdopterDiscountUsage?: true
   lastLoginAt?: true
   lastActiveAt?: true
   profilePictureId?: true
@@ -145,6 +173,8 @@ export type UserCountAggregateInputType = {
   role?: true
   status?: true
   isVerified?: true
+  isEarlyAdopter?: true
+  earlyAdopterDiscountUsage?: true
   lastLoginAt?: true
   lastActiveAt?: true
   profilePictureId?: true
@@ -197,6 +227,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -227,6 +269,8 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
@@ -240,6 +284,8 @@ export type UserGroupByOutputType = {
   role: $Enums.UserRole
   status: $Enums.UserStatus
   isVerified: boolean
+  isEarlyAdopter: boolean
+  earlyAdopterDiscountUsage: number
   lastLoginAt: Date | null
   lastActiveAt: Date | null
   profilePictureId: string | null
@@ -252,6 +298,8 @@ export type UserGroupByOutputType = {
   stripeDefaultPaymentMethodId: string | null
   subscriptionStatus: $Enums.SubscriptionStatus | null
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -283,6 +331,8 @@ export type UserWhereInput = {
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   isVerified?: Prisma.BoolFilter<"User"> | boolean
+  isEarlyAdopter?: Prisma.BoolFilter<"User"> | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   profilePictureId?: Prisma.StringNullableFilter<"User"> | string | null
@@ -317,6 +367,8 @@ export type UserOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  isEarlyAdopter?: Prisma.SortOrder
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePictureId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -360,6 +412,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus
   isVerified?: Prisma.BoolFilter<"User"> | boolean
+  isEarlyAdopter?: Prisma.BoolFilter<"User"> | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   lastActiveAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -388,6 +442,8 @@ export type UserOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  isEarlyAdopter?: Prisma.SortOrder
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrderInput | Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrderInput | Prisma.SortOrder
   profilePictureId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -400,8 +456,10 @@ export type UserOrderByWithAggregationInput = {
   stripeDefaultPaymentMethodId?: Prisma.SortOrderInput | Prisma.SortOrder
   subscriptionStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -416,6 +474,8 @@ export type UserScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
   isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  isEarlyAdopter?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntWithAggregatesFilter<"User"> | number
   lastLoginAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   lastActiveAt?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
   profilePictureId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
@@ -438,6 +498,8 @@ export type UserCreateInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -468,6 +530,8 @@ export type UserUncheckedCreateInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -498,6 +562,8 @@ export type UserUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,6 +594,8 @@ export type UserUncheckedUpdateInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -558,6 +626,8 @@ export type UserCreateManyInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -580,6 +650,8 @@ export type UserUpdateManyMutationInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -598,6 +670,8 @@ export type UserUncheckedUpdateManyInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -630,6 +704,8 @@ export type UserCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  isEarlyAdopter?: Prisma.SortOrder
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   profilePictureId?: Prisma.SortOrder
@@ -643,6 +719,10 @@ export type UserCountOrderByAggregateInput = {
   subscriptionStatus?: Prisma.SortOrder
 }
 
+export type UserAvgOrderByAggregateInput = {
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
+}
+
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -652,6 +732,8 @@ export type UserMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  isEarlyAdopter?: Prisma.SortOrder
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   profilePictureId?: Prisma.SortOrder
@@ -674,6 +756,8 @@ export type UserMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  isEarlyAdopter?: Prisma.SortOrder
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
   lastLoginAt?: Prisma.SortOrder
   lastActiveAt?: Prisma.SortOrder
   profilePictureId?: Prisma.SortOrder
@@ -685,6 +769,10 @@ export type UserMinOrderByAggregateInput = {
   stripeCustomerId?: Prisma.SortOrder
   stripeDefaultPaymentMethodId?: Prisma.SortOrder
   subscriptionStatus?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  earlyAdopterDiscountUsage?: Prisma.SortOrder
 }
 
 export type UserCreateNestedOneWithoutOtpsInput = {
@@ -950,6 +1038,8 @@ export type UserCreateWithoutOtpsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -979,6 +1069,8 @@ export type UserUncheckedCreateWithoutOtpsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1024,6 +1116,8 @@ export type UserUpdateWithoutOtpsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1053,6 +1147,8 @@ export type UserUncheckedUpdateWithoutOtpsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1082,6 +1178,8 @@ export type UserCreateWithoutRefreshTokensInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1111,6 +1209,8 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1156,6 +1256,8 @@ export type UserUpdateWithoutRefreshTokensInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1185,6 +1287,8 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1214,6 +1318,8 @@ export type UserCreateWithoutCvsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1243,6 +1349,8 @@ export type UserUncheckedCreateWithoutCvsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1277,6 +1385,8 @@ export type UserCreateWithoutSavedCVInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1306,6 +1416,8 @@ export type UserUncheckedCreateWithoutSavedCVInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1351,6 +1463,8 @@ export type UserUpdateWithoutCvsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1380,6 +1494,8 @@ export type UserUncheckedUpdateWithoutCvsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1420,6 +1536,8 @@ export type UserUpdateWithoutSavedCVInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1449,6 +1567,8 @@ export type UserUncheckedUpdateWithoutSavedCVInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1478,6 +1598,8 @@ export type UserCreateWithoutProfilePictureInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1507,6 +1629,8 @@ export type UserUncheckedCreateWithoutProfilePictureInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   farmId?: string | null
@@ -1552,6 +1676,8 @@ export type UserUpdateWithoutProfilePictureInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1581,6 +1707,8 @@ export type UserUncheckedUpdateWithoutProfilePictureInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   farmId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1610,6 +1738,8 @@ export type UserCreateWithoutJobApplicationsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1639,6 +1769,8 @@ export type UserUncheckedCreateWithoutJobApplicationsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1684,6 +1816,8 @@ export type UserUpdateWithoutJobApplicationsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1713,6 +1847,8 @@ export type UserUncheckedUpdateWithoutJobApplicationsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1742,6 +1878,8 @@ export type UserCreateWithoutSavedJobsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1771,6 +1909,8 @@ export type UserUncheckedCreateWithoutSavedJobsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1816,6 +1956,8 @@ export type UserUpdateWithoutSavedJobsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1845,6 +1987,8 @@ export type UserUncheckedUpdateWithoutSavedJobsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1874,6 +2018,8 @@ export type UserCreateWithoutNotificationsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -1903,6 +2049,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -1948,6 +2096,8 @@ export type UserUpdateWithoutNotificationsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1977,6 +2127,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2006,6 +2158,8 @@ export type UserCreateWithoutNotificationSettingsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -2035,6 +2189,8 @@ export type UserUncheckedCreateWithoutNotificationSettingsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -2080,6 +2236,8 @@ export type UserUpdateWithoutNotificationSettingsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2109,6 +2267,8 @@ export type UserUncheckedUpdateWithoutNotificationSettingsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2138,6 +2298,8 @@ export type UserCreateWithoutUserSubscriptionsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -2167,6 +2329,8 @@ export type UserUncheckedCreateWithoutUserSubscriptionsInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -2212,6 +2376,8 @@ export type UserUpdateWithoutUserSubscriptionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2241,6 +2407,8 @@ export type UserUncheckedUpdateWithoutUserSubscriptionsInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2270,6 +2438,8 @@ export type UserCreateWithoutInvoicesInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -2299,6 +2469,8 @@ export type UserUncheckedCreateWithoutInvoicesInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -2344,6 +2516,8 @@ export type UserUpdateWithoutInvoicesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2373,6 +2547,8 @@ export type UserUncheckedUpdateWithoutInvoicesInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2402,6 +2578,8 @@ export type UserCreateWithoutFarmInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   createdAt?: Date | string
@@ -2431,6 +2609,8 @@ export type UserUncheckedCreateWithoutFarmInput = {
   role: $Enums.UserRole
   status?: $Enums.UserStatus
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: number
   lastLoginAt?: Date | string | null
   lastActiveAt?: Date | string | null
   profilePictureId?: string | null
@@ -2476,6 +2656,8 @@ export type UserUpdateWithoutFarmInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2505,6 +2687,8 @@ export type UserUncheckedUpdateWithoutFarmInput = {
   role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isEarlyAdopter?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  earlyAdopterDiscountUsage?: Prisma.IntFieldUpdateOperationsInput | number
   lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   lastActiveAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   profilePictureId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -2628,6 +2812,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   role?: boolean
   status?: boolean
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: boolean
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
@@ -2663,6 +2849,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   status?: boolean
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: boolean
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
@@ -2689,6 +2877,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   role?: boolean
   status?: boolean
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: boolean
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
@@ -2715,6 +2905,8 @@ export type UserSelectScalar = {
   role?: boolean
   status?: boolean
   isVerified?: boolean
+  isEarlyAdopter?: boolean
+  earlyAdopterDiscountUsage?: boolean
   lastLoginAt?: boolean
   lastActiveAt?: boolean
   profilePictureId?: boolean
@@ -2728,7 +2920,7 @@ export type UserSelectScalar = {
   subscriptionStatus?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "password" | "role" | "status" | "isVerified" | "lastLoginAt" | "lastActiveAt" | "profilePictureId" | "farmId" | "savedCVId" | "notificationSettingsId" | "createdAt" | "updatedAt" | "stripeCustomerId" | "stripeDefaultPaymentMethodId" | "subscriptionStatus", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "password" | "role" | "status" | "isVerified" | "isEarlyAdopter" | "earlyAdopterDiscountUsage" | "lastLoginAt" | "lastActiveAt" | "profilePictureId" | "farmId" | "savedCVId" | "notificationSettingsId" | "createdAt" | "updatedAt" | "stripeCustomerId" | "stripeDefaultPaymentMethodId" | "subscriptionStatus", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   profilePicture?: boolean | Prisma.User$profilePictureArgs<ExtArgs>
   farm?: boolean | Prisma.User$farmArgs<ExtArgs>
@@ -2782,6 +2974,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     role: $Enums.UserRole
     status: $Enums.UserStatus
     isVerified: boolean
+    isEarlyAdopter: boolean
+    earlyAdopterDiscountUsage: number
     lastLoginAt: Date | null
     lastActiveAt: Date | null
     profilePictureId: string | null
@@ -3236,6 +3430,8 @@ export interface UserFieldRefs {
   readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly status: Prisma.FieldRef<"User", 'UserStatus'>
   readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly isEarlyAdopter: Prisma.FieldRef<"User", 'Boolean'>
+  readonly earlyAdopterDiscountUsage: Prisma.FieldRef<"User", 'Int'>
   readonly lastLoginAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly lastActiveAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly profilePictureId: Prisma.FieldRef<"User", 'String'>

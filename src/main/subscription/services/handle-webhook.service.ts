@@ -1,9 +1,13 @@
+import { QueueEventsEnum } from '@/common/enum/queue-events.enum';
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
+import { QueuePayload } from '@/lib/queue/interface/queue.payload';
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { StripePaymentMetadata } from '@/lib/stripe/stripe.types';
 import { Injectable, Logger } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UserRole } from '@prisma';
 import Stripe from 'stripe';
 
 @Injectable()
@@ -13,6 +17,7 @@ export class HandleWebhookService {
   constructor(
     private readonly stripeService: StripeService,
     private readonly prisma: PrismaService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   @HandleError('Failed to handle Stripe webhook', 'Subscription')
@@ -54,9 +59,150 @@ export class HandleWebhookService {
         await this.handleInvoicePaid(event.data.object as Stripe.Invoice);
         break;
 
+      case 'payment_intent.succeeded':
+        await this.handlePaymentIntentSucceeded(
+          event.data.object as Stripe.PaymentIntent,
+        );
+        break;
+
       default:
         this.logger.log(`Unhandled Stripe event type: ${event.type}`);
     }
+  }
+
+  private async handlePaymentIntentSucceeded(
+    paymentIntent: Stripe.PaymentIntent,
+  ) {
+    const metadata = paymentIntent.metadata as unknown as StripePaymentMetadata;
+    this.logger.log(`Processing payment_intent.succeeded: ${paymentIntent.id}`);
+
+    if (metadata.jobId) {
+      // Handle Job Payment
+      await this.handleJobPayment(paymentIntent, metadata);
+    } else {
+      // Handle other one-time payments if any
+      this.logger.warn(
+        `PaymentIntent ${paymentIntent.id} has no known handler (missing jobId or planId logic)`,
+      );
+    }
+  }
+
+  private async handleJobPayment(
+    paymentIntent: Stripe.PaymentIntent,
+    metadata: StripePaymentMetadata,
+  ) {
+    const { jobId, userId } = metadata;
+
+    if (!jobId || !userId) {
+      this.logger.error('Missing jobId or userId in metadata for job payment');
+      return;
+    }
+
+    const job = await this.prisma.client.job.findUnique({
+      where: { id: jobId },
+    });
+
+    if (!job) {
+      this.logger.error(
+        `Job ${jobId} not found for payment ${paymentIntent.id}`,
+      );
+      return;
+    }
+
+    if (job.status === 'ACTIVE') {
+      this.logger.log(`Job ${jobId} is already ACTIVE. Skipping.`);
+      return;
+    }
+
+    // Determine if we need to increment discount usage
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      this.logger.error(
+        `User ${userId} not found for payment ${paymentIntent.id}`,
+      );
+      return;
+    }
+
+    // Checking discount: If pricePaid < 250 (Normal Price), it implies a discount was used.
+    // Early Adopters get $150 (first) or $200 (next 3). Both are < 250.
+    const isDiscounted = (job.pricePaid || 0) < 250;
+    const shouldIncrementUsage = user.isEarlyAdopter && isDiscounted;
+
+    await this.prisma.client.$transaction(async (tx) => {
+      // 1. Activate Job
+      await tx.job.update({
+        where: { id: jobId },
+        data: {
+          status: 'ACTIVE',
+          paidAt: new Date(),
+        },
+      });
+
+      // 2. Increment Usage if applicable
+      if (shouldIncrementUsage) {
+        await tx.user.update({
+          where: { id: userId },
+          data: {
+            earlyAdopterDiscountUsage: {
+              increment: 1,
+            },
+          },
+        });
+        this.logger.log(
+          `Incremented earlyAdopterDiscountUsage for user ${userId}`,
+        );
+      }
+    });
+
+    this.logger.log(
+      `Job ${jobId} activated successfully after payment ${paymentIntent.id}`,
+    );
+
+    // Notify users about the new job
+    const userWithFarm = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+      include: { farm: true },
+    });
+
+    if (userWithFarm && userWithFarm.farm) {
+      this.notifyNewJob(jobId, job.title, userWithFarm.farm.name);
+    }
+  }
+
+  private async notifyNewJob(
+    jobId: string,
+    jobTitle: string,
+    farmName: string,
+  ) {
+    const interestedUsers = await this.prisma.client.user.findMany({
+      where: {
+        role: UserRole.USER,
+        notificationSettings: {
+          newRelatedJobsAlert: true,
+        },
+      },
+      select: { id: true },
+    });
+
+    if (interestedUsers.length === 0) return;
+
+    const payload: QueuePayload = {
+      recipients: interestedUsers,
+      type: QueueEventsEnum.NOTIFICATION,
+      title: 'New Job Posted',
+      message: `A new job "${jobTitle}" at ${farmName} matches your interests.`,
+      createdAt: new Date(),
+      meta: {
+        performedBy: 'system',
+        recordType: 'Job',
+        recordId: jobId,
+      },
+    };
+
+    this.eventEmitter.emit(QueueEventsEnum.NOTIFICATION, payload);
   }
 
   private async handleSetupIntentSucceeded(setupIntent: Stripe.SetupIntent) {
@@ -84,8 +230,10 @@ export class HandleWebhookService {
     }
 
     const paymentMethodId = setupIntent.payment_method as string;
-    if (!paymentMethodId) {
-      this.logger.warn(`SetupIntent ${setupIntentId} has no payment method`);
+    if (!paymentMethodId || !metadata.stripePriceId) {
+      this.logger.warn(
+        `SetupIntent ${setupIntentId} has no payment method or missing price ID`,
+      );
       return;
     }
 
@@ -93,7 +241,7 @@ export class HandleWebhookService {
       // Create Stripe subscription
       const stripeSub = await this.stripeService.createSubscription({
         customerId,
-        priceId: metadata.stripePriceId,
+        priceId: metadata.stripePriceId, // Now guaranteed string
         metadata,
         paymentMethodId,
       });

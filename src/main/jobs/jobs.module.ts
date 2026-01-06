@@ -1,3 +1,4 @@
+import { StripeModule } from '@/lib/stripe/stripe.module';
 import { Module } from '@nestjs/common';
 import { GetAllJobsController } from './controllers/get-all-jobs.controller';
 import { JobsController } from './controllers/jobs.controller';
@@ -10,6 +11,7 @@ import { JobService } from './services/job.service';
 import { UserJobsService } from './services/user-jobs.service';
 
 @Module({
+  imports: [StripeModule],
   controllers: [JobsController, GetAllJobsController, UserJobsController],
   providers: [
     JobService,
