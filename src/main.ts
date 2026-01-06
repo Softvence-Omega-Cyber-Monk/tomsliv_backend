@@ -25,6 +25,7 @@ async function bootstrap() {
       'http://16.176.48.236:4173',
       'http://localhost:4173',
       'http://16.176.48.236',
+      'https://farmlink.nz',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,

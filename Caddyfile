@@ -33,7 +33,7 @@ api.farmlink.nz {
 }
 
 ai.farmlink.nz {
-  tls internal # TODO: remove in production
+  # tls internal # TODO: remove in production
 
   # Allow up to 500MB upload
   request_body {

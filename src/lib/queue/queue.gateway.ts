@@ -20,6 +20,7 @@ import { NotificationPayload } from './interface/queue.payload';
       'http://16.176.48.236:4173',
       'http://localhost:4173',
       'http://16.176.48.236',
+      'https://farmlink.nz',
     ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
