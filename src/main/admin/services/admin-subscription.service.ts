@@ -16,38 +16,36 @@ export class AdminSubscriptionService {
   async getStats() {
     const now = DateTime.now();
 
-    // Total revenue
-    const totalRevenueResult = await this.prisma.client.invoice.aggregate({
-      _sum: { amount: true },
-      where: { status: 'PAID' },
+    // Total revenue (Jobs)
+    const totalRevenueResult = await this.prisma.client.job.aggregate({
+      _sum: { pricePaid: true },
+      where: { status: 'ACTIVE' },
     });
 
-    const totalRevenue = totalRevenueResult._sum.amount ?? 0;
+    // multiply by 100 for compatibility with cents-based UI
+    const totalRevenue = (totalRevenueResult._sum.pricePaid || 0) * 100;
 
     // Total revenue this week
     const startOfWeek = now.startOf('week').toJSDate();
     const endOfWeek = now.endOf('week').toJSDate();
 
-    const weeklyRevenueResult = await this.prisma.client.invoice.aggregate({
-      _sum: { amount: true },
+    const weeklyRevenueResult = await this.prisma.client.job.aggregate({
+      _sum: { pricePaid: true },
       where: {
-        status: 'PAID',
-        paidAt: { gte: startOfWeek, lte: endOfWeek },
+        status: 'ACTIVE',
+        createdAt: { gte: startOfWeek, lte: endOfWeek },
       },
     });
 
-    const weeklyRevenue = weeklyRevenueResult._sum.amount ?? 0;
+    const weeklyRevenue = (weeklyRevenueResult._sum.pricePaid || 0) * 100;
 
-    // Total transactions (paid invoices)
-    const totalTransactions = await this.prisma.client.invoice.count({
-      where: { status: 'PAID' },
+    // Total transactions (Active Jobs)
+    const totalTransactions = await this.prisma.client.job.count({
+      where: { status: 'ACTIVE' },
     });
 
-    // Running subscriptions
-    const runningSubscriptions =
-      await this.prisma.client.userSubscription.count({
-        where: { status: 'ACTIVE' },
-      });
+    // No subscriptions anymore
+    const runningSubscriptions = 0;
 
     const stats = {
       totalRevenue,
@@ -69,14 +67,14 @@ export class AdminSubscriptionService {
       const start = day.startOf('day').toJSDate();
       const end = day.endOf('day').toJSDate();
 
-      const sumResult = await this.prisma.client.invoice.aggregate({
-        _sum: { amount: true },
-        where: { status: 'PAID', paidAt: { gte: start, lte: end } },
+      const sumResult = await this.prisma.client.job.aggregate({
+        _sum: { pricePaid: true },
+        where: { status: 'ACTIVE', createdAt: { gte: start, lte: end } },
       });
 
       revenueData.push({
         label: day.toFormat('ccc dd'), // e.g., "Mon 15"
-        value: sumResult._sum.amount ?? 0,
+        value: (sumResult._sum.pricePaid || 0) * 100, // cents
         date: day.toISODate(),
       });
     }
@@ -94,14 +92,14 @@ export class AdminSubscriptionService {
       const start = month.startOf('month').toJSDate();
       const end = month.endOf('month').toJSDate();
 
-      const sumResult = await this.prisma.client.invoice.aggregate({
-        _sum: { amount: true },
-        where: { status: 'PAID', paidAt: { gte: start, lte: end } },
+      const sumResult = await this.prisma.client.job.aggregate({
+        _sum: { pricePaid: true },
+        where: { status: 'ACTIVE', createdAt: { gte: start, lte: end } },
       });
 
       revenueData.push({
         label: month.toFormat('LLL yyyy'), // e.g., "Dec 2025"
-        value: sumResult._sum.amount ?? 0,
+        value: (sumResult._sum.pricePaid || 0) * 100, // cents
         month: month.toISODate(),
       });
     }
@@ -115,69 +113,47 @@ export class AdminSubscriptionService {
     const limit = dto.limit && dto.limit > 0 ? +dto.limit : 10;
     const skip = (page - 1) * limit;
 
-    const invoices = await this.prisma.client.invoice.findMany({
-      orderBy: { issuedAt: 'desc' },
+    const jobs = await this.prisma.client.job.findMany({
+      where: { status: 'ACTIVE', pricePaid: { not: null } },
+      orderBy: { updatedAt: 'desc' },
       skip,
       take: limit,
       include: {
-        subscription: { include: { plan: true } },
-        user: true,
+        farm: {
+          include: {
+            users: true,
+          },
+        },
       },
     });
 
-    let data = invoices.map((inv) => ({
-      id: inv.id,
-      user: inv.user
-        ? {
-            name: inv.user.name,
-            email: inv.user.email,
-          }
-        : { name: 'Unknown', email: '' },
-      subscription: inv.subscription?.plan
-        ? { plan: { title: inv.subscription.plan.title } }
-        : { plan: { title: 'Unknown Plan' } },
-      amount: inv.amount,
-      currency: inv.currency,
-      status: inv.status,
-      issuedAt: inv.issuedAt,
-      paidAt: inv.paidAt,
-    }));
-
-    // If no data, return two dummy rows
-    if (data.length === 0) {
-      const now = new Date();
-      data = [
-        {
-          id: 'dummy1',
-          user: { name: 'John Doe', email: 'john@example.com' },
-          subscription: { plan: { title: 'Sample Plan' } },
-          amount: 1000,
-          currency: 'USD',
-          status: 'PAID',
-          issuedAt: now,
-          paidAt: now,
+    const data = jobs.map((job) => {
+      const user = job.farm.users;
+      return {
+        id: job.id,
+        user: {
+          name: user ? user.name : job.farm.name,
+          email: user ? user.email : 'N/A',
         },
-        {
-          id: 'dummy2',
-          user: { name: 'Jane Doe', email: 'jane@example.com' },
-          subscription: { plan: { title: 'Sample Plan' } },
-          amount: 500,
-          currency: 'USD',
-          status: 'PENDING',
-          issuedAt: now,
-          paidAt: null,
-        },
-      ];
-    }
+        subscription: { plan: { title: 'Job Advert' } },
+        amount: job.pricePaid,
+        currency: 'USD',
+        status: 'PAID',
+        issuedAt: job.createdAt,
+        paidAt: job.paidAt,
+      };
+    });
 
     return successPaginatedResponse(
       data,
       {
         page,
         limit,
-        total: await this.prisma.client.invoice.count(),
+        total: await this.prisma.client.job.count({
+          where: { status: 'ACTIVE', pricePaid: { not: null } },
+        }),
       },
-      'Successfully found',
+      'Successfully found payment history',
     );
   }
 }

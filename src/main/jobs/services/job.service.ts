@@ -57,14 +57,11 @@ export class JobService {
       let price = this.NORMAL_PRICE;
       const isEarlyAdopter = user.isEarlyAdopter;
       const earlyAdopterDiscountUsage = user.earlyAdopterDiscountUsage;
-      const statusUpdateData: Prisma.UserUpdateInput = {};
 
       if (isEarlyAdopter) {
         // Usage 0: First advert -> $150
         if (earlyAdopterDiscountUsage === 0) {
           price = this.EARLY_ADOPTER_PRICE; // $150
-          statusUpdateData.earlyAdopterDiscountUsage =
-            earlyAdopterDiscountUsage + 1;
         }
         // Usage 1, 2, 3: Next 3 adverts -> 20% OFF ($200)
         else if (
@@ -72,19 +69,11 @@ export class JobService {
         ) {
           price =
             this.NORMAL_PRICE * (1 - this.EARLY_ADOPTER_DISCOUNT_PERCENTAGE); // 250 - 20% = 200
-          statusUpdateData.earlyAdopterDiscountUsage =
-            earlyAdopterDiscountUsage + 1;
         }
         // Usage 4+: Normal Price ($250) - (Default)
       }
 
-      // 3. Update User Status if needed
-      if (Object.keys(statusUpdateData).length > 0) {
-        await tx.user.update({
-          where: { id: userId },
-          data: statusUpdateData,
-        });
-      }
+      // 3. User Status Update Moved to Webhook (on success)
 
       // 4. Create Job with PENDING_PAYMENT status
       const job = await tx.job.create({
@@ -99,7 +88,7 @@ export class JobService {
       return {
         job,
         price,
-        isNewEarlyAdopter: !!statusUpdateData.isEarlyAdopter,
+        isNewEarlyAdopter: user.isEarlyAdopter,
         farmName: farm.name,
         userEmail: user.email,
         userName: user.name,

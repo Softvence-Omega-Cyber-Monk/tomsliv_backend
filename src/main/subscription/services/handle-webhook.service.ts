@@ -114,12 +114,47 @@ export class HandleWebhookService {
       return;
     }
 
-    // Update Job Status
-    await this.prisma.client.job.update({
-      where: { id: jobId },
-      data: {
-        status: 'ACTIVE',
-      },
+    // Determine if we need to increment discount usage
+    const user = await this.prisma.client.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      this.logger.error(
+        `User ${userId} not found for payment ${paymentIntent.id}`,
+      );
+      return;
+    }
+
+    // Checking discount: If pricePaid < 250 (Normal Price), it implies a discount was used.
+    // Early Adopters get $150 (first) or $200 (next 3). Both are < 250.
+    const isDiscounted = (job.pricePaid || 0) < 250;
+    const shouldIncrementUsage = user.isEarlyAdopter && isDiscounted;
+
+    await this.prisma.client.$transaction(async (tx) => {
+      // 1. Activate Job
+      await tx.job.update({
+        where: { id: jobId },
+        data: {
+          status: 'ACTIVE',
+          paidAt: new Date(),
+        },
+      });
+
+      // 2. Increment Usage if applicable
+      if (shouldIncrementUsage) {
+        await tx.user.update({
+          where: { id: userId },
+          data: {
+            earlyAdopterDiscountUsage: {
+              increment: 1,
+            },
+          },
+        });
+        this.logger.log(
+          `Incremented earlyAdopterDiscountUsage for user ${userId}`,
+        );
+      }
     });
 
     this.logger.log(
@@ -127,13 +162,13 @@ export class HandleWebhookService {
     );
 
     // Notify users about the new job
-    const user = await this.prisma.client.user.findUnique({
+    const userWithFarm = await this.prisma.client.user.findUnique({
       where: { id: userId },
       include: { farm: true },
     });
 
-    if (user && user.farm) {
-      this.notifyNewJob(jobId, job.title, user.farm.name);
+    if (userWithFarm && userWithFarm.farm) {
+      this.notifyNewJob(jobId, job.title, userWithFarm.farm.name);
     }
   }
 

@@ -2,7 +2,7 @@ import { successResponse, TResponse } from '@/common/utils/response.util';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
-import { InvoiceStatus, UserRole } from '@prisma';
+import { UserRole } from '@prisma';
 import { DateTime } from 'luxon';
 
 @Injectable()
@@ -135,20 +135,24 @@ export class AdminStatsService {
         this.prisma.client.job.count({
           where: { createdAt: { gte: start, lte: end } },
         }),
-        this.prisma.client.invoice.aggregate({
+        this.prisma.client.job.aggregate({
           where: {
-            status: InvoiceStatus.PAID,
-            paidAt: { gte: start, lte: end },
+            status: 'ACTIVE',
+            createdAt: { gte: start, lte: end },
           },
-          _sum: { amount: true },
+          _sum: { pricePaid: true },
         }),
       ]);
+
+    // pricePaid is in dollars (e.g. 250). The formatter expects cents (divides by 100).
+    const revenueInDollars = revenueResult._sum.pricePaid || 0;
+    const revenueInCents = revenueInDollars * 100;
 
     return {
       totalUsers,
       totalFarms,
       totalJobs,
-      revenue: revenueResult._sum.amount || 0,
+      revenue: revenueInCents,
     };
   }
 

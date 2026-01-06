@@ -38,6 +38,7 @@ model Job {
 
   status JobStatus @default(ACTIVE)
   pricePaid Float?
+  paidAt   DateTime?
 
   idealCandidates IdealCandidate?
   jobApplications JobApplication[]
