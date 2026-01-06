@@ -22,6 +22,22 @@ api.farmlink.nz {
   }
 }
 
+ai.farmlink.nz {
+  tls internal # TODO: remove in production
+
+  # Allow up to 500MB upload
+  request_body {
+    max_size 500MB
+  }
+
+  reverse_proxy 127.0.0.1:8000 {
+    header_up X-Real-IP {remote}
+    header_up X-Forwarded-For {remote}
+    header_up X-Forwarded-Proto {scheme}
+    header_up Host {host}
+  }
+}
+
 farmlink.nz {
   tls internal # TODO: remove in production
 

@@ -22,8 +22,7 @@ export class AdminSubscriptionService {
       where: { status: 'ACTIVE' },
     });
 
-    // multiply by 100 for compatibility with cents-based UI
-    const totalRevenue = (totalRevenueResult._sum.pricePaid || 0) * 100;
+    const totalRevenue = totalRevenueResult._sum.pricePaid || 0;
 
     // Total revenue this week
     const startOfWeek = now.startOf('week').toJSDate();
@@ -37,7 +36,7 @@ export class AdminSubscriptionService {
       },
     });
 
-    const weeklyRevenue = (weeklyRevenueResult._sum.pricePaid || 0) * 100;
+    const weeklyRevenue = weeklyRevenueResult._sum.pricePaid || 0;
 
     // Total transactions (Active Jobs)
     const totalTransactions = await this.prisma.client.job.count({
@@ -74,7 +73,7 @@ export class AdminSubscriptionService {
 
       revenueData.push({
         label: day.toFormat('ccc dd'), // e.g., "Mon 15"
-        value: (sumResult._sum.pricePaid || 0) * 100, // cents
+        value: sumResult._sum.pricePaid || 0,
         date: day.toISODate(),
       });
     }
@@ -98,8 +97,8 @@ export class AdminSubscriptionService {
       });
 
       revenueData.push({
-        label: month.toFormat('LLL yyyy'), // e.g., "Dec 2025"
-        value: (sumResult._sum.pricePaid || 0) * 100, // cents
+        label: month.toFormat('LLL yyyy'),
+        value: sumResult._sum.pricePaid || 0,
         month: month.toISODate(),
       });
     }
