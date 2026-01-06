@@ -1,5 +1,5 @@
 api.farmlink.nz {
-  tls internal # TODO: remove in production
+  # tls internal # TODO: remove in production
 
   handle /pgadmin* {
     reverse_proxy pgadmin:80 {
@@ -49,7 +49,7 @@ ai.farmlink.nz {
 }
 
 farmlink.nz {
-  tls internal # TODO: remove in production
+  # tls internal # TODO: remove in production
 
   root * /var/www/html/dist
   try_files {path} /index.html
