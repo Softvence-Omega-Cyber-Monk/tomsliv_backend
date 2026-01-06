@@ -12,6 +12,10 @@ model User {
   status     UserStatus @default(ACTIVE)
   isVerified Boolean    @default(false)
 
+  // Promotional Status
+  isEarlyAdopter            Boolean @default(false)
+  earlyAdopterDiscountUsage Int     @default(0)
+
   // Activity
   lastLoginAt  DateTime?
   lastActiveAt DateTime?

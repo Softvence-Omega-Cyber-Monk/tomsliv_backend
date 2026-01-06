@@ -37,6 +37,7 @@ model Job {
   farmId String
 
   status JobStatus @default(ACTIVE)
+  pricePaid Float?
 
   idealCandidates IdealCandidate?
   jobApplications JobApplication[]
@@ -71,6 +72,7 @@ enum JobStatus {
   PAUSED
   CLOSED
   SUSPENDED
+  PENDING_PAYMENT
 }
 
 enum PrimaryLocation {

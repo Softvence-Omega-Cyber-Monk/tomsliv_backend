@@ -38,6 +38,7 @@ export type JobAvgAggregateOutputType = {
   totalPackageValue: number | null
   perKgMSDollarValue: number | null
   percentageOfMilkCheque: number | null
+  pricePaid: number | null
   viewCount: number | null
 }
 
@@ -53,6 +54,7 @@ export type JobSumAggregateOutputType = {
   totalPackageValue: number | null
   perKgMSDollarValue: number | null
   percentageOfMilkCheque: number | null
+  pricePaid: number | null
   viewCount: number | null
 }
 
@@ -82,6 +84,7 @@ export type JobMinAggregateOutputType = {
   percentageOfMilkCheque: number | null
   farmId: string | null
   status: $Enums.JobStatus | null
+  pricePaid: number | null
   viewCount: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -113,6 +116,7 @@ export type JobMaxAggregateOutputType = {
   percentageOfMilkCheque: number | null
   farmId: string | null
   status: $Enums.JobStatus | null
+  pricePaid: number | null
   viewCount: number | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -144,6 +148,7 @@ export type JobCountAggregateOutputType = {
   percentageOfMilkCheque: number
   farmId: number
   status: number
+  pricePaid: number
   viewCount: number
   createdAt: number
   updatedAt: number
@@ -163,6 +168,7 @@ export type JobAvgAggregateInputType = {
   totalPackageValue?: true
   perKgMSDollarValue?: true
   percentageOfMilkCheque?: true
+  pricePaid?: true
   viewCount?: true
 }
 
@@ -178,6 +184,7 @@ export type JobSumAggregateInputType = {
   totalPackageValue?: true
   perKgMSDollarValue?: true
   percentageOfMilkCheque?: true
+  pricePaid?: true
   viewCount?: true
 }
 
@@ -207,6 +214,7 @@ export type JobMinAggregateInputType = {
   percentageOfMilkCheque?: true
   farmId?: true
   status?: true
+  pricePaid?: true
   viewCount?: true
   createdAt?: true
   updatedAt?: true
@@ -238,6 +246,7 @@ export type JobMaxAggregateInputType = {
   percentageOfMilkCheque?: true
   farmId?: true
   status?: true
+  pricePaid?: true
   viewCount?: true
   createdAt?: true
   updatedAt?: true
@@ -269,6 +278,7 @@ export type JobCountAggregateInputType = {
   percentageOfMilkCheque?: true
   farmId?: true
   status?: true
+  pricePaid?: true
   viewCount?: true
   createdAt?: true
   updatedAt?: true
@@ -387,6 +397,7 @@ export type JobGroupByOutputType = {
   percentageOfMilkCheque: number | null
   farmId: string
   status: $Enums.JobStatus
+  pricePaid: number | null
   viewCount: number
   createdAt: Date
   updatedAt: Date
@@ -441,6 +452,7 @@ export type JobWhereInput = {
   percentageOfMilkCheque?: Prisma.FloatNullableFilter<"Job"> | number | null
   farmId?: Prisma.StringFilter<"Job"> | string
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
+  pricePaid?: Prisma.FloatNullableFilter<"Job"> | number | null
   viewCount?: Prisma.IntFilter<"Job"> | number
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -476,6 +488,7 @@ export type JobOrderByWithRelationInput = {
   percentageOfMilkCheque?: Prisma.SortOrderInput | Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrderInput | Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -514,6 +527,7 @@ export type JobWhereUniqueInput = Prisma.AtLeast<{
   percentageOfMilkCheque?: Prisma.FloatNullableFilter<"Job"> | number | null
   farmId?: Prisma.StringFilter<"Job"> | string
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
+  pricePaid?: Prisma.FloatNullableFilter<"Job"> | number | null
   viewCount?: Prisma.IntFilter<"Job"> | number
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -549,6 +563,7 @@ export type JobOrderByWithAggregationInput = {
   percentageOfMilkCheque?: Prisma.SortOrderInput | Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrderInput | Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -588,6 +603,7 @@ export type JobScalarWhereWithAggregatesInput = {
   percentageOfMilkCheque?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
   farmId?: Prisma.StringWithAggregatesFilter<"Job"> | string
   status?: Prisma.EnumJobStatusWithAggregatesFilter<"Job"> | $Enums.JobStatus
+  pricePaid?: Prisma.FloatNullableWithAggregatesFilter<"Job"> | number | null
   viewCount?: Prisma.IntWithAggregatesFilter<"Job"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Job"> | Date | string
@@ -618,6 +634,7 @@ export type JobCreateInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -653,6 +670,7 @@ export type JobUncheckedCreateInput = {
   percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -686,6 +704,7 @@ export type JobUpdateInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -721,6 +740,7 @@ export type JobUncheckedUpdateInput = {
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -755,6 +775,7 @@ export type JobCreateManyInput = {
   percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -785,6 +806,7 @@ export type JobUpdateManyMutationInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -816,6 +838,7 @@ export type JobUncheckedUpdateManyInput = {
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -852,6 +875,7 @@ export type JobCountOrderByAggregateInput = {
   percentageOfMilkCheque?: Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -869,6 +893,7 @@ export type JobAvgOrderByAggregateInput = {
   totalPackageValue?: Prisma.SortOrder
   perKgMSDollarValue?: Prisma.SortOrder
   percentageOfMilkCheque?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -898,6 +923,7 @@ export type JobMaxOrderByAggregateInput = {
   percentageOfMilkCheque?: Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -929,6 +955,7 @@ export type JobMinOrderByAggregateInput = {
   percentageOfMilkCheque?: Prisma.SortOrder
   farmId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -946,6 +973,7 @@ export type JobSumOrderByAggregateInput = {
   totalPackageValue?: Prisma.SortOrder
   perKgMSDollarValue?: Prisma.SortOrder
   percentageOfMilkCheque?: Prisma.SortOrder
+  pricePaid?: Prisma.SortOrder
   viewCount?: Prisma.SortOrder
 }
 
@@ -1084,6 +1112,7 @@ export type JobCreateWithoutIdealCandidatesInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1118,6 +1147,7 @@ export type JobUncheckedCreateWithoutIdealCandidatesInput = {
   percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1166,6 +1196,7 @@ export type JobUpdateWithoutIdealCandidatesInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1200,6 +1231,7 @@ export type JobUncheckedUpdateWithoutIdealCandidatesInput = {
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1232,6 +1264,7 @@ export type JobCreateWithoutJobApplicationsInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1266,6 +1299,7 @@ export type JobUncheckedCreateWithoutJobApplicationsInput = {
   percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1314,6 +1348,7 @@ export type JobUpdateWithoutJobApplicationsInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1348,6 +1383,7 @@ export type JobUncheckedUpdateWithoutJobApplicationsInput = {
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1380,6 +1416,7 @@ export type JobCreateWithoutSavedJobsInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1414,6 +1451,7 @@ export type JobUncheckedCreateWithoutSavedJobsInput = {
   percentageOfMilkCheque?: number | null
   farmId: string
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1462,6 +1500,7 @@ export type JobUpdateWithoutSavedJobsInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1496,6 +1535,7 @@ export type JobUncheckedUpdateWithoutSavedJobsInput = {
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   farmId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1528,6 +1568,7 @@ export type JobCreateWithoutFarmInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1561,6 +1602,7 @@ export type JobUncheckedCreateWithoutFarmInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1624,6 +1666,7 @@ export type JobScalarWhereInput = {
   percentageOfMilkCheque?: Prisma.FloatNullableFilter<"Job"> | number | null
   farmId?: Prisma.StringFilter<"Job"> | string
   status?: Prisma.EnumJobStatusFilter<"Job"> | $Enums.JobStatus
+  pricePaid?: Prisma.FloatNullableFilter<"Job"> | number | null
   viewCount?: Prisma.IntFilter<"Job"> | number
   createdAt?: Prisma.DateTimeFilter<"Job"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Job"> | Date | string
@@ -1654,6 +1697,7 @@ export type JobCreateManyFarmInput = {
   perKgMSDollarValue?: number | null
   percentageOfMilkCheque?: number | null
   status?: $Enums.JobStatus
+  pricePaid?: number | null
   viewCount?: number
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1684,6 +1728,7 @@ export type JobUpdateWithoutFarmInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1717,6 +1762,7 @@ export type JobUncheckedUpdateWithoutFarmInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1750,6 +1796,7 @@ export type JobUncheckedUpdateManyWithoutFarmInput = {
   perKgMSDollarValue?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   percentageOfMilkCheque?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   status?: Prisma.EnumJobStatusFieldUpdateOperationsInput | $Enums.JobStatus
+  pricePaid?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   viewCount?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1821,6 +1868,7 @@ export type JobSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = ru
   percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
+  pricePaid?: boolean
   viewCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1857,6 +1905,7 @@ export type JobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extension
   percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
+  pricePaid?: boolean
   viewCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1889,6 +1938,7 @@ export type JobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extension
   percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
+  pricePaid?: boolean
   viewCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1921,12 +1971,13 @@ export type JobSelectScalar = {
   percentageOfMilkCheque?: boolean
   farmId?: boolean
   status?: boolean
+  pricePaid?: boolean
   viewCount?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "benefits" | "farmSize" | "herdSize" | "onFarmStaff" | "location" | "jobType" | "role" | "numberOfPositions" | "requiredExperience" | "applicationDeadline" | "positionStartDate" | "hoursPerWeek" | "roster" | "remunerationPaidBy" | "remunerationType" | "remunerationStart" | "remunerationEnd" | "totalPackageValue" | "perKgMSDollarValue" | "percentageOfMilkCheque" | "farmId" | "status" | "viewCount" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
+export type JobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "benefits" | "farmSize" | "herdSize" | "onFarmStaff" | "location" | "jobType" | "role" | "numberOfPositions" | "requiredExperience" | "applicationDeadline" | "positionStartDate" | "hoursPerWeek" | "roster" | "remunerationPaidBy" | "remunerationType" | "remunerationStart" | "remunerationEnd" | "totalPackageValue" | "perKgMSDollarValue" | "percentageOfMilkCheque" | "farmId" | "status" | "pricePaid" | "viewCount" | "createdAt" | "updatedAt", ExtArgs["result"]["job"]>
 export type JobInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   farm?: boolean | Prisma.FarmDefaultArgs<ExtArgs>
   idealCandidates?: boolean | Prisma.Job$idealCandidatesArgs<ExtArgs>
@@ -1975,6 +2026,7 @@ export type $JobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
     percentageOfMilkCheque: number | null
     farmId: string
     status: $Enums.JobStatus
+    pricePaid: number | null
     viewCount: number
     createdAt: Date
     updatedAt: Date
@@ -2430,6 +2482,7 @@ export interface JobFieldRefs {
   readonly percentageOfMilkCheque: Prisma.FieldRef<"Job", 'Float'>
   readonly farmId: Prisma.FieldRef<"Job", 'String'>
   readonly status: Prisma.FieldRef<"Job", 'JobStatus'>
+  readonly pricePaid: Prisma.FieldRef<"Job", 'Float'>
   readonly viewCount: Prisma.FieldRef<"Job", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Job", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Job", 'DateTime'>

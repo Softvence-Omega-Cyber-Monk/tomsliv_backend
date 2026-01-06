@@ -2137,6 +2137,7 @@ export const JobScalarFieldEnum = {
   percentageOfMilkCheque: 'percentageOfMilkCheque',
   farmId: 'farmId',
   status: 'status',
+  pricePaid: 'pricePaid',
   viewCount: 'viewCount',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2243,6 +2244,8 @@ export const UserScalarFieldEnum = {
   role: 'role',
   status: 'status',
   isVerified: 'isVerified',
+  isEarlyAdopter: 'isEarlyAdopter',
+  earlyAdopterDiscountUsage: 'earlyAdopterDiscountUsage',
   lastLoginAt: 'lastLoginAt',
   lastActiveAt: 'lastActiveAt',
   profilePictureId: 'profilePictureId',

@@ -1,4 +1,3 @@
-import { QueueEventsEnum } from '@/common/enum/queue-events.enum';
 import {
   successPaginatedResponse,
   successResponse,
@@ -7,10 +6,9 @@ import {
 import { AppError } from '@/core/error/handle-error.app';
 import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
-import { QueuePayload } from '@/lib/queue/interface/queue.payload';
 import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-trigger.service';
+import { StripeService } from '@/lib/stripe/stripe.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Prisma, UserRole } from '@prisma';
 import { CreateJobDto } from '../dto/create-job.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
@@ -19,82 +17,133 @@ import { UpdateJobDto } from '../dto/update-job.dto';
 
 @Injectable()
 export class JobService {
+  // Constants for Pricing Rules
+  private readonly EARLY_ADOPTER_PRICE = 150;
+  private readonly NORMAL_PRICE = 250;
+  private readonly EARLY_ADOPTER_DISCOUNT_PERCENTAGE = 0.2; // 20%
+  private readonly EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT = 3;
+
   private readonly logger = new Logger(JobService.name);
 
   constructor(
     private readonly prisma: PrismaService,
     private readonly applicationAITrigger: ApplicationAITriggerService,
-    private readonly eventEmitter: EventEmitter2,
+    private readonly stripeService: StripeService,
   ) {}
 
   @HandleError('Failed to create job', 'Job')
   async createJob(userId: string, dto: CreateJobDto): Promise<TResponse<any>> {
-    const user = await this.prisma.client.user.findUniqueOrThrow({
-      where: { id: userId },
-      include: { farm: true },
+    // Pricing Logic Execution in Transaction
+    const result = await this.prisma.client.$transaction(async (tx) => {
+      // 1. Fetch User & Farm
+      const user = await tx.user.findUniqueOrThrow({
+        where: { id: userId },
+        include: { farm: true },
+      });
+
+      const farm = user.farm;
+      if (!farm) {
+        throw new AppError(
+          HttpStatus.BAD_REQUEST,
+          'User has no associated farm',
+        );
+      }
+
+      if (farm.status === 'INACTIVE') {
+        throw new AppError(HttpStatus.BAD_REQUEST, 'Farm is inactive');
+      }
+
+      // 2. Calculate Price based on Status
+      let price = this.NORMAL_PRICE;
+      const isEarlyAdopter = user.isEarlyAdopter;
+      const earlyAdopterDiscountUsage = user.earlyAdopterDiscountUsage;
+      const statusUpdateData: Prisma.UserUpdateInput = {};
+
+      if (isEarlyAdopter) {
+        // Usage 0: First advert -> $150
+        if (earlyAdopterDiscountUsage === 0) {
+          price = this.EARLY_ADOPTER_PRICE; // $150
+          statusUpdateData.earlyAdopterDiscountUsage =
+            earlyAdopterDiscountUsage + 1;
+        }
+        // Usage 1, 2, 3: Next 3 adverts -> 20% OFF ($200)
+        else if (
+          earlyAdopterDiscountUsage <= this.EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT
+        ) {
+          price =
+            this.NORMAL_PRICE * (1 - this.EARLY_ADOPTER_DISCOUNT_PERCENTAGE); // 250 - 20% = 200
+          statusUpdateData.earlyAdopterDiscountUsage =
+            earlyAdopterDiscountUsage + 1;
+        }
+        // Usage 4+: Normal Price ($250) - (Default)
+      }
+
+      // 3. Update User Status if needed
+      if (Object.keys(statusUpdateData).length > 0) {
+        await tx.user.update({
+          where: { id: userId },
+          data: statusUpdateData,
+        });
+      }
+
+      // 4. Create Job with PENDING_PAYMENT status
+      const job = await tx.job.create({
+        data: {
+          ...dto,
+          farmId: farm.id,
+          status: 'PENDING_PAYMENT',
+          pricePaid: price,
+        },
+      });
+
+      return {
+        job,
+        price,
+        isNewEarlyAdopter: !!statusUpdateData.isEarlyAdopter,
+        farmName: farm.name,
+        userEmail: user.email,
+        userName: user.name,
+      };
     });
 
-    const farm = user.farm;
-    if (!farm) {
-      this.logger.warn(`User with ID ${userId} has no associated farm.`);
-      throw new AppError(HttpStatus.BAD_REQUEST, 'User has no associated farm');
-    }
-
-    if (farm.status === 'INACTIVE') {
-      throw new AppError(HttpStatus.BAD_REQUEST, 'Farm is inactive');
-    }
-
-    const job = await this.prisma.client.job.create({
-      data: {
-        ...dto,
-        farmId: farm.id,
+    const paymentIntent = await this.stripeService.createPaymentIntent({
+      amount: Math.round(result.price * 100), // Convert to cents
+      currency: 'usd',
+      customerId: await this.stripeService
+        .getOrCreateCustomerId({
+          userId,
+          email: result.userEmail,
+          name: result.userName,
+        })
+        .then((c: any) => c.id),
+      metadata: {
+        userId,
+        email: result.userEmail,
+        name: result.userName,
+        planId: 'job-advert-one-time', // Placeholder
+        planTitle: 'Job Advert',
+        stripeProductId: 'job-advert', // Placeholder
+        jobId: result.job.id,
+        jobTitle: result.job.title,
       },
     });
 
-    // Notify users interested in new jobs
-    this.notifyNewJob(job.id, job.title, farm.name);
-
-    return successResponse(job, 'Job created successfully');
-  }
-
-  private async notifyNewJob(
-    jobId: string,
-    jobTitle: string,
-    farmName: string,
-  ) {
-    const interestedUsers = await this.prisma.client.user.findMany({
-      where: {
-        role: UserRole.USER,
-        notificationSettings: {
-          newRelatedJobsAlert: true,
+    return successResponse(
+      {
+        ...result.job,
+        clientSecret: paymentIntent.client_secret,
+        pricing: {
+          pricePaid: result.price,
+          currency: 'USD',
+          isEarlyAdopter:
+            result.isNewEarlyAdopter ||
+            (await this.prisma.client.user
+              .findUnique({ where: { id: userId } })
+              .then((u) => u?.isEarlyAdopter)),
         },
       },
-      select: { id: true },
-    });
-
-    if (interestedUsers.length === 0) return;
-
-    // Use notifyAllUsers logic via generic queue if needed, but for now specific users
-    // Since recipients might be large, we might want to split or just let QueueGateway handle it
-    // QueuePayload recipients is {id: string}[].
-
-    // Check if list is too large? QueueGateway iterates.
-    // If > 1000, maybe chunk? For now assuming simple.
-
-    const payload: QueuePayload = {
-      recipients: interestedUsers,
-      type: QueueEventsEnum.NOTIFICATION,
-      title: 'New Job Posted',
-      message: `A new job "${jobTitle}" at ${farmName} matches your interests.`,
-      createdAt: new Date(),
-      meta: {
-        performedBy: 'system',
-        recordType: 'Job',
-        recordId: jobId,
-      },
-    };
-
-    this.eventEmitter.emit(QueueEventsEnum.NOTIFICATION, payload);
+      'Job created. Payment required to publish.',
+    );
   }
 
   @HandleError('Failed to update job', 'Job')

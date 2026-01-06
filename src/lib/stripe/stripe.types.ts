@@ -5,5 +5,7 @@ export type StripePaymentMetadata = {
   planId: string;
   planTitle: string;
   stripeProductId: string;
-  stripePriceId: string;
+  stripePriceId?: string;
+  jobId?: string;
+  jobTitle?: string;
 };
