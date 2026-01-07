@@ -31,7 +31,7 @@ export class GetAllJobsService {
     if (status) {
       where.status = status;
     } else {
-      where.status = { not: 'SUSPENDED' };
+      where.status = { notIn: ['SUSPENDED', 'PENDING_PAYMENT'] };
     }
 
     if (jobTypes?.length) where.jobType = { in: jobTypes };
