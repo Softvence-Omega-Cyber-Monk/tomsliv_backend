@@ -27,40 +27,56 @@ export class GetAllJobsService {
     } = query;
 
     // ---------------- Filters ----------------
-    const where: Prisma.JobWhereInput = {};
+    const andFilters: Prisma.JobWhereInput[] = [];
 
     if (status) {
-      where.status = status;
+      andFilters.push({ status });
     } else {
-      where.status = { notIn: ['SUSPENDED', 'PENDING_PAYMENT'] };
+      andFilters.push({
+        status: { notIn: ['SUSPENDED', 'PENDING_PAYMENT', 'CLOSED', 'PAUSED'] },
+      });
     }
 
-    if (jobTypes?.length) where.jobType = { in: jobTypes };
-    if (roles?.length) where.title = { in: roles };
+    if (jobTypes?.length) {
+      andFilters.push({ jobType: { in: jobTypes } });
+    }
+
+    if (roles?.length) {
+      andFilters.push({
+        OR: roles.map((role) => ({
+          role: { equals: role, mode: QueryMode.insensitive },
+        })),
+      });
+    }
+
     if (locations?.length) {
-      where.OR = [
-        ...(where.OR || []),
-        ...locations.map((loc) => ({
+      andFilters.push({
+        OR: locations.map((loc) => ({
           location: { equals: loc, mode: QueryMode.insensitive },
         })),
-      ];
+      });
     }
 
     if (remunerationRange?.length) {
-      // OR multiple remuneration ranges
-      where.OR = remunerationRange.map((r) => ({
-        remunerationStart: { gte: r.min },
-        remunerationEnd: { lte: r.max },
-      }));
+      andFilters.push({
+        OR: remunerationRange.map((r) => ({
+          remunerationStart: { gte: r.min, lte: r.max },
+        })),
+      });
     }
 
     if (search) {
-      where.OR = [
-        ...(where.OR || []),
-        { title: { contains: search, mode: 'insensitive' } },
-        { description: { contains: search, mode: 'insensitive' } },
-      ];
+      andFilters.push({
+        OR: [
+          { title: { contains: search, mode: QueryMode.insensitive } },
+          { description: { contains: search, mode: QueryMode.insensitive } },
+          { role: { contains: search, mode: QueryMode.insensitive } },
+          { location: { contains: search, mode: QueryMode.insensitive } },
+        ],
+      });
     }
+
+    const where: Prisma.JobWhereInput = { AND: andFilters };
 
     // ---------------- Sorting ----------------
     let orderBy: Prisma.JobOrderByWithRelationInput = { createdAt: 'desc' }; // default

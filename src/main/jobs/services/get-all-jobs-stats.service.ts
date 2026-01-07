@@ -18,6 +18,9 @@ export class GetAllJobsStatsService {
   async getJobTypesWithCounts(): Promise<TResponse<any>> {
     const counts = await this.prisma.client.job.groupBy({
       by: ['jobType'],
+      where: {
+        status: { notIn: ['SUSPENDED', 'PENDING_PAYMENT', 'CLOSED', 'PAUSED'] },
+      },
       _count: { jobType: true },
     });
 
@@ -54,7 +57,10 @@ export class GetAllJobsStatsService {
   async getRemunerationBuckets(): Promise<TResponse<any>> {
     const jobs = await this.prisma.client.job.findMany({
       select: { remunerationStart: true },
-      where: { remunerationStart: { not: null } },
+      where: {
+        remunerationStart: { not: null },
+        status: { notIn: ['SUSPENDED', 'PENDING_PAYMENT', 'CLOSED', 'PAUSED'] },
+      },
     });
 
     const buckets = this.remunerationBuckets.map((bucket) => {
@@ -94,13 +100,25 @@ export class GetAllJobsStatsService {
 
     const counts = await this.prisma.client.job.groupBy({
       by: ['role'],
+      where: {
+        status: { notIn: ['SUSPENDED', 'PENDING_PAYMENT', 'CLOSED', 'PAUSED'] },
+      },
       _count: { role: true },
     });
 
-    const roles = counts.map((c) => ({
-      role: c.role,
-      count: c._count.role,
-      label: `${c.role} (${c._count.role})`,
+    // Case-insensitive exact match grouping
+    const roleMap: Record<string, number> = {};
+    for (const item of counts) {
+      if (!item.role) continue;
+      const roleLower = item.role.trim().toLowerCase();
+      // Use the first occurrence's casing as the label or just capitalize
+      roleMap[roleLower] = (roleMap[roleLower] || 0) + item._count.role;
+    }
+
+    const roles = Object.entries(roleMap).map(([role, count]) => ({
+      role: role,
+      count: count,
+      label: `${role.charAt(0).toUpperCase() + role.slice(1)} (${count})`,
     }));
 
     const paginatedRoles = roles.slice(skip, skip + limit);
@@ -125,6 +143,9 @@ export class GetAllJobsStatsService {
 
     const regionCounts = await this.prisma.client.job.groupBy({
       by: ['location'],
+      where: {
+        status: { notIn: ['SUSPENDED', 'PENDING_PAYMENT', 'CLOSED', 'PAUSED'] },
+      },
       _count: { location: true },
     });
 
