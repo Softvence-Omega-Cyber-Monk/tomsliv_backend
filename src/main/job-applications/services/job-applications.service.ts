@@ -388,6 +388,7 @@ export class JobApplicationsService {
           job: {
             include: {
               farm: true,
+              _count: { select: { jobApplications: true } },
             },
           },
           applicationAIResults: true,
