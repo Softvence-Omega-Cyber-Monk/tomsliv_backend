@@ -23,6 +23,8 @@ export class JobsService {
 
     if (dto.status) {
       where.status = dto.status;
+    } else {
+      where.status = { not: 'PENDING_PAYMENT' };
     }
 
     if (dto.search) {
