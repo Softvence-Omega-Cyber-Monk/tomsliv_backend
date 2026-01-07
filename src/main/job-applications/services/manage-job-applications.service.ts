@@ -28,6 +28,7 @@ export class ManageJobApplicationsService {
           cv: {
             include: {
               customCV: true,
+              customCoverLetter: true,
               educations: true,
               experiences: true,
               jobApplications: true,
@@ -66,7 +67,14 @@ export class ManageJobApplicationsService {
         data: { status: ApplicationStatus.REVIEWED },
         include: {
           job: true,
-          cv: { include: { customCV: true } },
+          cv: {
+            include: {
+              customCV: true,
+              customCoverLetter: true,
+              educations: true,
+              experiences: true,
+            },
+          },
           user: {
             select: {
               id: true,
