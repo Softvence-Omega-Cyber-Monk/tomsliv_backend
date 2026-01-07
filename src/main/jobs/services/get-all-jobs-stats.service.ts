@@ -137,7 +137,7 @@ export class GetAllJobsStatsService {
       {} as Record<string, string>,
     );
 
-    // Build aggregated counts
+    // Build aggregated counts (case-insensitive exact match only)
     const countMap: Record<string, number> = {};
 
     for (const item of regionCounts) {
@@ -145,13 +145,9 @@ export class GetAllJobsStatsService {
 
       const regionLower = item.location.toLowerCase();
 
-      // PARTIAL + CASE-INSENSITIVE MATCH
-      const matched = Object.keys(regionLookup).find((nzRegionLower) =>
-        regionLower.includes(nzRegionLower),
-      );
-
-      if (matched) {
-        const correctName = regionLookup[matched];
+      // CASE-INSENSITIVE EXACT MATCH ONLY
+      const correctName = regionLookup[regionLower];
+      if (correctName) {
         countMap[correctName] =
           (countMap[correctName] ?? 0) + item._count.location;
       }
