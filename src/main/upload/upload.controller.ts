@@ -27,8 +27,6 @@ import { UploadFilesRequestDto } from './dto/upload-file-request.dto';
 import { UploadFilesResponseDto } from './dto/upload-file-response.dto';
 import { UploadService } from './upload.service';
 
-@ApiBearerAuth()
-@ValidateAuth()
 @ApiTags('Files Upload')
 @Controller('upload')
 export class UploadController {
@@ -61,18 +59,24 @@ export class UploadController {
     return this.uploadService.uploadFiles(files);
   }
 
+  @ApiBearerAuth()
+  @ValidateAuth()
   @Delete()
   @ApiOperation({ summary: 'Delete multiple files from S3' })
   async deleteFiles(@Body() body: DeleteFilesRequestDto) {
     return this.uploadService.deleteFiles(body.fileIds);
   }
 
+  @ApiBearerAuth()
+  @ValidateAuth()
   @Get()
   @ApiOperation({ summary: 'Get all files from S3' })
   async getFiles(@Query() pg: PaginationDto) {
     return this.uploadService.getFiles(pg);
   }
 
+  @ApiBearerAuth()
+  @ValidateAuth()
   @Get(':id')
   @ApiOperation({ summary: 'Get a specific file from S3' })
   async getFileById(@Param('id') id: string) {
