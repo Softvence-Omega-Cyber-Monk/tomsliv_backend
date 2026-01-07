@@ -3,6 +3,7 @@ import { HandleError } from '@/core/error/handle-error.decorator';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma';
+import { QueryMode } from 'prisma/generated/internal/prismaNamespace';
 import { GetAllJobsDto, JobSortOptionEnum } from '../dto/get-jobs.dto';
 
 @Injectable()
@@ -36,7 +37,14 @@ export class GetAllJobsService {
 
     if (jobTypes?.length) where.jobType = { in: jobTypes };
     if (roles?.length) where.title = { in: roles };
-    if (locations?.length) where.location = { in: locations };
+    if (locations?.length) {
+      where.OR = [
+        ...(where.OR || []),
+        ...locations.map((loc) => ({
+          location: { equals: loc, mode: QueryMode.insensitive },
+        })),
+      ];
+    }
 
     if (remunerationRange?.length) {
       // OR multiple remuneration ranges
