@@ -101,9 +101,25 @@ export class GetAllJobsDto extends PaginationDto {
     example: [{ min: 10000, max: 50000 }],
   })
   @IsOptional()
-  @Transform(({ value }) =>
-    value ? (Array.isArray(value) ? value : [value]) : undefined,
-  )
+  @Transform(({ value }) => {
+    if (!value) return undefined;
+    const rawItems = Array.isArray(value) ? value : [value];
+    return rawItems
+      .map((item) => {
+        if (
+          typeof item === 'string' &&
+          (item.startsWith('[') || item.startsWith('{'))
+        ) {
+          try {
+            return JSON.parse(item);
+          } catch {
+            return item;
+          }
+        }
+        return item;
+      })
+      .flat();
+  })
   @Type(() => RemunerationRangeDto)
   @IsArray()
   remunerationRange?: RemunerationRangeDto[];
