@@ -140,6 +140,9 @@ export class ApplicationAIWorkerService extends WorkerHost {
         },
       });
 
+      // Hydrate CV with extracted data for future comparisons
+      await this.hydrateCvFromAiResult(application.cv.id, aiResult);
+
       this.logger.log(`AI analysis completed for application ${applicationId}`);
     } catch (err) {
       this.logger.error(
@@ -343,6 +346,79 @@ export class ApplicationAIWorkerService extends WorkerHost {
     this.logger.log(
       `Shortlist email sent to ${cv.email} for application ${applicationId}`,
     );
+  }
+
+  private async hydrateCvFromAiResult(cvId: string, aiResult: any) {
+    try {
+      const cv = await this.prisma.client.cV.findUnique({
+        where: { id: cvId },
+        include: { experiences: true, educations: true },
+      });
+
+      if (!cv) return;
+
+      const dataToUpdate: any = {};
+
+      // 1. Update summary if empty
+      if (!cv.summary && aiResult.AI_generated_summary) {
+        dataToUpdate.summary = aiResult.AI_generated_summary;
+      }
+
+      // 2. Update experiences if empty
+      if (cv.experiences.length === 0 && aiResult.work_experience?.length > 0) {
+        dataToUpdate.experiences = {
+          create: aiResult.work_experience.map((exp: any) => ({
+            jobTitle: exp.role || 'NA',
+            company: 'NA',
+            jobType: 'FULL_TIME',
+            summary: Array.isArray(exp.responsibilities)
+              ? exp.responsibilities.join('\n')
+              : exp.responsibilities || '',
+            startDate: this.parseYearFromDuration(exp.duration, true),
+            endDate: exp.duration?.toLowerCase().includes('present')
+              ? null
+              : this.parseYearFromDuration(exp.duration, false),
+            isOngoing: exp.duration?.toLowerCase().includes('present') || false,
+          })),
+        };
+      }
+
+      // 3. Update educations if empty
+      if (cv.educations.length === 0 && aiResult.certifications?.length > 0) {
+        dataToUpdate.educations = {
+          create: aiResult.certifications.map((cert: string) => ({
+            degree: cert,
+            institution: 'NA',
+            startDate: new Date(),
+            isOngoing: false,
+          })),
+        };
+      }
+
+      if (Object.keys(dataToUpdate).length > 0) {
+        await this.prisma.client.cV.update({
+          where: { id: cvId },
+          data: dataToUpdate,
+        });
+        this.logger.log(`CV ${cvId} hydrated with AI extracted data`);
+      }
+    } catch (err) {
+      this.logger.warn(`Failed to hydrate CV ${cvId}: ${err.message}`);
+    }
+  }
+
+  private parseYearFromDuration(duration: string, isStart: boolean): Date {
+    try {
+      if (!duration) return new Date();
+      const years = duration.match(/\d{4}/g);
+      if (years && years.length > 0) {
+        if (isStart) return new Date(`${years[0]}-01-01`);
+        if (years.length > 1) return new Date(`${years[1]}-01-01`);
+      }
+      return new Date();
+    } catch {
+      return new Date();
+    }
   }
 
   @OnWorkerEvent('completed')
