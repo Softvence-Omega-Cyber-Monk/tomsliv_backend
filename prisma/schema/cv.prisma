@@ -12,7 +12,7 @@ model CV {
   summary  String?
 
   jobTitle     String?
-  jobType      JobType
+  jobType      JobType?
   availability DateTime?
 
   hasDrivingLicense  Boolean @default(false)
@@ -56,7 +56,7 @@ model Experience {
   cvId String
 
   jobTitle String
-  jobType  JobType
+  jobType  JobType?
   company  String
   summary  String
 

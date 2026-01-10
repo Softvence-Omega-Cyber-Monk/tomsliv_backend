@@ -187,7 +187,7 @@ export type ExperienceGroupByOutputType = {
   id: string
   cvId: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date
@@ -222,7 +222,7 @@ export type ExperienceWhereInput = {
   id?: Prisma.StringFilter<"Experience"> | string
   cvId?: Prisma.StringFilter<"Experience"> | string
   jobTitle?: Prisma.StringFilter<"Experience"> | string
-  jobType?: Prisma.EnumJobTypeFilter<"Experience"> | $Enums.JobType
+  jobType?: Prisma.EnumJobTypeNullableFilter<"Experience"> | $Enums.JobType | null
   company?: Prisma.StringFilter<"Experience"> | string
   summary?: Prisma.StringFilter<"Experience"> | string
   startDate?: Prisma.DateTimeFilter<"Experience"> | Date | string
@@ -237,7 +237,7 @@ export type ExperienceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
-  jobType?: Prisma.SortOrder
+  jobType?: Prisma.SortOrderInput | Prisma.SortOrder
   company?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
@@ -255,7 +255,7 @@ export type ExperienceWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.ExperienceWhereInput | Prisma.ExperienceWhereInput[]
   cvId?: Prisma.StringFilter<"Experience"> | string
   jobTitle?: Prisma.StringFilter<"Experience"> | string
-  jobType?: Prisma.EnumJobTypeFilter<"Experience"> | $Enums.JobType
+  jobType?: Prisma.EnumJobTypeNullableFilter<"Experience"> | $Enums.JobType | null
   company?: Prisma.StringFilter<"Experience"> | string
   summary?: Prisma.StringFilter<"Experience"> | string
   startDate?: Prisma.DateTimeFilter<"Experience"> | Date | string
@@ -270,7 +270,7 @@ export type ExperienceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   cvId?: Prisma.SortOrder
   jobTitle?: Prisma.SortOrder
-  jobType?: Prisma.SortOrder
+  jobType?: Prisma.SortOrderInput | Prisma.SortOrder
   company?: Prisma.SortOrder
   summary?: Prisma.SortOrder
   startDate?: Prisma.SortOrder
@@ -290,7 +290,7 @@ export type ExperienceScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Experience"> | string
   cvId?: Prisma.StringWithAggregatesFilter<"Experience"> | string
   jobTitle?: Prisma.StringWithAggregatesFilter<"Experience"> | string
-  jobType?: Prisma.EnumJobTypeWithAggregatesFilter<"Experience"> | $Enums.JobType
+  jobType?: Prisma.EnumJobTypeNullableWithAggregatesFilter<"Experience"> | $Enums.JobType | null
   company?: Prisma.StringWithAggregatesFilter<"Experience"> | string
   summary?: Prisma.StringWithAggregatesFilter<"Experience"> | string
   startDate?: Prisma.DateTimeWithAggregatesFilter<"Experience"> | Date | string
@@ -303,7 +303,7 @@ export type ExperienceScalarWhereWithAggregatesInput = {
 export type ExperienceCreateInput = {
   id?: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType?: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date | string
@@ -318,7 +318,7 @@ export type ExperienceUncheckedCreateInput = {
   id?: string
   cvId: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType?: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date | string
@@ -331,7 +331,7 @@ export type ExperienceUncheckedCreateInput = {
 export type ExperienceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -346,7 +346,7 @@ export type ExperienceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,7 +360,7 @@ export type ExperienceCreateManyInput = {
   id?: string
   cvId: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType?: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date | string
@@ -373,7 +373,7 @@ export type ExperienceCreateManyInput = {
 export type ExperienceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -387,7 +387,7 @@ export type ExperienceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cvId?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -494,7 +494,7 @@ export type ExperienceUncheckedUpdateManyWithoutCvNestedInput = {
 export type ExperienceCreateWithoutCvInput = {
   id?: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType?: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date | string
@@ -507,7 +507,7 @@ export type ExperienceCreateWithoutCvInput = {
 export type ExperienceUncheckedCreateWithoutCvInput = {
   id?: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType?: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date | string
@@ -550,7 +550,7 @@ export type ExperienceScalarWhereInput = {
   id?: Prisma.StringFilter<"Experience"> | string
   cvId?: Prisma.StringFilter<"Experience"> | string
   jobTitle?: Prisma.StringFilter<"Experience"> | string
-  jobType?: Prisma.EnumJobTypeFilter<"Experience"> | $Enums.JobType
+  jobType?: Prisma.EnumJobTypeNullableFilter<"Experience"> | $Enums.JobType | null
   company?: Prisma.StringFilter<"Experience"> | string
   summary?: Prisma.StringFilter<"Experience"> | string
   startDate?: Prisma.DateTimeFilter<"Experience"> | Date | string
@@ -563,7 +563,7 @@ export type ExperienceScalarWhereInput = {
 export type ExperienceCreateManyCvInput = {
   id?: string
   jobTitle: string
-  jobType: $Enums.JobType
+  jobType?: $Enums.JobType | null
   company: string
   summary: string
   startDate: Date | string
@@ -576,7 +576,7 @@ export type ExperienceCreateManyCvInput = {
 export type ExperienceUpdateWithoutCvInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -589,7 +589,7 @@ export type ExperienceUpdateWithoutCvInput = {
 export type ExperienceUncheckedUpdateWithoutCvInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -602,7 +602,7 @@ export type ExperienceUncheckedUpdateWithoutCvInput = {
 export type ExperienceUncheckedUpdateManyWithoutCvInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
-  jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
+  jobType?: Prisma.NullableEnumJobTypeFieldUpdateOperationsInput | $Enums.JobType | null
   company?: Prisma.StringFieldUpdateOperationsInput | string
   summary?: Prisma.StringFieldUpdateOperationsInput | string
   startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -693,7 +693,7 @@ export type $ExperiencePayload<ExtArgs extends runtime.Types.Extensions.Internal
     id: string
     cvId: string
     jobTitle: string
-    jobType: $Enums.JobType
+    jobType: $Enums.JobType | null
     company: string
     summary: string
     startDate: Date
