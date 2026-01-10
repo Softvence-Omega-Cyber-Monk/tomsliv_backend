@@ -1,11 +1,11 @@
 import { ENVEnum } from '@/common/enum/env.enum';
 import { QueueName } from '@/common/enum/queue-name.enum';
+import { S3Service } from '@/lib/file/services/s3.service';
 import { ShortlistMailService } from '@/lib/mail/services/shortlist-mail.service';
 import { PrismaService } from '@/lib/prisma/prisma.service';
 import { OnWorkerEvent, Processor, WorkerHost } from '@nestjs/bullmq';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
 import { Job } from 'bullmq';
 import { ApplicationAIPayload } from '../interface/application-ai.payload';
 
@@ -18,6 +18,7 @@ export class ApplicationAIWorkerService extends WorkerHost {
     private readonly prisma: PrismaService,
     private readonly shortlistMailService: ShortlistMailService,
     private readonly configService: ConfigService,
+    private readonly s3Service: S3Service,
   ) {
     super();
     this.AI_URL = this.configService.get<string>(ENVEnum.AI_URL) || '';
@@ -49,7 +50,14 @@ export class ApplicationAIWorkerService extends WorkerHost {
       const application = await this.prisma.client.jobApplication.findUnique({
         where: { id: applicationId },
         include: {
-          cv: { include: { experiences: true, educations: true } },
+          cv: {
+            include: {
+              experiences: true,
+              educations: true,
+              customCV: true,
+              customCoverLetter: true,
+            },
+          },
           job: { include: { farm: true, idealCandidates: true } },
           user: { select: { name: true, email: true } },
           applicationAIResults: true,
@@ -93,11 +101,12 @@ export class ApplicationAIWorkerService extends WorkerHost {
 
       const cvJson = this.transformCvForAi(application.cv);
 
-      // Call AI endpoint
+      // Call AI endpoint - pass raw CV model as requested
       const aiResult = await this.callAiEndpoint(
         jobDetails,
         idealCandidatePayload,
-        cvJson,
+        application.cv, // Passing raw Prisma CV model
+        cvJson, // Still passing transformed version for file metadata
       );
 
       this.logger.log(
@@ -144,6 +153,20 @@ export class ApplicationAIWorkerService extends WorkerHost {
   private transformCvForAi(cv: any) {
     return {
       name: `${cv.firstName} ${cv.lastName}`,
+      email: cv.email,
+      phone: cv.phone,
+      location: cv.location,
+      summary: cv.summary || '',
+      job_title: cv.jobTitle || '',
+      job_type: cv.jobType || '',
+      cv_url: cv.customCV?.url || '',
+      cv_path: cv.customCV?.path || '',
+      cv_mime_type: cv.customCV?.mimeType || 'application/pdf',
+      cv_filename: cv.customCV?.originalFilename || 'cv.pdf',
+      cover_letter_url: cv.customCoverLetter?.url || '',
+      cl_path: cv.customCoverLetter?.path || '',
+      cl_mime_type: cv.customCoverLetter?.mimeType || 'application/pdf',
+      cl_filename: cv.customCoverLetter?.originalFilename || 'cover_letter.pdf',
       skills: this.extractSkills(cv),
       certifications: cv.educations?.map((e: any) => e.degree) || [],
       work_experience: cv.experiences.map((exp: any) => ({
@@ -190,7 +213,8 @@ export class ApplicationAIWorkerService extends WorkerHost {
   private async callAiEndpoint(
     jobDetails: any,
     idealCandidate: any,
-    cvJson: any,
+    cvModel: any,
+    cvMetadata: any,
   ) {
     if (!this.AI_URL) throw new Error('AI server URL not configured');
 
@@ -201,23 +225,90 @@ export class ApplicationAIWorkerService extends WorkerHost {
         'ideal_candidate',
         idealCandidate ? JSON.stringify(idealCandidate) : '',
       );
-      formData.append('cv_json', JSON.stringify(cvJson));
-      formData.append('cv_file', ''); // not using file
 
-      const { data } = await axios.post(
-        `${this.AI_URL}/process-candidate`,
-        formData,
-        {
-          timeout: 30_000,
-        },
+      // Build CV data. If we have a file, send empty cv_json to force AI to extract from the file.
+      // This matches the successful pattern identified in Swagger testing.
+      const cvJsonToSend = cvMetadata.cv_path ? '' : JSON.stringify(cvModel);
+      formData.append('cv_json', cvJsonToSend);
+      this.logger.log(
+        `Payload cv_json: ${cvJsonToSend ? 'Provided' : 'Empty (Forcing File Extraction)'}`,
       );
 
+      // Fetch and append CV file if path exists
+      if (cvMetadata.cv_path) {
+        try {
+          this.logger.log(
+            `Fetching CV file from S3 path: ${cvMetadata.cv_path}`,
+          );
+          const cvBuffer = await this.s3Service.getFileContent(
+            cvMetadata.cv_path,
+          );
+          const cvBlob = new Blob([new Uint8Array(cvBuffer)], {
+            type: cvMetadata.cv_mime_type || 'application/pdf',
+          });
+          formData.append(
+            'cv_file',
+            cvBlob,
+            cvMetadata.cv_filename || 'cv.pdf',
+          );
+          this.logger.log(
+            `CV file appended successfully: ${cvMetadata.cv_filename}`,
+          );
+        } catch (err) {
+          this.logger.warn(
+            `Failed to fetch CV file from S3 path ${cvMetadata.cv_path}: ${err.message}`,
+          );
+        }
+      }
+
+      // Fetch and append Cover Letter file if path exists
+      if (cvMetadata.cl_path) {
+        try {
+          this.logger.log(
+            `Fetching Cover Letter file from S3 path: ${cvMetadata.cl_path}`,
+          );
+          const clBuffer = await this.s3Service.getFileContent(
+            cvMetadata.cl_path,
+          );
+          const clBlob = new Blob([new Uint8Array(clBuffer)], {
+            type: cvMetadata.cl_mime_type || 'application/pdf',
+          });
+          formData.append(
+            'cover_letter_file',
+            clBlob,
+            cvMetadata.cl_filename || 'cover_letter.pdf',
+          );
+          this.logger.log(
+            `Cover Letter file appended successfully: ${cvMetadata.cl_filename}`,
+          );
+        } catch (err) {
+          this.logger.warn(
+            `Failed to fetch Cover Letter file from S3 path ${cvMetadata.cl_path}: ${err.message}`,
+          );
+        }
+      }
+
+      this.logger.log(`Calling AI service at ${this.AI_URL}/process-candidate`);
+
+      const response = await fetch(`${this.AI_URL}/process-candidate`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        this.logger.error(
+          `AI service returned error ${response.status}: ${errorText}`,
+        );
+        throw new Error(`AI service failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      this.logger.log(`AI service response received successfully`);
       return data;
     } catch (err: unknown) {
       let message = 'AI service call failed';
-      if (axios.isAxiosError(err)) {
-        message = err.response?.data?.message || err.message || message;
-      } else if (err instanceof Error) {
+      if (err instanceof Error) {
         message = err.message;
       }
       this.logger.error('AI service failed', err as any);

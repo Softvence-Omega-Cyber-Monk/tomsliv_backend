@@ -31,6 +31,8 @@ export class CvComparisonService {
         include: {
           experiences: true,
           educations: true,
+          customCV: true,
+          customCoverLetter: true,
           user: { select: { name: true, email: true, profilePicture: true } },
         },
       }),
@@ -39,6 +41,8 @@ export class CvComparisonService {
         include: {
           experiences: true,
           educations: true,
+          customCV: true,
+          customCoverLetter: true,
           user: { select: { name: true, email: true, profilePicture: true } },
         },
       }),
@@ -146,6 +150,8 @@ export class CvComparisonService {
   private transformCvToAiFormat(cv: any) {
     return {
       name: `${cv.firstName} ${cv.lastName}`,
+      cv_url: cv.customCV?.url || '',
+      cover_letter_url: cv.customCoverLetter?.url || '',
       skills: this.extractSkills(cv),
       certifications: cv.educations?.map((e: any) => e.degree) || [],
       work_experience: cv.experiences.map((exp: any) => ({

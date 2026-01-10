@@ -40,7 +40,7 @@ export class AdminSubscriptionService {
 
     // Total transactions (Active Jobs)
     const totalTransactions = await this.prisma.client.job.count({
-      where: { status: 'ACTIVE' },
+      where: { status: 'ACTIVE', paidAt: { not: null } },
     });
 
     // No subscriptions anymore
