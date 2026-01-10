@@ -202,6 +202,43 @@ export class CvService {
 
     return successResponse(null, 'CV deleted successfully');
   }
+
+  @HandleError('Failed to get all CVs', 'CV')
+  async getAllCvs(userId: string): Promise<TResponse<any>> {
+    const user = await this.prisma.client.user.findUniqueOrThrow({
+      where: { id: userId },
+      include: {
+        savedCV: {
+          include: {
+            experiences: true,
+            educations: true,
+            customCV: true,
+            customCoverLetter: true,
+          },
+        },
+        cvs: {
+          where: { isSaved: false },
+          orderBy: { createdAt: 'desc' },
+          include: {
+            experiences: true,
+            educations: true,
+            customCV: true,
+            customCoverLetter: true,
+          },
+        },
+      },
+    });
+
+    const allCvs = [];
+    if (user.savedCV) {
+      allCvs.push({ ...user.savedCV, isDefault: true });
+    }
+
+    allCvs.push(...user.cvs.map((cv) => ({ ...cv, isDefault: false })));
+
+    return successResponse(allCvs, 'All CVs fetched successfully');
+  }
+
   @HandleError('Failed to get recent CVs', 'CV')
   async getRecentCVsForFarmOwner(
     userId: string,

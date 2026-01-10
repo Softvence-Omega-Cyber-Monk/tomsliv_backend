@@ -92,6 +92,13 @@ export class JobsController {
     return this.jobService.getSingleJob(jobId);
   }
 
+  @ApiOperation({ summary: 'Check introduction offer availability (Public)' })
+  @Public()
+  @Get('introduction-offer-availability')
+  async checkIntroductionOfferAvailability() {
+    return this.jobService.checkIntroductionOfferAvailability();
+  }
+
   @ApiOperation({
     summary: 'Create or update ideal candidate profile for a job (Farm Owner)',
   })

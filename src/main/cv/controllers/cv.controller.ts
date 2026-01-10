@@ -26,6 +26,12 @@ export class CvController {
     return this.cvService.getCv(userId);
   }
 
+  @ApiOperation({ summary: 'Get all user CVs (Saved + Application History)' })
+  @Get('all')
+  async getAllMyCvs(@GetUser('sub') userId: string) {
+    return this.cvService.getAllCvs(userId);
+  }
+
   @ApiOperation({ summary: 'Save or Update CV' })
   @Post()
   async saveCv(@GetUser('sub') userId: string, @Body() data: CreateCvBodyDto) {

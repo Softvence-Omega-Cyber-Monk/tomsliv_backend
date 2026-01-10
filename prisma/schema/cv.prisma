@@ -9,16 +9,16 @@ model CV {
   email    String
   phone    String
   location String
-  summary  String
+  summary  String?
 
-  jobTitle     String
+  jobTitle     String?
   jobType      JobType
   availability DateTime?
 
   hasDrivingLicense  Boolean @default(false)
   eligibleToWorkInNZ Boolean @default(false)
 
-  workPermitType WorkPermitType @default(OTHER)
+  workPermitType WorkPermitType @default(CITIZENSHIP)
 
   customCVId String?       @unique
   customCV   FileInstance? @relation("CVFile", fields: [customCVId], references: [id], onDelete: SetNull)

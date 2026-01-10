@@ -10,6 +10,7 @@ import { ApplicationAITriggerService } from '@/lib/queue/trigger/application-ai-
 import { StripeService } from '@/lib/stripe/stripe.service';
 import { HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { Prisma, UserRole } from '@prisma';
+import { PRICING_CONFIG } from '../constants/pricing.constants';
 import { CreateJobDto } from '../dto/create-job.dto';
 import { GetFarmOwnerJobsDto } from '../dto/get-jobs.dto';
 import { ManageJobStatusDto } from '../dto/manage-job-status.dto';
@@ -17,11 +18,14 @@ import { UpdateJobDto } from '../dto/update-job.dto';
 
 @Injectable()
 export class JobService {
-  // Constants for Pricing Rules
-  private readonly EARLY_ADOPTER_PRICE = 150;
-  private readonly NORMAL_PRICE = 250;
-  private readonly EARLY_ADOPTER_DISCOUNT_PERCENTAGE = 0.2; // 20%
-  private readonly EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT = 3;
+  // Pricing Rules (from constants)
+  private readonly EARLY_ADOPTER_PRICE = PRICING_CONFIG.EARLY_ADOPTER_PRICE;
+  private readonly NORMAL_PRICE = PRICING_CONFIG.NORMAL_PRICE;
+  private readonly EARLY_ADOPTER_DISCOUNT_PERCENTAGE =
+    PRICING_CONFIG.EARLY_ADOPTER_DISCOUNT_PERCENTAGE;
+  private readonly EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT =
+    PRICING_CONFIG.EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT;
+  private readonly EARLY_ADOPTER_LIMIT = PRICING_CONFIG.EARLY_ADOPTER_LIMIT;
 
   private readonly logger = new Logger(JobService.name);
 
@@ -423,6 +427,31 @@ export class JobService {
     return successResponse(
       jobWithStats,
       'Job details fetched successfully with stats',
+    );
+  }
+
+  @HandleError('Failed to check introduction offer availability', 'Job')
+  async checkIntroductionOfferAvailability(): Promise<TResponse<any>> {
+    const currentEarlyAdopters = await this.prisma.client.user.count({
+      where: { isEarlyAdopter: true },
+    });
+
+    const isAvailable = currentEarlyAdopters < this.EARLY_ADOPTER_LIMIT;
+
+    return successResponse(
+      {
+        isAvailable,
+        totalLimit: this.EARLY_ADOPTER_LIMIT,
+        currentCount: currentEarlyAdopters,
+        offerDetails: {
+          introductoryPrice: this.EARLY_ADOPTER_PRICE,
+          normalPrice: this.NORMAL_PRICE,
+          discountPercentage: this.EARLY_ADOPTER_DISCOUNT_PERCENTAGE * 100,
+          discountUsageLimit: this.EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT,
+          description: `The first ${this.EARLY_ADOPTER_LIMIT} farmers to register get their first job advert for only $${this.EARLY_ADOPTER_PRICE}. Following that, they get a ${this.EARLY_ADOPTER_DISCOUNT_PERCENTAGE * 100}% discount on their next ${this.EARLY_ADOPTER_DISCOUNT_USAGE_LIMIT} job adverts.`,
+        },
+      },
+      'Introduction offer availability checked successfully',
     );
   }
 }

@@ -8,12 +8,13 @@ import { AuthUtilsService } from '@/lib/utils/services/auth-utils.service';
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { UserRole } from '@prisma';
+import { PRICING_CONFIG } from '../../jobs/constants/pricing.constants';
 import { FarmRegisterDto, RegisterDto } from '../dto/register.dto';
 
 @Injectable()
 export class AuthRegisterService {
   // Constants
-  private readonly EARLY_ADOPTER_LIMIT = 10;
+  private readonly EARLY_ADOPTER_LIMIT = PRICING_CONFIG.EARLY_ADOPTER_LIMIT;
 
   constructor(
     private readonly prisma: PrismaService,
