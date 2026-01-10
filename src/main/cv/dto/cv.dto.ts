@@ -14,9 +14,10 @@ export class ExperienceDto {
   @IsString()
   jobTitle: string;
 
-  @ApiProperty({ enum: JobType, example: JobType.FULL_TIME })
+  @ApiPropertyOptional({ enum: JobType, example: JobType.FULL_TIME })
+  @IsOptional()
   @IsEnum(JobType)
-  jobType: JobType;
+  jobType?: JobType;
 
   @ApiProperty({ example: 'TechCorp Solutions Ltd' })
   @IsString()
@@ -104,12 +105,15 @@ export class CoreCvDto {
   @IsString()
   jobTitle?: string;
 
-  @ApiProperty({ enum: JobType, example: JobType.FULL_TIME })
+  @ApiPropertyOptional({ enum: JobType, example: JobType.FULL_TIME })
+  @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsEnum(JobType)
-  jobType: JobType;
+  jobType?: JobType;
 
   @ApiPropertyOptional({ example: '2025-01-01T00:00:00.000Z' })
   @IsOptional()
+  @Transform(({ value }) => (value === '' ? undefined : value))
   @IsISO8601()
   availability?: string;
 

@@ -1051,6 +1051,10 @@ export type JobUpdateOneRequiredWithoutSavedJobsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.JobUpdateToOneWithWhereWithoutSavedJobsInput, Prisma.JobUpdateWithoutSavedJobsInput>, Prisma.JobUncheckedUpdateWithoutSavedJobsInput>
 }
 
+export type EnumJobTypeFieldUpdateOperationsInput = {
+  set?: $Enums.JobType
+}
+
 export type EnumSalaryTypeFieldUpdateOperationsInput = {
   set?: $Enums.SalaryType
 }
