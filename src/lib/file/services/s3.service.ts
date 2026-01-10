@@ -67,6 +67,21 @@ export class S3Service {
     );
   }
 
+  async getFileContent(key: string): Promise<Buffer> {
+    const command = new GetObjectCommand({
+      Bucket: this.AWS_S3_BUCKET_NAME,
+      Key: key,
+    });
+
+    const response = await this.s3.send(command);
+    if (!response.Body) {
+      throw new Error(`S3 Object Body is empty for key: ${key}`);
+    }
+
+    const bytes = await response.Body.transformToByteArray();
+    return Buffer.from(bytes);
+  }
+
   async getSignedUrl(key: string, expiresIn = 3600): Promise<string> {
     const command = new GetObjectCommand({
       Bucket: this.AWS_S3_BUCKET_NAME,
