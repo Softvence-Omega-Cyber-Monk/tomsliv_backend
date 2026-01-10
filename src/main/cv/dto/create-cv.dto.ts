@@ -28,6 +28,7 @@ export class CreateCvBodyDto {
   coreInfo: CoreCvDto;
 
   @ApiPropertyOptional({ type: [ExperienceDto] })
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ExperienceDto)
@@ -39,9 +40,10 @@ export class CreateCvBodyDto {
       return [];
     }
   })
-  experiences: ExperienceDto[];
+  experiences?: ExperienceDto[];
 
   @ApiPropertyOptional({ type: [EducationDto] })
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => EducationDto)
@@ -53,5 +55,5 @@ export class CreateCvBodyDto {
       return [];
     }
   })
-  educations: EducationDto[];
+  educations?: EducationDto[];
 }

@@ -91,16 +91,18 @@ export class CoreCvDto {
   @IsString()
   location: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example:
       'Experienced backend developer with 4+ years specialising in Node.js, NestJS, and cloud infrastructure.',
   })
+  @IsOptional()
   @IsString()
-  summary: string;
+  summary?: string;
 
-  @ApiProperty({ example: 'Backend Developer' })
+  @ApiPropertyOptional({ example: 'Backend Developer' })
+  @IsOptional()
   @IsString()
-  jobTitle: string;
+  jobTitle?: string;
 
   @ApiProperty({ enum: JobType, example: JobType.FULL_TIME })
   @IsEnum(JobType)
@@ -111,17 +113,21 @@ export class CoreCvDto {
   @IsISO8601()
   availability?: string;
 
-  @ApiPropertyOptional({ example: true })
+  @ApiPropertyOptional({ description: 'Driver’s License', example: true })
   @IsOptional()
   @IsBoolean()
   hasDrivingLicense?: boolean;
 
-  @ApiPropertyOptional({ example: true })
+  @ApiPropertyOptional({
+    description: 'Eligible to Work in New Zealand',
+    example: true,
+  })
   @IsOptional()
   @IsBoolean()
   eligibleToWorkInNZ?: boolean;
 
   @ApiPropertyOptional({
+    description: 'Work Permit Type',
     enum: WorkPermitType,
     example: WorkPermitType.WORK_VISA,
   })

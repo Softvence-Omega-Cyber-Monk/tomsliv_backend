@@ -239,8 +239,8 @@ export type CVGroupByOutputType = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary: string | null
+  jobTitle: string | null
   jobType: $Enums.JobType
   availability: Date | null
   hasDrivingLicense: boolean
@@ -282,8 +282,8 @@ export type CVWhereInput = {
   email?: Prisma.StringFilter<"CV"> | string
   phone?: Prisma.StringFilter<"CV"> | string
   location?: Prisma.StringFilter<"CV"> | string
-  summary?: Prisma.StringFilter<"CV"> | string
-  jobTitle?: Prisma.StringFilter<"CV"> | string
+  summary?: Prisma.StringNullableFilter<"CV"> | string | null
+  jobTitle?: Prisma.StringNullableFilter<"CV"> | string | null
   jobType?: Prisma.EnumJobTypeFilter<"CV"> | $Enums.JobType
   availability?: Prisma.DateTimeNullableFilter<"CV"> | Date | string | null
   hasDrivingLicense?: Prisma.BoolFilter<"CV"> | boolean
@@ -311,8 +311,8 @@ export type CVOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  summary?: Prisma.SortOrder
-  jobTitle?: Prisma.SortOrder
+  summary?: Prisma.SortOrderInput | Prisma.SortOrder
+  jobTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   jobType?: Prisma.SortOrder
   availability?: Prisma.SortOrderInput | Prisma.SortOrder
   hasDrivingLicense?: Prisma.SortOrder
@@ -345,8 +345,8 @@ export type CVWhereUniqueInput = Prisma.AtLeast<{
   email?: Prisma.StringFilter<"CV"> | string
   phone?: Prisma.StringFilter<"CV"> | string
   location?: Prisma.StringFilter<"CV"> | string
-  summary?: Prisma.StringFilter<"CV"> | string
-  jobTitle?: Prisma.StringFilter<"CV"> | string
+  summary?: Prisma.StringNullableFilter<"CV"> | string | null
+  jobTitle?: Prisma.StringNullableFilter<"CV"> | string | null
   jobType?: Prisma.EnumJobTypeFilter<"CV"> | $Enums.JobType
   availability?: Prisma.DateTimeNullableFilter<"CV"> | Date | string | null
   hasDrivingLicense?: Prisma.BoolFilter<"CV"> | boolean
@@ -372,8 +372,8 @@ export type CVOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   location?: Prisma.SortOrder
-  summary?: Prisma.SortOrder
-  jobTitle?: Prisma.SortOrder
+  summary?: Prisma.SortOrderInput | Prisma.SortOrder
+  jobTitle?: Prisma.SortOrderInput | Prisma.SortOrder
   jobType?: Prisma.SortOrder
   availability?: Prisma.SortOrderInput | Prisma.SortOrder
   hasDrivingLicense?: Prisma.SortOrder
@@ -400,8 +400,8 @@ export type CVScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"CV"> | string
   phone?: Prisma.StringWithAggregatesFilter<"CV"> | string
   location?: Prisma.StringWithAggregatesFilter<"CV"> | string
-  summary?: Prisma.StringWithAggregatesFilter<"CV"> | string
-  jobTitle?: Prisma.StringWithAggregatesFilter<"CV"> | string
+  summary?: Prisma.StringNullableWithAggregatesFilter<"CV"> | string | null
+  jobTitle?: Prisma.StringNullableWithAggregatesFilter<"CV"> | string | null
   jobType?: Prisma.EnumJobTypeWithAggregatesFilter<"CV"> | $Enums.JobType
   availability?: Prisma.DateTimeNullableWithAggregatesFilter<"CV"> | Date | string | null
   hasDrivingLicense?: Prisma.BoolWithAggregatesFilter<"CV"> | boolean
@@ -422,8 +422,8 @@ export type CVCreateInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -448,8 +448,8 @@ export type CVUncheckedCreateInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -474,8 +474,8 @@ export type CVUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -500,8 +500,8 @@ export type CVUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -526,8 +526,8 @@ export type CVCreateManyInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -548,8 +548,8 @@ export type CVUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -567,8 +567,8 @@ export type CVUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -671,6 +671,10 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type EnumJobTypeFieldUpdateOperationsInput = {
   set?: $Enums.JobType
 }
@@ -681,10 +685,6 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
 
 export type EnumWorkPermitTypeFieldUpdateOperationsInput = {
   set?: $Enums.WorkPermitType
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
 }
 
 export type CVCreateNestedOneWithoutExperiencesInput = {
@@ -859,8 +859,8 @@ export type CVCreateWithoutExperiencesInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -884,8 +884,8 @@ export type CVUncheckedCreateWithoutExperiencesInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -925,8 +925,8 @@ export type CVUpdateWithoutExperiencesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -950,8 +950,8 @@ export type CVUncheckedUpdateWithoutExperiencesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -975,8 +975,8 @@ export type CVCreateWithoutEducationsInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1000,8 +1000,8 @@ export type CVUncheckedCreateWithoutEducationsInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1041,8 +1041,8 @@ export type CVUpdateWithoutEducationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1066,8 +1066,8 @@ export type CVUncheckedUpdateWithoutEducationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1091,8 +1091,8 @@ export type CVCreateWithoutCustomCVInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1116,8 +1116,8 @@ export type CVUncheckedCreateWithoutCustomCVInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1146,8 +1146,8 @@ export type CVCreateWithoutCustomCoverLetterInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1171,8 +1171,8 @@ export type CVUncheckedCreateWithoutCustomCoverLetterInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1212,8 +1212,8 @@ export type CVUpdateWithoutCustomCVInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1237,8 +1237,8 @@ export type CVUncheckedUpdateWithoutCustomCVInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1273,8 +1273,8 @@ export type CVUpdateWithoutCustomCoverLetterInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1298,8 +1298,8 @@ export type CVUncheckedUpdateWithoutCustomCoverLetterInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1323,8 +1323,8 @@ export type CVCreateWithoutJobApplicationsInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1348,8 +1348,8 @@ export type CVUncheckedCreateWithoutJobApplicationsInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1389,8 +1389,8 @@ export type CVUpdateWithoutJobApplicationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1414,8 +1414,8 @@ export type CVUncheckedUpdateWithoutJobApplicationsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1439,8 +1439,8 @@ export type CVCreateWithoutSavedByInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1464,8 +1464,8 @@ export type CVUncheckedCreateWithoutSavedByInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1494,8 +1494,8 @@ export type CVCreateWithoutUserInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1519,8 +1519,8 @@ export type CVUncheckedCreateWithoutUserInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1565,8 +1565,8 @@ export type CVUpdateWithoutSavedByInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1590,8 +1590,8 @@ export type CVUncheckedUpdateWithoutSavedByInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1634,8 +1634,8 @@ export type CVScalarWhereInput = {
   email?: Prisma.StringFilter<"CV"> | string
   phone?: Prisma.StringFilter<"CV"> | string
   location?: Prisma.StringFilter<"CV"> | string
-  summary?: Prisma.StringFilter<"CV"> | string
-  jobTitle?: Prisma.StringFilter<"CV"> | string
+  summary?: Prisma.StringNullableFilter<"CV"> | string | null
+  jobTitle?: Prisma.StringNullableFilter<"CV"> | string | null
   jobType?: Prisma.EnumJobTypeFilter<"CV"> | $Enums.JobType
   availability?: Prisma.DateTimeNullableFilter<"CV"> | Date | string | null
   hasDrivingLicense?: Prisma.BoolFilter<"CV"> | boolean
@@ -1656,8 +1656,8 @@ export type CVCreateManyUserInput = {
   email: string
   phone: string
   location: string
-  summary: string
-  jobTitle: string
+  summary?: string | null
+  jobTitle?: string | null
   jobType: $Enums.JobType
   availability?: Date | string | null
   hasDrivingLicense?: boolean
@@ -1677,8 +1677,8 @@ export type CVUpdateWithoutUserInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1702,8 +1702,8 @@ export type CVUncheckedUpdateWithoutUserInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1727,8 +1727,8 @@ export type CVUncheckedUpdateManyWithoutUserInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   location?: Prisma.StringFieldUpdateOperationsInput | string
-  summary?: Prisma.StringFieldUpdateOperationsInput | string
-  jobTitle?: Prisma.StringFieldUpdateOperationsInput | string
+  summary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  jobTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   jobType?: Prisma.EnumJobTypeFieldUpdateOperationsInput | $Enums.JobType
   availability?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hasDrivingLicense?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1932,8 +1932,8 @@ export type $CVPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
     email: string
     phone: string
     location: string
-    summary: string
-    jobTitle: string
+    summary: string | null
+    jobTitle: string | null
     jobType: $Enums.JobType
     availability: Date | null
     hasDrivingLicense: boolean
