@@ -18,9 +18,11 @@ export type OtpType = (typeof OtpType)[keyof typeof OtpType]
 
 
 export const WorkPermitType = {
-  NZ_CITIZEN: 'NZ_CITIZEN',
-  NZ_RESIDENT: 'NZ_RESIDENT',
-  WORK_VISA: 'WORK_VISA'
+  CITIZENSHIP: 'CITIZENSHIP',
+  RESIDENT_VISA: 'RESIDENT_VISA',
+  WORK_VISA: 'WORK_VISA',
+  STUDENT_VISA: 'STUDENT_VISA',
+  OTHER: 'OTHER'
 } as const
 
 export type WorkPermitType = (typeof WorkPermitType)[keyof typeof WorkPermitType]
