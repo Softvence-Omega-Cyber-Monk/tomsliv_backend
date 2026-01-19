@@ -11,7 +11,7 @@ BACKUP_FILE="/tmp/${PACKAGE_NAME}_db_${TIMESTAMP}.sql"
 DB_CONTAINER="${PACKAGE_NAME}_db"
 
 # Dump PostgreSQL database from Docker container
-docker exec -i $DB_CONTAINER pg_dump -U $POSTGRES_USER $POSTGRES_DB > $BACKUP_FILE
+sudo docker exec -i $DB_CONTAINER pg_dump -U postgres $DB_CONTAINER > $BACKUP_FILE
 
 # Upload backup to S3
 aws s3 cp $BACKUP_FILE s3://$AWS_S3_BUCKET_NAME/backups/ --region $AWS_REGION
