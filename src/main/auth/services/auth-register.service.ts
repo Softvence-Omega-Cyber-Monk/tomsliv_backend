@@ -42,17 +42,27 @@ export class AuthRegisterService {
         role: UserRole.USER,
         password: await this.utils.hash(password),
         isVerified: true,
+        lastLoginAt: new Date(),
+        lastActiveAt: new Date(),
         notificationSettings: {
           create: {},
         },
       },
     });
 
+    // Generate token
+    const token = await this.utils.generateTokenPairAndSave({
+      email,
+      role: newUser.role,
+      sub: newUser.id,
+    });
+
     // Return sanitized response
     return successResponse(
       {
-        email: newUser.email,
-        isVerified: newUser.isVerified,
+        loginType: newUser.role,
+        user: await this.utils.sanitizeUser(newUser),
+        token,
       },
       `Registration successful. Welcome to TomsLiv.`,
     );
@@ -88,6 +98,8 @@ export class AuthRegisterService {
           password: await this.utils.hash(password),
           isVerified: true,
           isEarlyAdopter, // Set status based on availability
+          lastLoginAt: new Date(),
+          lastActiveAt: new Date(),
           farm: {
             create: {
               name: farmName,
@@ -130,12 +142,20 @@ export class AuthRegisterService {
       await this.eventEmitter.emitAsync(QueueEventsEnum.NOTIFICATION, payload);
     }
 
+    // 3. Generate token
+    const token = await this.utils.generateTokenPairAndSave({
+      email,
+      role: newUser.role,
+      sub: newUser.id,
+    });
+
     // Return sanitized response
     return successResponse(
       {
-        email: newUser.email,
+        loginType: newUser.role,
+        user: await this.utils.sanitizeUser(newUser),
+        token,
         farm: newUser.farm,
-        isVerified: newUser.isVerified,
         isEarlyAdopter: newUser.isEarlyAdopter,
       },
       `Registration successful. Welcome to TomsLiv.`,
