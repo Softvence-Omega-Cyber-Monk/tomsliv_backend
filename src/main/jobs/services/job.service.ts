@@ -101,7 +101,7 @@ export class JobService {
 
     const paymentIntent = await this.stripeService.createPaymentIntent({
       amount: Math.round(result.price * 100), // Convert to cents
-      currency: 'usd',
+      currency: 'nzd',
       customerId: await this.stripeService
         .getOrCreateCustomerId({
           userId,
