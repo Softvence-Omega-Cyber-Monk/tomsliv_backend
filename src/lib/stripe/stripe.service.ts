@@ -22,7 +22,7 @@ export class StripeService {
     title,
     description,
     priceCents,
-    currency = 'usd',
+    currency = 'nzd',
     interval = 'month',
     intervalCount = 1,
     lookupKey,
@@ -61,7 +61,7 @@ export class StripeService {
   async updatePrice({
     productId,
     newPriceCents,
-    currency = 'usd',
+    currency = 'nzd',
     interval = 'month',
     intervalCount = 1,
   }: {
@@ -158,7 +158,7 @@ export class StripeService {
 
   async createPaymentIntent({
     amount,
-    currency = 'usd',
+    currency = 'nzd',
     customerId,
     metadata,
     paymentMethodId,

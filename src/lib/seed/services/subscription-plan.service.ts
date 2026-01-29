@@ -45,7 +45,7 @@ export class SubscriptionPlanService implements OnModuleInit {
         title: 'Farm Owner Monthly Plan',
         description: 'Monthly subscription for farm owners',
         priceCents: 5000,
-        currency: 'usd',
+        currency: 'nzd',
         lookupKey: 'farm_owner_monthly',
       });
 
@@ -61,7 +61,7 @@ export class SubscriptionPlanService implements OnModuleInit {
         title: 'Farm Owner Monthly Plan',
         description: 'Monthly subscription for farm owners',
         priceCents: 5000,
-        currency: 'usd',
+        currency: 'nzd',
         isActive: true,
         stripeProductId,
         stripePriceId,

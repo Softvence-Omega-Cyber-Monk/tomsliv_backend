@@ -444,7 +444,7 @@ export class HandleWebhookService {
             user: { connect: { id: userId } },
             subscription: { connect: { id: localSubscription.id } },
             amount: invoice.amount_paid ?? invoice.total ?? 0,
-            currency: invoice.currency ?? 'usd',
+            currency: invoice.currency ?? 'nzd',
             status: 'PAID',
             paidAt: invoice.status_transitions.paid_at
               ? new Date(invoice.status_transitions.paid_at * 1000)
