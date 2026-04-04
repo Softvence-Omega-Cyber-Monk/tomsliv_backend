@@ -12,7 +12,7 @@ export class StripeService {
   constructor(private readonly configService: ConfigService) {
     const secretKey = this.configService.getOrThrow<string>(
       // ENVEnum.STRIPE_SECRET_KEY,
-      'sk_test_51T76GwJflxC7UgTZIOBMkI5ShOAfFKqH08XG5ybYEoa4msPjQ9E44lh2WTe2ND2QvkeJTPIKwWnefLkCi2zr7qyG00xjlk78DZ',
+      // 'sk_test_51T76GwJflxC7UgTZIOBMkI5ShOAfFKqH08XG5ybYEoa4msPjQ9E44lh2WTe2ND2QvkeJTPIKwWnefLkCi2zr7qyG00xjlk78DZ',
     );
     this.stripe = new Stripe(secretKey);
   }
