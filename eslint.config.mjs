@@ -2,10 +2,12 @@ import js from '@eslint/js';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import globals from 'globals';
+import { createRequire } from 'module';
 import tseslint from 'typescript-eslint';
 
+const require = createRequire(import.meta.url);
+
 export default defineConfig([
-  // Ignore folders that should never be linted
   globalIgnores([
     'node_modules/*',
     'dist/*',
@@ -13,10 +15,8 @@ export default defineConfig([
     'prisma/*',
     'scripts/*',
   ]),
-
-  // JavaScript rules
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     plugins: { js },
     extends: ['js/recommended'],
     rules: {
@@ -28,11 +28,7 @@ export default defineConfig([
       'no-unused-expressions': 'error',
     },
   },
-
-  // TypeScript recommended rules
   ...tseslint.configs.recommended,
-
-  // Shared rules for JS + TS files
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts}'],
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
@@ -43,7 +39,5 @@ export default defineConfig([
       'no-undef': 'off',
     },
   },
-
-  // Prettier integration
   eslintPluginPrettierRecommended,
 ]);
